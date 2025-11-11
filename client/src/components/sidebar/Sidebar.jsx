@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {DashboardIcon, CalendarIcon, MealIcon, AnalysisIcon, SettingsIcon } from "../../assets/icons";
 import MenuOption from "../menu/MenuOption";
 
@@ -10,13 +9,13 @@ const menuItems = [
     {title: "Ustawienia", url: "settings", iconUrl: SettingsIcon},
 ];
 
-function Sidebar({selectedOption, setSelectedOption}){
+function Sidebar({selectedOption}){
 
     return(
         <>
-            <nav className="w-fit lg:w-xs lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 bg-gray-800">
+            <nav className="w-fit lg:w-xs lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 bg-gray-800 border-r border-r-black">
                 {menuItems.map((item, index) => (
-                    <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url} changeOption={()=>changeOption(index)}/>
+                    <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url}/>
                 ))}
             </nav>
         </>
