@@ -1,4 +1,4 @@
-import MenuOption from "./MenuOption";
+import MenuOption from "../menu/MenuOption";
 import DashboardIcon from "./assets/icons/dashboard.png"
 import CalendarIcon from "./assets/icons/calendar.png"
 import MealIcon from "./assets/icons/meal.png"
