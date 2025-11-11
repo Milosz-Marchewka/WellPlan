@@ -4,7 +4,7 @@ import { User } from "../models/User.js";
 
 export const signup = async ({name, surname, email, password, age, height, weight, start, end, wake, sleep}, res)=>{
     console.log("hi2");
-    if(!name || !surname || !email || !password || !age || !height || !weight || !start || !end || !wake || !sleep){
+    if([name, surname, email, password, age, height, weight, start, end, wake, sleep].some(v=>v==null)){
         return res.status(400).json({error: "Proszę wypełnić wszystkie pola formularza."})
     }
 
@@ -24,6 +24,6 @@ export const signup = async ({name, surname, email, password, age, height, weigh
         console.log("hi4");
     } catch(err){
         console.log(err);
-        res.status(500).json({error: "Server error."});
+        res.status(500).json({error: "Błąd serwera."});
     }
 }
