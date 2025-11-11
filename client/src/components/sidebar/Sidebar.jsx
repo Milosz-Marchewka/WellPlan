@@ -10,19 +10,13 @@ const menuItems = [
     {title: "Ustawienia", url: "settings", iconUrl: SettingsIcon},
 ];
 
-function Sidebar(){
-
-    const [selectedOption, setSelectedOption] = useState(0);
-
-    const changeOption = index=>{
-        setSelectedOption(s => s = index)
-    }
+function Sidebar({selectedOption, setSelectedOption}){
 
     return(
         <>
             <nav className="w-fit lg:w-xs lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 bg-gray-800">
                 {menuItems.map((item, index) => (
-                    <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === index} onClick={() => changeOption(index)}/>
+                    <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url} changeOption={()=>changeOption(index)}/>
                 ))}
             </nav>
         </>
