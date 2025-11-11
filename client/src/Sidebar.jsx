@@ -16,7 +16,7 @@ function Sidebar({selectedOption, onSwitchOption}){
 
     return(
         <>
-            <nav className="w-70 flex flex-col gap-5 min-h-screen p-2 bg-gray-800">
+            <nav className="w-fit lg:w-xs lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 bg-gray-800">
                 {menuItems.map((item, index) => (
                     <MenuOption key={index} title={item.title} iconUrl={item.iconUrl} isActive={selectedOption === index} onClick={() => onSwitchOption(index)}/>
                 ))}
