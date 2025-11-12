@@ -11,10 +11,6 @@ function DesktopView(){
 
     const [selectedOption, setSelectedOption] = useState("/");
     const location = useLocation();
-    
-    const changeOption = index=>{
-        setSelectedOption(s => s = index)
-    }
 
     useEffect(()=>{
         setSelectedOption(location.pathname.split("/")[1]);
