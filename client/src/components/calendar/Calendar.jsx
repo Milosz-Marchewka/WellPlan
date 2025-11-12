@@ -1,12 +1,13 @@
 import SingleDayCalendar from "./SingleDayCalendar";
+import AddCalendarEvent from "./AddCalendarEvent";
 
 const Calendar = ()=>{
     return(
-        <>
-            <p>Calendar</p>
-            <SingleDayCalendar/>
-        </>
-    )
+        <div className="p-10 flex justify-around w-full">
+            <SingleDayCalendar />
+            <AddCalendarEvent />
+        </div>
+    );
 }
 
 export default Calendar;

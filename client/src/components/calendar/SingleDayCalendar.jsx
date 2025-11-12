@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 
 function SingleDayCalendar() {
     const [date, setDate] = useState(new Date());
+    const [events, setEvents] = useState([]);
+;
+
+    useEffect(()=>{
+        console.log("DebugText: useeffect calendar");
+        setEvents([]);
+        if(date.toDateString() === new Date().toDateString()){
+            setEvents([
+                {title: "Pobudka", start: {hh: 2, mm: 30}, end: {hh: 2, mm: 35}, color: "ghostwhite"},
+                {title: "Matematyka", start: {hh: 10, mm: 10}, end: {hh: 10, mm: 55}, color: "cyan"},
+                {title: "J. niemiecki", start: {hh: 11, mm: 10}, end: {hh: 11, mm: 55}, color: "crimson"},
+                {title: "J. polski", start: {hh: 12, mm: 10}, end: {hh: 13, mm: 45}, color: "beige"},
+                {title: "Geografia", start: {hh: 14, mm: 0}, end: {hh: 14, mm: 45}, color: "chocolate"},
+            ]);
+        }
+    }, [date]);
+
 
     function formatDateForInput(date) {
         return date.toISOString().split("T")[0];
@@ -25,22 +42,19 @@ function SingleDayCalendar() {
         });
     }
 
-    function generateAxis(){
-
-    }
-
   return (
-    <div>
-        <div>
-            <button onClick={() => previousDay()}>left</button>
+    <div className="w-1/3">
+        <div className="bg-emerald-400 flex justify-around h-20 rounded-t-2xl text-xl">
+            <button onClick={() => previousDay()}>&lt;</button>
             <input
                 type="date"
                 value={formatDateForInput(date)}
+                className="w-fit"
                 onChange={(e) => setDate(new Date(e.target.value))}
             />
-            <button onClick={() => nextDay()}>right</button>
+            <button onClick={() => nextDay()}>&gt;</button>
         </div>
-        <div className="w-110 h-[500px] bg-gray-300 overflow-auto z-100 p-5 bg-gray-800 rounded-2xl">
+        <div className="h-[500px] overflow-auto z-100 p-5 bg-gray-800 rounded-2xl rounded-t-none w-full">
             <div className="relative w-full h-[1440px] bg-gray-800 grid grid-rows-[repeat(24,60px)]">
                 {[...Array(24)].map((_, i) => (
                     <div key={i} className="border-t border-white text-xs text-white pl-1">
@@ -48,13 +62,12 @@ function SingleDayCalendar() {
                     </div>
                 ))}
                 <div className="absolute w-100 h-[1440px] z-50">
-                    <CalendarEvent title="Matematyka" start={{hh: 10, mm: 10}} end={{hh: 10, mm: 55}} color="cyan" />
-                    <CalendarEvent title="Niemiecki" start={{hh: 11, mm: 10}} end={{hh: 11, mm: 55}} color="yellow" />
-                    <CalendarEvent title="J. Polski" start={{hh: 12, mm: 10}} end={{hh: 13, mm: 45}} color="crimson" />
-                    <CalendarEvent title="Geografia" start={{hh: 14, mm: 0}} end={{hh: 14, mm: 45}} color="brown" />
-                    <CalendarEvent title="Obiad🍴" start={{hh: 16, mm: 0}} end={{hh: 16, mm: 30}} color="chocolate" />
-                    <CalendarEvent title="Trening💪" start={{hh: 17, mm: 30}} end={{hh: 18, mm: 45}} color="dimGray" />
-                    <CalendarEvent title="Idziemy spac💤" start={{hh: 22, mm: 30}} end={{hh: 23, mm: 0}} color="skyBlue" />
+                    {
+                        events.map((item, i) => (
+                            <CalendarEvent key={i} title={item.title} start={item.start} end={item.end} color={item.color} />
+                        ))
+                    }
+                    {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
                     <Pointer now={{hh: date.getHours(), mm: date.getMinutes()}}/>
                 </div>
             </div>
