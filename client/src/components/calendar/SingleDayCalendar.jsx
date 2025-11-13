@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 
 function SingleDayCalendar() {
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
+    const pointerRef = useRef(null);
 ;
 
     useEffect(()=>{
@@ -21,6 +22,14 @@ function SingleDayCalendar() {
         }
     }, [date]);
 
+    useEffect(() => {
+        if(pointerRef.current){
+            pointerRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+    }, []);
 
     function formatDateForInput(date) {
         return date.toISOString().split("T")[0];
@@ -69,8 +78,8 @@ function SingleDayCalendar() {
                             ))
                         }
                         {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
+                        <Pointer ref={pointerRef} now={{hh: date.getHours(), mm: date.getMinutes()}}/>
                     </div>
-                    <Pointer now={{hh: date.getHours(), mm: date.getMinutes()}}/>
                 </div>
             </div>
         </div>
