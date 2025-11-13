@@ -17,15 +17,17 @@ function DesktopView(){
     }, [location]);
 
     return(
-        <div className="flex w-screen bg-gray-700 ">
+        <div className="flex w-screen bg-gray-700 h-fit">
             <Sidebar selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/calendar" element={<Calendar/>}/>
-                <Route path="/nutrition" element={<Nutrition/>}/>
-                <Route path="/statistics" element={<Statistics/>}/>
-                <Route path="/settings" element={<Settings/>}/>
-            </Routes>
+            <div className="ml-10 lg:ml-70 w-full">
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/calendar" element={<Calendar/>}/>
+                    <Route path="/nutrition" element={<Nutrition/>}/>
+                    <Route path="/statistics" element={<Statistics/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
+                </Routes>
+            </div>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 function CalendarEvent({title, start, end, color}){
  
-    let classes = "text-center absolute left-30 w-70 rounded-xs";
+    let classes = "text-center absolute left-0 w-full rounded-xs";
 
     let styles = {
         top: getTopMinutes(start),

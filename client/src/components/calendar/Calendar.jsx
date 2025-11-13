@@ -3,7 +3,8 @@ import AddCalendarEvent from "./AddCalendarEvent";
 
 const Calendar = ()=>{
     return(
-        <div className="p-10 flex justify-around w-full">
+        
+        <div className="flex justify-center w-full min-h-screen items-center  gap-20">
             <SingleDayCalendar />
             <AddCalendarEvent />
         </div>

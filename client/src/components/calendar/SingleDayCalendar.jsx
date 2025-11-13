@@ -43,7 +43,7 @@ function SingleDayCalendar() {
     }
 
   return (
-    <div className="w-1/3">
+    <div className="min-w-fit w-2/5">
         <div className="bg-emerald-400 flex justify-around h-20 rounded-t-2xl text-xl">
             <button onClick={() => previousDay()}>&lt;</button>
             <input
@@ -61,13 +61,15 @@ function SingleDayCalendar() {
                         {i}:00
                     </div>
                 ))}
-                <div className="absolute w-100 h-[1440px] z-50">
-                    {
-                        events.map((item, i) => (
-                            <CalendarEvent key={i} title={item.title} start={item.start} end={item.end} color={item.color} />
-                        ))
-                    }
-                    {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
+                <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
+                    <div className="relative w-3/4">
+                        {
+                            events.map((item, i) => (
+                                <CalendarEvent key={i} title={item.title} start={item.start} end={item.end} color={item.color} />
+                            ))
+                        }
+                        {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
+                    </div>
                     <Pointer now={{hh: date.getHours(), mm: date.getMinutes()}}/>
                 </div>
             </div>
