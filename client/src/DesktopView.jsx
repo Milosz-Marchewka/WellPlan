@@ -17,7 +17,7 @@ function DesktopView(){
     }, [location]);
 
     return(
-        <div className="flex w-screen bg-gray-700 h-fit">
+        <div className="flex w-screen h-fit">
             <Sidebar selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
             <div className="ml-10 lg:ml-70 w-full">
                 <Routes>

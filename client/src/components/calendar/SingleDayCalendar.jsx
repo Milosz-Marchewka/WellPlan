@@ -52,8 +52,8 @@ function SingleDayCalendar() {
     }
 
   return (
-    <div className="min-w-fit w-2/5">
-        <div className="bg-emerald-400 flex justify-around h-20 rounded-t-2xl text-xl">
+    <div className="min-w-fit w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
+        <div className="bg-gray-900 text-emerald-400 flex justify-around h-20 text-xl">
             <button onClick={() => previousDay()}>&lt;</button>
             <input
                 type="date"
@@ -63,10 +63,10 @@ function SingleDayCalendar() {
             />
             <button onClick={() => nextDay()}>&gt;</button>
         </div>
-        <div className="h-[500px] overflow-auto z-100 p-5 bg-gray-800 rounded-2xl rounded-t-none w-full">
+        <div className="h-[500px] overflow-auto z-100 p-5 pb-2 bg-gray-800 w-full">
             <div className="relative w-full h-[1440px] bg-gray-800 grid grid-rows-[repeat(24,60px)]">
                 {[...Array(24)].map((_, i) => (
-                    <div key={i} className="border-t border-white text-xs text-white pl-1">
+                    <div key={i} className="border-t border-gray-400 text-xs text-gray-400 pl-1 pt-0.5">
                         {i}:00
                     </div>
                 ))}

@@ -13,7 +13,7 @@ function Sidebar({selectedOption}){
 
     return(
         <>
-            <nav className="fixed left-0 top-0 w-fit lg:w-70 lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 bg-gray-800 border-r border-r-black">
+            <nav className="fixed left-0 top-0 w-fit lg:w-70 lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 pt-5 bg-gray-800 ring-2 ring-gray-900">
                 {menuItems.map((item, index) => (
                     <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url}/>
                 ))}
