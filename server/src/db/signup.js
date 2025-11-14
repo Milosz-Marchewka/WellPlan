@@ -4,6 +4,10 @@ import { User } from "../models/User.js";
 // {name, surname, email, password, age, height, weight, start, end, wake, sleep}
 export const signup = async (body, res)=>{
     try{
+        body.name.trim();
+        body.surname.trim();
+        body.password.trim();
+        
         // sprawdzanie czy user istnieje
         const existing = await User.findOne({email: body.email});
         if(existing){

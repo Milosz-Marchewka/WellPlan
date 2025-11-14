@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/db.js";
-import { signup, getCalories, getCalendar } from "./src/db/index.js";
+import { signup, getCalories, getCalendar, addActivity } from "./src/db/index.js";
 
 const app = express();
 app.use(cors());
@@ -17,8 +17,12 @@ app.get("/calories", (req, res)=>{
     getCalories(req.query, res)
 });
 
-app.get("/calendar", (req, res)=>{
+app.get("/calendar/get", (req, res)=>{
     getCalendar(req.query);
+});
+
+app.post("/calendar/add", (req, res)=>{
+    addActivity(req.body, res);
 });
 
 app.listen(5000, ()=>{
