@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 
 function CalendarEvent({title, start, end, color}){
  
-    let classes = "text-center absolute left-0 w-full rounded-xs";
+    const classes = "text-center absolute left-0 w-full rounded-xs";
 
-    let styles = {
+    const styles = {
         top: getTopMinutes(start),
         height: getHeight(start, end),
         backgroundColor: color
     }
     
     function getTopMinutes(time){
-        return time.hh * 60 + time.mm;
+        console.log(time);
+        return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
     }
 
     function getHeight(time1, time2){

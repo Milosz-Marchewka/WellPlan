@@ -18,7 +18,7 @@ app.get("/calories", (req, res)=>{
 });
 
 app.get("/calendar/get", (req, res)=>{
-    getCalendar(req.query);
+    getCalendar(req.query, res);
 });
 
 app.post("/calendar/add", (req, res)=>{

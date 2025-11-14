@@ -14,6 +14,38 @@ function AddCalendarEvent(){
         end: "",
     });
 
+    const add = async ()=>{
+        console.log(await addEvent(eventData.title, eventData.date, eventData.start, eventData.end));
+    }
+
+    const addEvent = async (name, date, start, end)=>{
+        try{
+            const req = await fetch("http://localhost:5000/calendar/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: "activities@test.pl",
+                    name,
+                    date,
+                    start,
+                    end
+                })
+            });
+
+            if(!req.ok){
+                console.log("Błąd pobierania danych.");
+                return await req.text();
+            }
+
+            const res = await req.json();
+            return res.message ? res.message : res.error;
+        } catch(err){
+            console.log("Błąd serwera.");
+        }
+    }
+
     function handleChange(e){
         let element = e.target;
         setEventData(prevEventData => ({...prevEventData, [element.name]: element.value}));
@@ -24,7 +56,7 @@ function AddCalendarEvent(){
         if(e.target.checked){
             setIsStartEqualEnd(true);
             setEventData(prevEventData => ({...prevEventData, ["end"]: prevEventData.start}))
-        }else{
+        } else{
             setIsStartEqualEnd(false);
         }
     }
@@ -39,7 +71,7 @@ function AddCalendarEvent(){
                         <StyledInput label="Rozpoczęcie" name="start" type="time" value={eventData.start} onChange={(e) => handleChange(e)}/>
                         <StyledInput label="Zakończenie" name="end" type="time" value={isStartEqualEnd ? eventData.start : eventData.end} disabled={isStartEqualEnd ? true : false} onChange={(e) => handleChange(e)}/>
                         <StyledCheckbox label="Taka sama godzina rozpoczęcia i zakończenia" onChange={(e) => handleCheckboxChange(e)}/>
-                        <StyledButton text="Dodaj"/>
+                        <StyledButton click={add} text="Dodaj"/>
                 </div>
             </div>
         </div>
