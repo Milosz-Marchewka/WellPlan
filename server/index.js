@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/db.js";
-import { signup, getCalories } from "./src/db/index.js";
+import { signup, getCalories, getCalendar } from "./src/db/index.js";
 
 const app = express();
 app.use(cors());
