@@ -1,6 +1,6 @@
+import { forwardRef } from "react";
 
-
-function Pointer({now}){
+const Pointer = forwardRef(({ now }, ref) => {
 
     let styles = {
         top: getTopMinutes(now),
@@ -11,9 +11,9 @@ function Pointer({now}){
     }
 
     return(
-        <div className="w-full bg-emerald-500 h-0.5 absolute" style={styles}></div>
+        <div ref={ref} className="w-full bg-emerald-500 h-0.5 absolute" style={styles}></div>
     );
 
-}
+});
 
 export default Pointer;

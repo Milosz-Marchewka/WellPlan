@@ -1,27 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 function CalendarEvent({title, start, end, color}){
  
-    let classes = "absolute left-20 w-70 rounded-lg p-1";
+    let classes = "text-center absolute left-0 w-full rounded-xs";
 
     let styles = {
         top: getTopMinutes(start),
         height: getHeight(start, end),
         backgroundColor: color
     }
-
+    
     function getTopMinutes(time){
         return time.hh * 60 + time.mm;
     }
 
     function getHeight(time1, time2){
-        return getTopMinutes(time2) - getTopMinutes(time1); 
+        let h = getTopMinutes(time2) - getTopMinutes(time1);
+        return h == 0 ? 1 : h; 
+    }
+
+    function getStyleForH6(){
+        let h = getHeight(start, end);
+        if(h < 24){
+            return {backgroundColor: color, transform: `translateY(-${12 - h/2}px)`}
+        }else{
+            return {backgroundColor: color}
+        }
     }
 
     return(
         <div className={classes} style={styles}>
-            <h6>{title}</h6>
+                {
+                (getHeight(start, end) < 25) ?
+                <h6 className="text-center inline-block px-4 rounded-xs" style={getStyleForH6()}>{title}</h6>
+                :
+                <h6 className="text-center inline-block px-4 rounded-xs">{title}</h6>
+                }
         </div>
     );
 }

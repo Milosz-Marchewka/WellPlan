@@ -1,9 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 
 function SingleDayCalendar() {
     const [date, setDate] = useState(new Date());
+    const [events, setEvents] = useState([]);
+    const pointerRef = useRef(null);
+;
+
+    useEffect(()=>{
+        console.log("DebugText: useeffect calendar");
+        setEvents([]);
+        if(date.toDateString() === new Date().toDateString()){
+            setEvents([
+                {title: "Pobudka", start: {hh: 2, mm: 30}, end: {hh: 2, mm: 35}, color: "ghostwhite"},
+                {title: "Matematyka", start: {hh: 10, mm: 10}, end: {hh: 10, mm: 55}, color: "cyan"},
+                {title: "J. niemiecki", start: {hh: 11, mm: 10}, end: {hh: 11, mm: 55}, color: "crimson"},
+                {title: "J. polski", start: {hh: 12, mm: 10}, end: {hh: 13, mm: 45}, color: "beige"},
+                {title: "Geografia", start: {hh: 14, mm: 0}, end: {hh: 14, mm: 45}, color: "chocolate"},
+            ]);
+        }
+    }, [date]);
+
+    useEffect(() => {
+        if(pointerRef.current){
+            pointerRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+    }, []);
 
     function formatDateForInput(date) {
         return date.toISOString().split("T")[0];
@@ -25,37 +51,35 @@ function SingleDayCalendar() {
         });
     }
 
-    function generateAxis(){
-
-    }
-
   return (
-    <div>
-        <div>
-            <button onClick={() => previousDay()}>left</button>
+    <div className="min-w-fit w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
+        <div className="bg-gray-900 text-emerald-400 flex justify-around h-20 text-xl">
+            <button onClick={() => previousDay()}>&lt;</button>
             <input
                 type="date"
                 value={formatDateForInput(date)}
+                className="w-fit"
                 onChange={(e) => setDate(new Date(e.target.value))}
             />
-            <button onClick={() => nextDay()}>right</button>
+            <button onClick={() => nextDay()}>&gt;</button>
         </div>
-        <div className="w-110 h-[500px] bg-gray-300 overflow-auto z-100 p-5 bg-gray-800 rounded-2xl">
+        <div className="h-[500px] overflow-auto z-100 p-5 pb-2 bg-gray-800 w-full">
             <div className="relative w-full h-[1440px] bg-gray-800 grid grid-rows-[repeat(24,60px)]">
                 {[...Array(24)].map((_, i) => (
-                    <div key={i} className="border-t border-white text-xs text-white pl-1">
+                    <div key={i} className="border-t border-gray-400 text-xs text-gray-400 pl-1 pt-0.5">
                         {i}:00
                     </div>
                 ))}
-                <div className="absolute w-100 h-[1440px] z-50">
-                    <CalendarEvent title="Matematyka" start={{hh: 10, mm: 10}} end={{hh: 10, mm: 55}} color="cyan" />
-                    <CalendarEvent title="Niemiecki" start={{hh: 11, mm: 10}} end={{hh: 11, mm: 55}} color="yellow" />
-                    <CalendarEvent title="J. Polski" start={{hh: 12, mm: 10}} end={{hh: 13, mm: 45}} color="crimson" />
-                    <CalendarEvent title="Geografia" start={{hh: 14, mm: 0}} end={{hh: 14, mm: 45}} color="brown" />
-                    <CalendarEvent title="Obiad🍴" start={{hh: 16, mm: 0}} end={{hh: 16, mm: 30}} color="chocolate" />
-                    <CalendarEvent title="Trening💪" start={{hh: 17, mm: 30}} end={{hh: 18, mm: 45}} color="dimGray" />
-                    <CalendarEvent title="Idziemy spac💤" start={{hh: 22, mm: 30}} end={{hh: 23, mm: 0}} color="skyBlue" />
-                    <Pointer now={{hh: date.getHours(), mm: date.getMinutes()}}/>
+                <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
+                    <div className="relative w-3/4">
+                        {
+                            events.map((item, i) => (
+                                <CalendarEvent key={i} title={item.title} start={item.start} end={item.end} color={item.color} />
+                            ))
+                        }
+                        {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
+                        <Pointer ref={pointerRef} now={{hh: date.getHours(), mm: date.getMinutes()}}/>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,4 +3,9 @@
 
 *{
     font-family: 'Cabin', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url("assets/background/background.png");
 }
