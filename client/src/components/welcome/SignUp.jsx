@@ -1,9 +1,7 @@
-import { useState } from "react";
-import PersonalInformations from "./SignUpPanels/PersonalInformations";
-import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
-import Lifestyle from "./SignUpPanels/LifeStyle";
+import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
-function SignUp(){
+const SignUp = ({user, navigate})=>{
     const [userData, setUserData] = useState({
         name: "",
         surname: "",
@@ -15,8 +13,14 @@ function SignUp(){
         weight: -1,
     });
 
+    useEffect(()=>{
+        if(user != null){
+            navigate("/");
+        }
+    }, []);
+
     const handleChange = (e) => {
-        setUserLogData(prev => ({...prev, [e.target.name]: e.target.value}));
+        setUserData(prev => ({...prev, [e.target.name]: e.target.value}));
         console.log("DebugText: ", userData);
     }
 
@@ -24,11 +28,7 @@ function SignUp(){
         <div className="bg-gray-800 text-white w-1/4 min-w-sm p-10 rounded-lg shadow-lg shadow-gray-800">
             <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
             <div className="my-5 flex flex-col gap-2">
-                <Routes>
-                    <Route path="/signup/personalInformations" element={<PersonalInformations/>}/>
-                    <Route path="/signup/bodyMeasurements" element={<BodyMeasurements/>}/>
-                    <Route path="/signup/statistics" element={<Statistics/>}/>
-                </Routes>
+                <Outlet/>
             </div>
         </div>
     );

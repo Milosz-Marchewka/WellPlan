@@ -1,17 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
 
-function LogIn(){
+const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
     const [userLogData, setUserLogData] = useState({
         email: "",
         password: "",
     });
 
+    useEffect(()=>{
+        if(user != null){
+            navigate("/");
+        }
+    }, []);
+
+    const check = async ()=>{
+        try{
+            const req = await fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: userLogData.email,
+                    password: userLogData.password
+                })
+            });
+
+            if(!req.ok){
+                console.log("Błąd pobierania danych.");
+            }
+
+            const res = await req.json();
+            if(res.message){
+                const current = res.user;
+                setUser(current);
+                setWithExpiry(current);
+                navigate("/");
+            } else {
+                setUser(null);
+                console.log(res.error);
+            }
+        } catch(err){
+            console.log("Błąd serwera.");
+        }
+    }
+
     const handleChange = (e) => {
         setUserLogData(prev => ({...prev, [e.target.name]: e.target.value}));
-        console.log("DebugText: ", userLogData);
     }
 
     return(
@@ -23,7 +60,7 @@ function LogIn(){
                     <StyledInput type="email" label="E-mail" name="email" onChange={handleChange}/>
                     <StyledInput type="password" label="Hasło" name="password" onChange={handleChange}/>
                 </div>
-                <StyledButton text="Zaloguj Się" classTw={"block mx-auto w-1/2"}/>
+                <StyledButton text="Zaloguj Się" click={check} classTw={"block mx-auto w-1/2"}/>
                 <div className="block text-center mt-2">
                     Nie masz konta? 
                     <Link to="/signup" className="text-emerald-400 hover:underline ml-1">

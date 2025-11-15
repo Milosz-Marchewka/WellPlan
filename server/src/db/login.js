@@ -14,6 +14,9 @@ export const login = async ({email, password}, res)=>{
     if(!(await bcrypt.compare(password, user.password))){
         return res.status(400).json({error: "Niepoprawne hasło."});
     }
-        
-    return res.status(200).json({message: "Pomyślnie zalogowano."});
+
+    const {password: _pass, _id, __v, ...safe} = user.toObject();
+    
+    console.log({message: "Pomyślnie zalogowano.", user: safe});
+    return res.status(200).json({message: "Pomyślnie zalogowano.", user: safe});
 }
