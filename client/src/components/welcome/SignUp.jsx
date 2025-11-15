@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import PersonalInformations from "./SignUpPanels/PersonalInformations";
 import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
 import Lifestyle from "./SignUpPanels/Lifestyle";
@@ -6,13 +7,18 @@ import StyledButton from "../buttons/StyledButton";
 import Person from "../../assets/icons/signForm/person.png";
 import Dumbell from "../../assets/icons/signForm/dumbell.png";
 
-function SignUp(){
-
+const SignUp = ({user, navigate}) => {
     const [progress, setProgress] = useState(0);
+    
+    useEffect(()=>{
+    
+    }, [progress]);
 
     useEffect(()=>{
-        
-    }, [progress])
+        if(user != null){
+            navigate("/");
+        }
+    }, []);
 
     const [userData, setUserData] = useState({
         name: "",
@@ -100,13 +106,7 @@ function SignUp(){
                     <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
                     <div className="my-5 flex flex-col gap-2">
                         {
-                            (progress == 0 ?
-                            <PersonalInformations onChange={handleChange} onChangeManual={handleChangeManual} userData={userData}/>
-                            :
-                            (progress == 1 ?
-                            <BodyMeasurements onChange={handleChange} onChangeManual={handleChangeManual} userData={userData}/>
-                            :
-                            <Lifestyle onChange={handleChange} onChangeManual={handleChangeManual} userData={userData} handleSchedule={handleTempSchedule} schedule={tempSchedule}/>))
+                            <Outlet/>
                         }
                     </div>
                     <div className="mt-auto flex justify-between">
