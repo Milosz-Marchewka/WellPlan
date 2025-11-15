@@ -3,7 +3,7 @@ import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 
-function AddCalendarEvent(){
+const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
 
     const [isStartEqualEnd, setIsStartEqualEnd] = useState(false);
 
@@ -12,19 +12,54 @@ function AddCalendarEvent(){
         date: new Date().toISOString().split("T")[0],
         start: "",
         end: "",
+        color: "#FFFFFF"
     });
 
-    function handleChange(e){
-        let element = e.target;
+    const add = async ()=>{
+        console.log(await addEvent(eventData.title, eventData.date, eventData.start, eventData.end, eventData.color));
+        await fetchEvents("activities@test.pl", new Date());
+    }
+
+    const addEvent = async (name, date, start, end, color)=>{
+        try{
+            const req = await fetch("http://localhost:5000/calendar/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: "activities@test.pl",
+                    name,
+                    date,
+                    start,
+                    end,
+                    color
+                })
+            });
+
+            if(!req.ok){
+                console.log("Błąd pobierania danych.");
+                return await req.text();
+            }
+
+            const res = await req.json();
+            return res.message ? res.message : res.error;
+        } catch(err){
+            console.log("Błąd serwera.");
+        }
+    }
+
+    const handleChange = (e)=>{
+        const element = e.target;
         setEventData(prevEventData => ({...prevEventData, [element.name]: element.value}));
         console.log("DebugText: ", eventData);
     }
 
-    function handleCheckboxChange(e){
+    const handleCheckboxChange = (e)=>{
         if(e.target.checked){
             setIsStartEqualEnd(true);
             setEventData(prevEventData => ({...prevEventData, ["end"]: prevEventData.start}))
-        }else{
+        } else{
             setIsStartEqualEnd(false);
         }
     }
@@ -39,7 +74,8 @@ function AddCalendarEvent(){
                         <StyledInput label="Rozpoczęcie" name="start" type="time" value={eventData.start} onChange={(e) => handleChange(e)}/>
                         <StyledInput label="Zakończenie" name="end" type="time" value={isStartEqualEnd ? eventData.start : eventData.end} disabled={isStartEqualEnd ? true : false} onChange={(e) => handleChange(e)}/>
                         <StyledCheckbox label="Taka sama godzina rozpoczęcia i zakończenia" onChange={(e) => handleCheckboxChange(e)}/>
-                        <StyledButton text="Dodaj"/>
+                        <input type="color" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/>
+                        <StyledButton click={add} text="Dodaj"/>
                 </div>
             </div>
         </div>

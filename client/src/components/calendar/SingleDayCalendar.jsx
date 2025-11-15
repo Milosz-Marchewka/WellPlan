@@ -2,38 +2,38 @@ import { useEffect, useState, useRef } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 
-function SingleDayCalendar() {
+const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
     const [date, setDate] = useState(new Date());
-    const [events, setEvents] = useState([]);
     const pointerRef = useRef(null);
-;
+
+    // empty [] - runs once (componentDidMount) - pull initial data + scroll into view
+    // if you're wondering what magic is (async()=>{})() go google IIFE JS :D
+    useEffect(() => {
+        (async () => {
+            if (pointerRef.current) {
+            pointerRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            }
+
+            try {
+                await fetchEvents("activities@test.pl", new Date());
+            } catch (err) {
+                console.log("Błąd serwera.");
+            }
+        })();
+    }, []);
 
     useEffect(()=>{
-        console.log("DebugText: useeffect calendar");
-        setEvents([]);
-        if(date.toDateString() === new Date().toDateString()){
-            setEvents([
-                {title: "Pobudka", start: {hh: 2, mm: 30}, end: {hh: 2, mm: 35}, color: "ghostwhite"},
-                {title: "Matematyka", start: {hh: 10, mm: 10}, end: {hh: 10, mm: 55}, color: "cyan"},
-                {title: "J. niemiecki", start: {hh: 11, mm: 10}, end: {hh: 11, mm: 55}, color: "crimson"},
-                {title: "J. polski", start: {hh: 12, mm: 10}, end: {hh: 13, mm: 45}, color: "beige"},
-                {title: "Geografia", start: {hh: 14, mm: 0}, end: {hh: 14, mm: 45}, color: "chocolate"},
-            ]);
+        try{
+            (async()=>{await fetchEvents("activities@test.pl", date)})();
+        } catch(err){
+            console.log("Błąd serwera.");
         }
     }, [date]);
 
-    useEffect(() => {
-        if(pointerRef.current){
-            pointerRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-        }
-    }, []);
 
-    function formatDateForInput(date) {
-        return date.toISOString().split("T")[0];
-    }
 
     function previousDay() {
         setDate((prevDate) => {
@@ -72,9 +72,17 @@ function SingleDayCalendar() {
                 ))}
                 <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
                     <div className="relative w-3/4">
+                    {console.log(events)}
                         {
-                            events.map((item, i) => (
-                                <CalendarEvent key={i} title={item.title} start={item.start} end={item.end} color={item.color} />
+                            events &&
+                            events.map((event, index) => (
+                                <CalendarEvent 
+                                    key={index}
+                                    title={event.name} 
+                                    start={event.start} 
+                                    end={event.end} 
+                                    color={event.color} 
+                                />
                             ))
                         }
                         {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
