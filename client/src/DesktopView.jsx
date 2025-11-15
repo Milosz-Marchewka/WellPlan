@@ -36,11 +36,12 @@ function DesktopView(){
             </div>
         </div>
         :
-        <Routes>
-            <Route path="/login" element={<LogIn/>}/>
-            <Route path="/signup" element={<SignUp/>}/>
-            <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
+        <SignUp/>
+        // <Routes>
+        //     <Route path="/login" element={<LogIn/>}/>
+        //     <Route path="/signup" element={<SignUp/>}/>
+        //     <Route path="*" element={<Navigate to="/login" />} />
+        // </Routes>
     );
 }
 
