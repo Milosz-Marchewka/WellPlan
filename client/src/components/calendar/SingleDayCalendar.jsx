@@ -2,14 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 
-const formatDateForInput = (date)=>{
-    return date.toISOString().split("T")[0];
-}
-
-
-function SingleDayCalendar() {
+const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
     const [date, setDate] = useState(new Date());
-    const [events, setEvents] = useState([]);
     const pointerRef = useRef(null);
 
     // empty [] - runs once (componentDidMount) - pull initial data + scroll into view
@@ -24,8 +18,7 @@ function SingleDayCalendar() {
             }
 
             try {
-            const event = await fetchEvents("activities@test.pl", new Date());
-            setEvents(event);
+                await fetchEvents("activities@test.pl", new Date());
             } catch (err) {
                 console.log("Błąd serwera.");
             }
@@ -33,39 +26,13 @@ function SingleDayCalendar() {
     }, []);
 
     useEffect(()=>{
-        console.log("DebugText: useeffect calendar");
-        if(date.toDateString() === new Date().toDateString()){
-            // event
-            // {
-            //     'year-month-day': {
-            //         name,
-            //         start,
-            //         end
-            //     }
-            // }
+        try{
+            (async()=>{await fetchEvents("activities@test.pl", date)})();
+        } catch(err){
+            console.log("Błąd serwera.");
         }
     }, [date]);
 
-    const fetchEvents = async (email, date)=>{
-        try{
-            const formatted = formatDateForInput(date);
-            const req = await fetch(`http://localhost:5000/calendar/get?email=${email}&date=${formatted}`, {
-                method: "GET",
-                headers:{
-                    "Accept": "application/json"
-                }
-            });
-            if(!req.ok){
-                console.log("Błąd pobierania danych.");
-                return [];
-            }
-            const res = await req.json();
-            return res || [];
-        } catch(err){
-            console.log("Błąd serwera.");
-            return [];
-        }
-    }
 
 
     function previousDay() {
@@ -105,6 +72,7 @@ function SingleDayCalendar() {
                 ))}
                 <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
                     <div className="relative w-3/4">
+                    {console.log(events)}
                         {
                             events &&
                             events.map((event, index) => (
@@ -113,7 +81,7 @@ function SingleDayCalendar() {
                                     title={event.name} 
                                     start={event.start} 
                                     end={event.end} 
-                                    color={"red"} 
+                                    color={event.color} 
                                 />
                             ))
                         }
