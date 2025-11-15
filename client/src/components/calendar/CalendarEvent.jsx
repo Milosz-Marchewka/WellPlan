@@ -1,32 +1,31 @@
-import { useEffect, useState } from "react";
 
+const CalendarEvent = ({title, start, end, color})=>{
 
-function CalendarEvent({title, start, end, color}){
- 
-    let classes = "text-center absolute left-0 w-full rounded-xs";
-
-    let styles = {
-        top: getTopMinutes(start),
-        height: getHeight(start, end),
-        backgroundColor: color
-    }
-    
-    function getTopMinutes(time){
-        return time.hh * 60 + time.mm;
+    const getTopMinutes = (time)=>{
+        console.log(time);
+        return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
     }
 
-    function getHeight(time1, time2){
-        let h = getTopMinutes(time2) - getTopMinutes(time1);
+    const getHeight = (time1, time2)=>{
+        const h = getTopMinutes(time2) - getTopMinutes(time1);
         return h == 0 ? 1 : h; 
     }
 
-    function getStyleForH6(){
-        let h = getHeight(start, end);
+    const getStyleForH6 = ()=>{
+        const h = getHeight(start, end);
         if(h < 24){
             return {backgroundColor: color, transform: `translateY(-${12 - h/2}px)`}
         }else{
             return {backgroundColor: color}
         }
+    }
+ 
+    const classes = "text-center absolute left-0 w-full rounded-xs";
+
+    const styles = {
+        top: getTopMinutes(start),
+        height: getHeight(start, end),
+        backgroundColor: color
     }
 
     return(
