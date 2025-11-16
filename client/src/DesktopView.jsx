@@ -46,15 +46,15 @@ function DesktopView(){
     // HACK: this works instead of sessions lol
     // try to go to another url, it will pull you back unless the state is saturated lol
     // edit: now featuring pseudosessions&trade;
-    // useEffect(()=>{
-    //     const currentUser = getUserWithExpiry();
-    //     setUser(currentUser);
-    //     if(currentUser == null){
-    //         navigate("/login");
-    //     } else {
-    //         navigate("/");
-    //     }
-    // }, []);
+    useEffect(()=>{
+        const currentUser = getUserWithExpiry();
+        setUser(currentUser);
+        if(currentUser == null){
+            navigate("/login");
+        } else {
+            navigate("/");
+        }
+    }, []);
 
 
     useEffect(()=>{
