@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { Outlet } from "react-router-dom";
 import PersonalInformations from "./SignUpPanels/PersonalInformations";
 import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
@@ -7,11 +7,15 @@ import StyledButton from "../buttons/StyledButton";
 import Person from "../../assets/icons/signForm/person.png";
 import Dumbell from "../../assets/icons/signForm/dumbell.png";
 
+export const SignupContext = createContext();
+
+const urls = ["/", "/bodyMeasurements", "/lifestyle"];
+
 const SignUp = ({user, navigate}) => {
     const [progress, setProgress] = useState(0);
     
     useEffect(()=>{
-    
+        navigate(`/signup${urls[progress]}`);
     }, [progress]);
 
     useEffect(()=>{
@@ -34,14 +38,14 @@ const SignUp = ({user, navigate}) => {
         sleep: "",
     });
 
-    const [tempSchedule, setTempSchedule] = useState([]);
+    const [schedule, setSchedule] = useState([]);
 
-    const handleTempSchedule = (index, name, value) => {
-        let temp = tempSchedule;
+    const handleSchedule = (index, name, value) => {
+        let temp = schedule;
         for(let i = 0; i < temp.length; i++){
             if(temp[i].index == Number(index)){
                 temp[i][name] = value;
-                setTempSchedule(prev => temp);
+                setSchedule(prev => temp);
                 console.log(temp);
                 return;
             }
@@ -49,11 +53,11 @@ const SignUp = ({user, navigate}) => {
         temp.push({index: Number(index), start: "", end: "", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", [name]: value});
 
         console.log(temp);
-        setTempSchedule(prev => temp);
+        setSchedule(prev => temp);
     }
 
-    const tempScheduleToNormalSchedule = () => {
-        let temp = tempSchedule;
+    const scheduleToNormalSchedule = () => {
+        let temp = schedule;
         temp.sort((a, b) => {
             const [hh1, mm1] = a.start.split(":").map(Number);
             const [hh2, mm2] = b.start.split(":").map(Number);
@@ -82,6 +86,7 @@ const SignUp = ({user, navigate}) => {
     }
 
     const handleChange = (e) => {
+        
         setUserData(prev => ({...prev, [e.target.name]: e.target.value}));
         console.log("DebugText: ", userData);
     }
@@ -100,40 +105,42 @@ const SignUp = ({user, navigate}) => {
     }
 
     return(
-        <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
-            <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
-                <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">
-                    <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
-                    <div className="my-5 flex flex-col gap-2">
-                        {
-                            <Outlet/>
-                        }
+        <SignupContext.Provider value={{handleChange, handleChangeManual, userData, handleSchedule, schedule}}>
+            <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
+                <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
+                    <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">
+                        <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
+                        <div className="my-5 flex flex-col gap-2">
+                            {
+                                <Outlet/>
+                            }
+                        </div>
+                        <div className="mt-auto flex justify-between">
+                            {
+                                progress == 0 ? 
+                                <div></div>
+                                :
+                                <StyledButton text="Wstesz" click={prevStage}/>
+                            }
+                            {
+                                progress == 2 ?
+                                <StyledButton text="Zarejestuj się" click={()=> console.log("Koniec")} />
+                                :
+                                <StyledButton text="Dalej" click={nextStage} />
+                            }
+                        </div>
                     </div>
-                    <div className="mt-auto flex justify-between">
-                        {
-                            progress == 0 ? 
-                            <div></div>
-                            :
-                            <StyledButton text="Wstesz" click={prevStage}/>
-                        }
-                        {
-                            progress == 2 ?
-                            <StyledButton text="Zarejestuj się" click={()=> console.log("Koniec")} />
-                            :
-                            <StyledButton text="Dalej" click={nextStage} />
-                        }
-                    </div>
+                    {
+                        progress !== 2 ?
+                        <div className="flex-2 bg-emerald-600 flex items-center justify-center">
+                            <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
+                        </div>
+                        :
+                        ""
+                    }
                 </div>
-                {
-                    progress !== 2 ?
-                    <div className="flex-2 bg-emerald-600 flex items-center justify-center">
-                        <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
-                    </div>
-                    :
-                    ""
-                }
             </div>
-        </div>
+        </SignupContext.Provider>
     );
 }
 

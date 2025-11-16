@@ -9,7 +9,7 @@ import LogIn from "./components/welcome/LogIn";
 import SignUp from "./components/welcome/SignUp";
 import Layout from "./Layout";
 import PersonalInformation from "./components/welcome/SignUpPanels/PersonalInformations";
-import Lifestyle from "./components/welcome/SignUpPanels/LifeStyle";
+import Lifestyle from "./components/welcome/SignUpPanels/Lifestyle";
 import BodyMeasurements from "./components/welcome/SignUpPanels/BodyMeasurements";
 
 function DesktopView(){
@@ -46,15 +46,15 @@ function DesktopView(){
     // HACK: this works instead of sessions lol
     // try to go to another url, it will pull you back unless the state is saturated lol
     // edit: now featuring pseudosessions&trade;
-    useEffect(()=>{
-        const currentUser = getUserWithExpiry();
-        setUser(currentUser);
-        if(currentUser == null){
-            navigate("/login");
-        } else {
-            navigate("/");
-        }
-    }, []);
+    // useEffect(()=>{
+    //     const currentUser = getUserWithExpiry();
+    //     setUser(currentUser);
+    //     if(currentUser == null){
+    //         navigate("/login");
+    //     } else {
+    //         navigate("/");
+    //     }
+    // }, []);
 
 
     useEffect(()=>{

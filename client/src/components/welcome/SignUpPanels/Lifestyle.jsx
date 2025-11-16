@@ -1,10 +1,13 @@
 import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
 import StyledCheckbox from "../../inputs/StyledCheckbox";
+import { useEffect, useState, useContext } from "react";
+import { SignupContext } from "../SignUp";
 import "./Lifestyle.css";
-import { useEffect, useState } from "react";
 
-const Lifestyle = ({onChange, onChangeManual, userData, handleSchedule, schedule}) => {
+const Lifestyle = () => {
+
+    const { handleChange, userData, handleSchedule, schedule } = useContext(SignupContext);
 
 
     const [numOfRow, setNumOfRows] = useState(6);
@@ -32,7 +35,7 @@ const Lifestyle = ({onChange, onChangeManual, userData, handleSchedule, schedule
 
     },[numOfRow])
 
-    const getLenghtOfSleep = () => {
+    const getLengthOfSleep = () => {
         if(userData.sleep == "" || userData.wake == ""){
             return "...";
         }
@@ -113,8 +116,8 @@ const Lifestyle = ({onChange, onChangeManual, userData, handleSchedule, schedule
                 <h2>Sen:</h2>
                 <div className="flex flex-row justify-between mt-1">
                     <div className="w-2/5 flex flex-col gap-5">
-                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={onChange} value={userData.wake}/>
-                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={onChange} value={userData.sleep}/>
+                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={userData.wake}/>
+                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={userData.sleep}/>
                     </div>
                     <div className="w-fit grid grid-cols-2 gap-3 items-center text-center">
                         <div className="text-indigo-400">
@@ -123,7 +126,7 @@ const Lifestyle = ({onChange, onChangeManual, userData, handleSchedule, schedule
                         </div>
                         <div className="text-amber-200">
                             <p className="">Twój czas snu:</p>
-                            <h4 className="text-6xl">{getLenghtOfSleep()}</h4>
+                            <h4 className="text-6xl">{getLengthOfSleep()}</h4>
                         </div>
                     </div>
                 </div>
