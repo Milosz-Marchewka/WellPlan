@@ -2,6 +2,7 @@ import {useState} from "react"
 import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
+import StyledColorInput from "../inputs/StyledColorInput";
 
 const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
 
@@ -74,7 +75,8 @@ const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
                         <StyledInput label="Rozpoczęcie" name="start" type="time" value={eventData.start} onChange={(e) => handleChange(e)}/>
                         <StyledInput label="Zakończenie" name="end" type="time" value={isStartEqualEnd ? eventData.start : eventData.end} disabled={isStartEqualEnd ? true : false} onChange={(e) => handleChange(e)}/>
                         <StyledCheckbox label="Taka sama godzina rozpoczęcia i zakończenia" onChange={(e) => handleCheckboxChange(e)}/>
-                        <input type="color" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/>
+                        <StyledColorInput label="Wybierz kolor" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/>
+                        {/* <input type="color" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/> */}
                         <StyledButton click={add} text="Dodaj"/>
                 </div>
             </div>

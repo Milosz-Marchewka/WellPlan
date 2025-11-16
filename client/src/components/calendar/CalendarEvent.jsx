@@ -1,8 +1,7 @@
 
-const CalendarEvent = ({title, start, end, color})=>{
+const CalendarEvent = ({title, start, end, color, offset})=>{
 
     const getTopMinutes = (time)=>{
-        console.log(time);
         return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
     }
 
@@ -20,12 +19,13 @@ const CalendarEvent = ({title, start, end, color})=>{
         }
     }
  
-    const classes = "text-center absolute left-0 w-full rounded-xs";
+    const classes = "text-center left-0 w-full rounded-xs";
 
     const styles = {
         top: getTopMinutes(start),
         height: getHeight(start, end),
-        backgroundColor: color
+        backgroundColor: color,
+        marginTop: (getTopMinutes(start) - offset)
     }
 
     return(

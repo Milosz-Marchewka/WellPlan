@@ -1,10 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
+import GroupedEvents from "./GroupedEvents";
 
 const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
     const [date, setDate] = useState(new Date());
     const pointerRef = useRef(null);
+
+    useEffect(()=>{
+        console.log("SDC", events)
+    })
 
     // empty [] - runs once (componentDidMount) - pull initial data + scroll into view
     // if you're wondering what magic is (async()=>{})() go google IIFE JS :D
@@ -71,17 +76,12 @@ const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
                     </div>
                 ))}
                 <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
-                    <div className="relative w-3/4">
-                    {console.log(events)}
+                    <div className="relative w-4/5">
                         {
-                            events &&
-                            events.map((event, index) => (
-                                <CalendarEvent 
+                            events.map((group, index) => (
+                                <GroupedEvents
                                     key={index}
-                                    title={event.name} 
-                                    start={event.start} 
-                                    end={event.end} 
-                                    color={event.color} 
+                                    group={group}
                                 />
                             ))
                         }

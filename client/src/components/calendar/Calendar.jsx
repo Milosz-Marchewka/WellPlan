@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleDayCalendar from "./SingleDayCalendar";
 import AddCalendarEvent from "./AddCalendarEvent";
 
@@ -6,8 +6,50 @@ const formatDateForInput = (date)=>{
     return date.toISOString().split("T")[0];
 }
 
+const formatTimeToMinutes = (time)=>{
+    return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
+}
+
+
 const Calendar = ()=>{
     const [events, setEvents] = useState([]);
+    const [groupEvents, setGroupEvents] = useState([]);
+
+    useEffect(() => {
+        if (!events || events.length === 0){
+            setGroupEvents([]);
+            return;
+        }
+
+        events.sort((a, b) => {
+            return formatTimeToMinutes(a.start) - formatTimeToMinutes(b.start);
+        });
+
+        const groups = [];
+        let currentGroup = [events[0]];
+        let currentEnd = formatTimeToMinutes(events[0].end);
+
+        for (let i = 1; i < events.length; i++) {
+            const start = formatTimeToMinutes(events[i].start);
+            console.log(events[i]);
+            
+            if (start <= currentEnd) {
+                currentGroup.push(events[i]);
+                const thisEnd = formatTimeToMinutes(events[i].end);
+                currentEnd = Math.max(currentEnd, thisEnd);
+            } else {
+                groups.push(currentGroup);
+                currentGroup = [events[i]];
+                currentEnd = formatTimeToMinutes(events[i].end);
+            }
+        }
+        groups.push(currentGroup);
+
+        console.log("Ready to go", groups);
+        setGroupEvents(groups);
+        
+    }, [events]);
+
 
     const fetchEvents = async (email, date)=>{
         try{
@@ -39,7 +81,7 @@ const Calendar = ()=>{
             </div>
             
             <div className="flex justify-center items-start pt-20 gap-20">
-                <SingleDayCalendar events={events} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
+                <SingleDayCalendar events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
                 <AddCalendarEvent events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>
         
