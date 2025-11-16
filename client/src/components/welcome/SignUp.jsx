@@ -68,7 +68,7 @@ const SignUp = ({user, navigate}) => {
             return minutesA - minutesB;
         }); 
 
-        let result = {};
+        const result = {};
         result.monday = [];
         result.tuesday = [];
         result.wednesday = [];
