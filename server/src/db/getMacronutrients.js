@@ -16,14 +16,14 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
         bmr -= 161;
     }
 
-    tdee = Math.ceil(bmr * activities[activity]);
+    const tdee = Math.ceil(bmr * activities[activity]);
 
     const nutrients = {
         calories: tdee,
-        protein: Math.round((tdee * 0.3)/4),
+        proteins: Math.round((tdee * 0.3)/4),
         carbs: Math.round((tdee * 0.45)/4),
         fat: Math.round((tdee * 0.25)/9)
     }
 
-    return res.status(200).json({nutrients});
+    return res.status(200).json(nutrients);
 }

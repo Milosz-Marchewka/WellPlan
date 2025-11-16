@@ -3,5 +3,6 @@ import { getCalories } from "./getCalories.js";
 import { getCalendar } from "./getCalendar.js";
 import { addActivity } from "./addActivity.js";
 import { login } from "./login.js";
+import { getMacronutrients } from "./getMacronutrients.js";
 
-export { signup, getCalories, getCalendar, addActivity, login };
+export { signup, getCalories, getCalendar, addActivity, login, getMacronutrients };
