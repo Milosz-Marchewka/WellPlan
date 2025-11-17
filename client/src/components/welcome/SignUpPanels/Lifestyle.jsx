@@ -126,7 +126,7 @@ const Lifestyle = () => {
                         </div>
                         <div className="text-amber-200">
                             <p className="">Twój czas snu:</p>
-                            <h4 className="text-6xl">{getLengthOfSleep()}</h4>
+                            <h4 className="text-6xl">{getLengthOfSleep()}h</h4>
                         </div>
                     </div>
                 </div>

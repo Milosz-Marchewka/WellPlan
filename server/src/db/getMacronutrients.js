@@ -1,6 +1,7 @@
 const activities = [1.2, 1.375, 1.55, 1.725, 1.9];
 
 export const getMacronutrients = ({age, height, weight, gender, activity}, res)=>{
+    console.log(activity);
     if([age, height, weight, gender, activity].some(v=>!v)){
         return res.status(400).json({error: "Niepełne dane."});
     }
@@ -16,7 +17,7 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
         bmr -= 161;
     }
 
-    tdee = Math.ceil(bmr * activities[activity]);
+    const tdee = Math.ceil(bmr * activities[activity]);
 
     const nutrients = {
         calories: tdee,
@@ -25,5 +26,5 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
         fat: Math.round((tdee * 0.25)/9)
     }
 
-    return res.status(200).json({nutrients});
+    return res.status(200).json(nutrients);
 }

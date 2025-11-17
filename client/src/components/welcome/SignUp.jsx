@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import PersonalInformations from "./SignUpPanels/PersonalInformations";
 import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
 import Lifestyle from "./SignUpPanels/Lifestyle";
@@ -118,7 +118,9 @@ const SignUp = ({user, navigate}) => {
                         <div className="mt-auto flex justify-between">
                             {
                                 progress == 0 ? 
-                                <div></div>
+                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1">
+                                    Wróć do logowania
+                                </Link>
                                 :
                                 <StyledButton text="Wstesz" click={prevStage}/>
                             }

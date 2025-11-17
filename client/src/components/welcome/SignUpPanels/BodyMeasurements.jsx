@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { SignupContext } from "../SignUp";
 import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
@@ -6,7 +6,14 @@ import StyledButton from "../../buttons/StyledButton";
 const BodyMeasurements = () => {
     const {handleChange, handleChangeManual,  userData} = useContext(SignupContext);
 
-    const [activityLevel, setActivityLevel] = useState(userData?.activityLevel || 0);
+    const [nutrients, setNutrients] = useState({
+        calories: 0,
+        proteins: 0,
+        fat: 0,
+        carbs: 0
+    });
+
+    const [activityLevel, setActivityLevel] = useState(userData.activityLevel == null ? null : userData.activityLevel);
 
     const handleActivityLevelChange = (level) => {
         setActivityLevel(level);
@@ -16,6 +23,35 @@ const BodyMeasurements = () => {
     const selectedStyle = {
         backgroundColor: "green"
     }
+
+    useEffect(()=>{
+        if([userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel].some(v=>v==null)) return;
+        console.log(activityLevel);
+        try{
+            (async ()=>{
+                const url = `age=${userData.age}&gender=${userData.gender}&height=${userData.height}&weight=${userData.weight}&activity=${userData.activityLevel}`;
+                const req = await fetch(`http://localhost:5000/nutrition?${url}`, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+
+                if(!req.ok){
+                    console.log(await req.text());
+                    return;
+                }
+
+                const res = await req.json();
+                console.log(res);
+                setNutrients(res);
+            })();
+        }
+        catch(e){
+            console.log("Błąd serwera.");
+            return;
+        }
+    }, [userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel]);
 
     return(
         <div className="flex flex-col gap-5">
@@ -71,19 +107,27 @@ const BodyMeasurements = () => {
                 <div className="grid grid-cols-2 grid-rows-2 text-center mt-3">
                     <div className="text-lime-400">
                         <p>Kalorie</p>
-                        <h4 className="text-2xl">2869 kcal</h4>
+                        <h4 className="text-2xl">
+                            {nutrients.calories && nutrients.calories}g
+                        </h4>
                     </div>
                     <div className="text-cyan-300">
                         <p>Białko</p>
-                        <h4 className="text-2xl">86g</h4>
+                        <h4 className="text-2xl">
+                            {nutrients.protein && nutrients.protein}g
+                        </h4>
                     </div>
                     <div className="text-yellow-400">
                         <p>Tłuszcze</p>
-                        <h4 className="text-2xl">80g</h4>
+                        <h4 className="text-2xl">
+                            { nutrients.fat && nutrients.fat }g
+                        </h4>
                     </div>
                     <div className="text-rose-400">
                         <p>Węglowodany</p>
-                        <h4 className="text-2xl">323g</h4>
+                        <h4 className="text-2xl">
+                            { nutrients.carbs && nutrients.carbs}g
+                        </h4>
                     </div>
                 </div>
             </div>
