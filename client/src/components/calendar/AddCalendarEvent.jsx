@@ -66,7 +66,7 @@ const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
     }
 
     return(
-        <div className="text-center h-fit w-1/3 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
+        <div className="text-center h-fit w-full lg:w-1/3 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
             <h3 className="w-full bg-gray-900 text-emerald-400 text-2xl p-5">Dodaj nowe wydarzenie</h3>
             <div className="bg-gray-800 p-5">
                 <div className="mx-auto w-5/6 flex flex-col gap-5 bg-gray-800 py-4">

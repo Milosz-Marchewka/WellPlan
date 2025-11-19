@@ -73,6 +73,7 @@ const Calendar = ()=>{
         }
     }
 
+    // flex justify-center items-start pt-20 gap-20
     return(
         <div>
             <div className="w-fit h-fit px-15 pt-2 flex gap-1 flex-col align-middle text-shadow-md text-shadow-gray-900">
@@ -80,7 +81,7 @@ const Calendar = ()=>{
                 <p className="mb-4 text-gray-200 text-lg">Dodawaj wydarzenia do swojego kalendarza</p>
             </div>
             
-            <div className="flex justify-center items-start pt-20 gap-20">
+            <div className="flex flex-col gap-5 px-5 pb-5 lg:flex-row lg:justify-center lg:items-start lg:pt-20 lg:gap-20">
                 <SingleDayCalendar events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
                 <AddCalendarEvent events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>

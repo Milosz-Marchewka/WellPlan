@@ -9,6 +9,13 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
         password: "",
     });
 
+    const [inputsErrors, setInputsErrors] = useState({
+        email: null,
+        password: null,
+    });
+
+    const [log, setLog] = useState(null);
+
     useEffect(()=>{
         if(user != null){
             navigate("/");
@@ -40,25 +47,48 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
                 navigate("/");
             } else {
                 setUser(null);
-                console.log(res.error);
+                console.log(res);
+                setLog(res.error);
+                switch(res.id){
+                    case 1:
+                        setInputsErrors({
+                            email: -1,
+                            password: -1,
+                        });
+                    break;
+                    case 2:
+                        setInputsErrors(prev => ({
+                            ...prev,
+                            email: -1,
+                        }))
+                    break;
+                    case 3:
+                        setInputsErrors(prev => ({
+                            ...prev,
+                            password: -1,
+                        }))
+                    break;
+                }
             }
         } catch(err){
             console.log("Błąd serwera.");
+            setLog("Błąd serwera.");
         }
     }
 
     const handleChange = (e) => {
         setUserLogData(prev => ({...prev, [e.target.name]: e.target.value}));
+        setInputsErrors(prev => ({...prev, [e.target.name]: null}));
     }
 
     return(
-        <div className="flex w-screen min-h-screen items-center justify-start flex-col py-40 gap-10 ">
-            <h1 className="text-6xl text-white text-shadow-md text-shadow-gray-900"><span className="text-emerald-400">Student</span> Planner</h1>
+        <div className="flex w-screen min-h-screen items-center justify-start flex-col py-40 gap-5 ">
+            <h1 className="text-6xl text-white text-shadow-md text-shadow-gray-900 mb-5"><span className="text-emerald-400">Student</span> Planner</h1>
             <div className="bg-gray-800 text-white w-1/4 min-w-sm p-10 pb-5 rounded-lg shadow-lg shadow-gray-800">
                 <h2 className="text-emerald-400 text-3xl">Logowanie</h2>
                 <div className="my-5 flex flex-col gap-2">
-                    <StyledInput type="email" label="E-mail" name="email" onChange={handleChange}/>
-                    <StyledInput type="password" label="Hasło" name="password" onChange={handleChange}/>
+                    <StyledInput type="email" label="E-mail" name="email" onChange={handleChange} valid={inputsErrors.email === null}/>
+                    <StyledInput type="password" label="Hasło" name="password" onChange={handleChange} valid={inputsErrors.password == null}/>
                 </div>
                 <StyledButton text="Zaloguj Się" click={check} classTw={"block mx-auto w-1/2"}/>
                 <div className="block text-center mt-2">
@@ -68,6 +98,15 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
                     </Link>
                 </div>
             </div>
+            {
+                log !== null ?
+                    <div className="bg-red-700/75 w-1/4 min-w-sm rounded-lg p-3 border-1 border-red-500 shadow-sm shadow-red-800">
+                        <h5 className="text-2xl">Błąd:</h5>
+                        <p className="text-lg">{log}</p>
+                    </div>
+                :
+                <></>
+            }
         </div>
     );
 }

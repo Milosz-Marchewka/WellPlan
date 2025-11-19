@@ -1,5 +1,6 @@
 import Meals from "./Meals";
 import Statistic from "./Statistic";
+import AddMeal from "./AddMeal";
 
 const Nutrition = ()=>{
 
@@ -12,12 +13,13 @@ const Nutrition = ()=>{
                 <p className="mb-4 text-gray-200 text-lg">Odżywiaj się zdrowo</p>
             </div>
             
-            <div className="flex flex-col-reverse gap-5 w-full justify-center px-10 2xl:flex-row">
+            <div className="flex flex-col-reverse gap-5 w-full justify-center px-5 2xl:flex-row">
                 <div className="flex-3">
                     <Meals />
                 </div>
-                <div className="flex-2">
+                <div className="flex-2 flex flex-col gap-3">
                     <Statistic/>
+                    <AddMeal/>
                 </div>
             </div>
         </div>
