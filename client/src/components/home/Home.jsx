@@ -27,11 +27,27 @@ const Home = ()=>{
     const del = ()=>{
         localStorage.removeItem("user");
     }
+
+    const recipes = async ()=>{
+        try{
+            const req = await fetch("http://localhost:5000/nutrition/meals?type=main+dish&calories=2500", {
+                method: "GET"
+            });
+
+            if(!req.ok){
+                console.log(await req.text());
+            }
+        } catch(e){
+            console.log(e);
+        }
+    }
     
     return(
     <>
         <button onClick={add}>add user</button>
         <button onClick={del}>delete pseudosession lol</button>
+        <br/>
+        <button onClick={recipes} className="bg-white rounded p-6 cursor-pointer">please don't explode</button>
     </>)
 }
 

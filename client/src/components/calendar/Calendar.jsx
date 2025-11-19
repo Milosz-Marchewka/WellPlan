@@ -11,9 +11,13 @@ const formatTimeToMinutes = (time)=>{
 }
 
 
-const Calendar = ()=>{
+const Calendar = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
+
+    useEffect(()=>{
+        if(user === null) return;
+    }, [user])
 
     useEffect(() => {
         if (!events || events.length === 0){
@@ -81,8 +85,8 @@ const Calendar = ()=>{
             </div>
             
             <div className="flex justify-center items-start pt-20 gap-20">
-                <SingleDayCalendar events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
-                <AddCalendarEvent events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
+                <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
+                <AddCalendarEvent user={user} events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>
         
         </div>

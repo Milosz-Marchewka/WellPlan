@@ -4,7 +4,11 @@ import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
 
 const BodyMeasurements = () => {
-    const {handleChange, handleChangeManual,  userData} = useContext(SignupContext);
+    const {handleChange, handleChangeManual, user} = useContext(SignupContext);
+
+    useEffect(()=>{
+        if(user === null) return;
+    }, [user])
 
     const [nutrients, setNutrients] = useState({
         calories: 0,
@@ -13,7 +17,7 @@ const BodyMeasurements = () => {
         carbs: 0
     });
 
-    const [activityLevel, setActivityLevel] = useState(userData.activityLevel == null ? null : userData.activityLevel);
+    const [activityLevel, setActivityLevel] = useState(user.activityLevel == null ? null : user.activityLevel);
 
     const handleActivityLevelChange = (level) => {
         setActivityLevel(level);
@@ -25,12 +29,12 @@ const BodyMeasurements = () => {
     }
 
     useEffect(()=>{
-        if([userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel].some(v=>v==null)) return;
+        if([user.age, user.gender, user.weight, user.height, user.activityLevel].some(v=>v==null)) return;
         console.log(activityLevel);
         try{
             (async ()=>{
-                const url = `age=${userData.age}&gender=${userData.gender}&height=${userData.height}&weight=${userData.weight}&activity=${userData.activityLevel}`;
-                const req = await fetch(`http://localhost:5000/nutrition?${url}`, {
+                const url = `age=${user.age}&gender=${user.gender}&height=${user.height}&weight=${user.weight}&activity=${user.activityLevel}`;
+                const req = await fetch(`http://localhost:5000/nutrition/macronutrients?${url}`, {
                     method: "GET",
                     headers: {
                         "Accept": "application/json"
@@ -51,15 +55,15 @@ const BodyMeasurements = () => {
             console.log("Błąd serwera.");
             return;
         }
-    }, [userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel]);
+    }, [user.age, user.gender, user.weight, user.height, user.activityLevel]);
 
     return(
         <div className="flex flex-col gap-5">
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={userData.height}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={userData.weight}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user.height}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user.weight}/>
                 </div>
             </div>
             <div>

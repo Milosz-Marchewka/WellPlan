@@ -39,6 +39,7 @@ function DesktopView(){
             localStorage.removeItem("user");
             return null;
         }
+        console.log(user);
         return item.user;
     }
 
@@ -48,13 +49,16 @@ function DesktopView(){
     // edit: now featuring pseudosessions&trade;
     useEffect(()=>{
         const currentUser = getUserWithExpiry();
+        console.log("C:", currentUser);
         setUser(currentUser);
         if(currentUser == null){
             navigate("/login");
         } else {
             navigate("/");
-         }
+        }
     }, []);
+
+    useEffect(()=>{console.log("U:", user)}, [user]);
 
 
     useEffect(()=>{
@@ -65,7 +69,7 @@ function DesktopView(){
         <Routes>
             <Route path="/" element={<Layout selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}>
                 <Route index element={<Home/>}/>
-                <Route path="calendar" element={<Calendar/>} />
+                <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
                 <Route path="statistics" element={<Statistics/>} />
                 <Route path="settings" element={<Settings/>} />
