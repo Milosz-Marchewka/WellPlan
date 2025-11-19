@@ -19,9 +19,8 @@ export const getMeals = async ({type, calories}, res)=>{
         }
 
         const result = await req.json();
-        console.log(result);
-        console.log("B:", result.results[0].nutrition);
-        return res.status(200).json(result);
+        console.log(result.results[0]);
+        return res.status(200).json({result: result.results[0]});
     } catch(e){
         return res.status(500).json({error: e.message});
     }
