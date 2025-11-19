@@ -4,7 +4,8 @@ dotenv.config();
 const API_KEY = process.env.RECIPE_KEY;
 
 export const getMeals = async ({type, calories}, res)=>{
-    if(!calories) return res.status(400).json({error: "C"});
+    console.log(type, calories);
+    if(!calories || !type) return res.status(400).json({error: "Proszę wypełnić wszystkie pola"});
     try{
         const req = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&type=${type}&maxCalories=${calories}&addRecipeNutrition=true&number=1`, {
             method: "GET",
