@@ -10,9 +10,10 @@ const RadialProgress = ({percentage, color}) => {
 
         <div className="w-full flex justify-center">
             <div className="w-20 h-20 flex items-center justify-center" style={style}>
-                <div className="w-14 h-14 bg-gray-900 rounded-[50%] ">
-
-
+                <div className="w-14 h-14 bg-gray-900 rounded-[50%] flex items-center text-lg justify-center text-center ">
+                    <div>
+                        {percentage}%
+                    </div>
                 </div>
             </div>
         </div>

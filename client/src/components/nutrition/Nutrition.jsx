@@ -12,11 +12,11 @@ const Nutrition = ()=>{
                 <p className="mb-4 text-gray-200 text-lg">Odżywiaj się zdrowo</p>
             </div>
             
-            <div className="flex p-10 gap-5">
-                <div className="flex-2">
+            <div className="flex flex-col-reverse gap-5 w-full justify-center px-10 2xl:flex-row">
+                <div className="flex-3">
                     <Meals />
                 </div>
-                <div className="flex-1">
+                <div className="flex-2">
                     <Statistic/>
                 </div>
             </div>

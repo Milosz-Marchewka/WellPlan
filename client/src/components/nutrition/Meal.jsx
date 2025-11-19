@@ -11,7 +11,7 @@ const Meal = ({imgUrl, title, prepTime, prepDifficulty, macronutrients}) => {
                 <div className="text-center text-3xl h-fit flex items-center px-2 mb-1">
                     <p className="text-sm text-emerald-500 float-left flex-1">Śniadanie</p>
                     <h3 className="flex-8">{title}</h3>
-                    <p className="flex-1">-&gt;</p>
+                    <p className="flex-1">+</p>
                 </div>
                 <div className="flex items-center h-34 text-center">
                     <div className="flex-1 flex justify-center">
