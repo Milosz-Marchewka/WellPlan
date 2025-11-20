@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+html{
+  background-color: hsl(216, 18%, 17%)
+}
+
 body{
     min-height: 100vh;
     background-image: url("assets/background/background.png");
@@ -22,4 +26,20 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #00000015;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(216, 18%, 40%);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(3, 133, 90);
 }

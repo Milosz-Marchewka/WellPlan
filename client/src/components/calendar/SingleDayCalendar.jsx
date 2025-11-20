@@ -57,7 +57,7 @@ const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
     }
 
   return (
-    <div className="min-w-fit w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
+    <div className="min-w-fit w-full lg:w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
         <div className="bg-gray-900 text-emerald-400 flex justify-around h-20 text-xl">
             <button onClick={() => previousDay()}>&lt;</button>
             <input

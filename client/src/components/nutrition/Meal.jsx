@@ -1,4 +1,15 @@
 
+const prepDifficultyToText = (value) => {
+    switch(value){
+        case 0:
+            return "Łatwe";
+        case 1:
+            return "Średnie";
+        case 2:
+            return "Trudne";
+    }
+}
+
 const Meal = ({imgUrl, title, prepTime, prepDifficulty, macronutrients}) => {
     
 
@@ -13,14 +24,14 @@ const Meal = ({imgUrl, title, prepTime, prepDifficulty, macronutrients}) => {
                     <div>
                         <h3 className="inline-block">{title}</h3>
                         <div className="inline-block text-sm mx-3 text-gray-300">
-                            🕑{prepTime}🧑‍🍳Łatwe
+                            🕑{prepTime}🧑‍🍳{prepDifficultyToText(prepDifficulty)}
                         </div>
                     </div>
                     <p className="text-sm">Pokaż Przepis</p>
                 </div>
                 <div className="flex text-center h-45 pt-2">
-                    <div className="flex-2 text-left">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium hic tempora, ducimus veniam tenetur dolore iusto, tempore fugiat corporis eum dolores, et minus deserunt quam at molestiae. In, tenetur accusamus.</p>
+                    <div className="flex-2 text-left h-35 overflow-clip mask-b-from-1% mask-b-to-70%">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium hic tempora, ducimus veniam tenetur dolore iusto, tempore fugiat corporis eum dolores, et minus deserunt quam at molestiae. In, tenetur accusamus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium hic tempora, ducimus veniam tenetur dolore iusto, tempore fugiat corporis eum dolores, et minus deserunt quam at molestiae. In, tenetur accusamus.</p>
                     </div>
                     <div className="basis-1/3 grid grid-cols-2 grid-rows-2 justify-center h-28">
                         <div className="text-green-500"><h4 className="text-sm">Kalorie:</h4><p className="inline-block text-2xl">{macronutrients.calories}</p>kcal</div>
