@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/db.js";
-import { signup, login, getCalories, getCalendar, addActivity, getMacronutrients, getMeals } from "./src/db/index.js";
+import { signup, login, getCalories, getCalendar, addActivity, getMacronutrients, getMeals, getTraining, addTraining } from "./src/db/index.js";
 
 const app = express();
 app.use(cors());
@@ -36,6 +36,15 @@ app.get("/calendar/get", (req, res)=>{
 app.post("/calendar/add", (req, res)=>{
     addActivity(req.body, res);
 });
+
+app.get("/training/get", (req, res)=>{
+    getTraining(req.query, res);
+});
+
+app.post("/training/add", (req, res)=>{
+    addTraining(req.body, res);
+});
+
 
 app.listen(5000, ()=>{
     console.log("App on port 5000");
