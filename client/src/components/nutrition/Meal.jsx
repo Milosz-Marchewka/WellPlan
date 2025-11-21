@@ -1,31 +1,43 @@
 
+const prepDifficultyToText = (value) => {
+    switch(value){
+        case 0:
+            return "Łatwe";
+        case 1:
+            return "Średnie";
+        case 2:
+            return "Trudne";
+    }
+}
+
 const Meal = ({imgUrl, title, prepTime, prepDifficulty, macronutrients}) => {
     
 
     return(
         <div className="h-50 bg-gray-900 text-white flex w-full items-center overflow-hidden gap-5 rounded-3xl p-3">
-            <div className="h-full flex-1 overflow-hidden flex items-center rounded-2xl">
-                <img src={imgUrl} alt={imgUrl} className="w-full"/>
+            <div className="h-full w-full flex-1 overflow-hidden flex items-center rounded-2xl">
+                <img src={imgUrl} alt={imgUrl} className="w-full h-full"/>
             </div>
             <div className="flex-3 h-full">
-                <div className="text-center text-3xl h-fit flex items-center px-2 mb-1">
-                    <p className="text-sm text-emerald-500 float-left flex-1">Śniadanie</p>
-                    <h3 className="flex-8">{title}</h3>
-                    <p className="flex-1">-&gt;</p>
+                <p className="text-sm text-emerald-500">Śniadanie</p>
+                <div className="text-center text-3xl h-fit flex items-center justify-between px-2 pb-2 border-b border-b-emerald-400">
+                    <div>
+                        <h3 className="inline-block">{title}</h3>
+                        <div className="inline-block text-sm mx-3 text-gray-300">
+                            🕑{prepTime}🧑‍🍳{prepDifficultyToText(prepDifficulty)}
+                        </div>
+                    </div>
+                    <p className="text-sm">Pokaż Przepis</p>
                 </div>
-                <div className="flex items-center h-34 text-center">
-                    <div className="flex-1 flex justify-center">
-                        <p>Bardzo pyszna, ale taka bardzo bardzo pyszna owsianka z takich bardzo bardzo pysznych składników.</p>
+                <div className="flex text-center h-45 pt-2">
+                    <div className="flex-2 text-left h-35 overflow-clip mask-b-from-1% mask-b-to-70%">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium hic tempora, ducimus veniam tenetur dolore iusto, tempore fugiat corporis eum dolores, et minus deserunt quam at molestiae. In, tenetur accusamus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium hic tempora, ducimus veniam tenetur dolore iusto, tempore fugiat corporis eum dolores, et minus deserunt quam at molestiae. In, tenetur accusamus.</p>
                     </div>
-                    <div className="flex-1 flex flex-col border-l-1 border-l-emerald-600 h-full justify-center">
-                        <p>{prepTime}</p>
-                        <p>Łatwe</p>
-                    </div>
-                    <div className="flex-1 flex flex-col border-l-1 border-l-emerald-600 h-full justify-center">
-                        <p>Kalorie: {macronutrients.calories}kcal</p>
-                        <p>Białko: {macronutrients.protein}g</p>
-                        <p>Tłuszcze: {macronutrients.fat}g</p>
-                        <p>Węglowodany: {macronutrients.carbs}g</p>
+                    <div className="basis-1/3 grid grid-cols-2 grid-rows-2 justify-center h-28">
+                        <div className="text-green-500"><h4 className="text-sm">Kalorie:</h4><p className="inline-block text-2xl">{macronutrients.calories}</p>kcal</div>
+                        <div className="text-blue-500"><h4 className="text-sm">Białko:</h4><p className="inline-block text-2xl">{macronutrients.protein}</p>g</div>
+                        <div className="text-yellow-500"><h4 className="text-sm">Tłuszcze:</h4><p className="inline-block text-2xl">{macronutrients.fat}</p>g</div>
+                        <div className="text-red-500"><h4 className="text-sm">Węglowodany:</h4><p className="inline-block text-2xl">{macronutrients.carbs}</p>g</div>
                     </div>
                 </div>
             </div>

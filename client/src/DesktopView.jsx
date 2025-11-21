@@ -11,6 +11,7 @@ import Layout from "./Layout";
 import PersonalInformation from "./components/welcome/SignUpPanels/PersonalInformations";
 import Lifestyle from "./components/welcome/SignUpPanels/Lifestyle";
 import BodyMeasurements from "./components/welcome/SignUpPanels/BodyMeasurements";
+import Trening from "./components/trening/Trening";
 
 function DesktopView(){
 
@@ -71,7 +72,7 @@ function DesktopView(){
                 <Route index element={<Home/>}/>
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
-                <Route path="statistics" element={<Statistics/>} />
+                <Route path="trening" element={<Trening/>} />
                 <Route path="settings" element={<Settings/>} />
             </Route>
             <Route path="/login">
