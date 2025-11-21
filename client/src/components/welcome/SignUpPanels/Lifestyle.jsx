@@ -57,7 +57,7 @@ const Lifestyle = () => {
         let result = sleepH < wakeH ? wakeH - sleepH : wakeH + 24 - sleepH;
         result *= 100;
 
-        return Math.round(result)/100;
+        return `${Math.round(result)/100}h`;
     }
 
     const handleScheduleChange = (e) => {
