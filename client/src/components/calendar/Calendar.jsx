@@ -14,6 +14,7 @@ const formatTimeToMinutes = (time)=>{
 const Calendar = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
+    const [date, setDate] = useState(new Date());
 
     useEffect(()=>{
         if(user === null) return;
@@ -25,9 +26,11 @@ const Calendar = ({user})=>{
             return;
         }
 
-        events.sort((a, b) => {
-            return formatTimeToMinutes(a.start) - formatTimeToMinutes(b.start);
-        });
+        if(events == []){
+            events.sort((a, b) => {
+                return formatTimeToMinutes(a.start) - formatTimeToMinutes(b.start);
+            });
+        }
 
         const groups = [];
         let currentGroup = [events[0]];
@@ -86,8 +89,8 @@ const Calendar = ({user})=>{
             </div>
             
             <div className="flex flex-col gap-5 px-5 pb-5 lg:flex-row lg:justify-center lg:items-start lg:pt-20 lg:gap-20">
-                <SingleDayCalendar events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
-                <AddCalendarEvent events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
+                <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
+                <AddCalendarEvent user={user} events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>
         
         </div>

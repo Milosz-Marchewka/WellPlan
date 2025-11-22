@@ -69,7 +69,7 @@ function DesktopView(){
     return(
         <Routes>
             <Route path="/" element={<Layout selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}>
-                <Route index element={<Home/>}/>
+                <Route index element={<Home user={user}/>}/>
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
                 <Route path="trening" element={<Trening/>} />
