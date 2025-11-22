@@ -78,7 +78,7 @@ function DesktopView(){
             <Route path="/login">
                 <Route index element={<LogIn user={user} setUser={setUser} setWithExpiry={setWithExpiry} navigate={navigate}/>}/>
             </Route>
-            <Route path="/signup" element={<SignUp user={user} navigate={navigate} />}>
+            <Route path="/signup" element={<SignUp user={user} setUser={setUser} navigate={navigate} />}>
                 <Route index element={<PersonalInformation/>}/>
                 <Route path="bodyMeasurements" element={<BodyMeasurements/>}/>
                 <Route path="lifestyle" element={<Lifestyle/>}/>

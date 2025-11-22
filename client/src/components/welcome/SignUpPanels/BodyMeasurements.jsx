@@ -4,21 +4,15 @@ import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
 
 const BodyMeasurements = () => {
-    const {handleChange, handleChangeManual, user} = useContext(SignupContext);
+    const {handleChange, handleChangeManual, user, setCanProgress} = useContext(SignupContext);
 
-    const [activityLevel, setActivityLevel] = useState(userData?.activityLevel || 0);
+    const [activityLevel, setActivityLevel] = useState(user?.activityLevel || 0);
     const [nutrients, setNutrients] = useState({
             calories: 0,
             proteins: 0,
             carbs: 0,
             fat: 0,
-        });
-
-    const handleActivityLevelChange = (level) => {
-        setActivityLevel(level);
-        handleChangeManual("activityLevel", level);
-    }
-
+    });
     const selectedStyle = {
         backgroundColor: "green"
     }
@@ -26,10 +20,26 @@ const BodyMeasurements = () => {
     useEffect(()=>{
         console.log(nutrients);
         (async ()=>{
-            const data = await fetchNutrients(userData.age, userData.gender, userData.height, userData.weight, userData.activityLevel);
+            const data = await fetchNutrients(user?.age, user?.gender, user?.height, user?.weight, user?.activityLevel);
             setNutrients(data);
         })();
-    },[userData]);
+    },[user]);
+
+    useEffect(()=>{
+        console.log(user?.weight, user?.height, user?.activityLevel);
+        setCanProgress(()=>()=>{
+            if(user?.weight &&
+               user?.height && 
+               user?.activityLevel != null
+            ) return true;
+            else return false;
+        })
+    }, [setCanProgress, user]);
+
+    const handleActivityLevelChange = (level) => {
+        setActivityLevel(level);
+        handleChangeManual("activityLevel", level);
+    }
 
     const fetchNutrients = async (age, gender, height, weight, activity)=>{
         console.log(age, height, weight, activity);
@@ -70,8 +80,8 @@ const BodyMeasurements = () => {
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user.height}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user.weight}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user?.height}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user?.weight}/>
                 </div>
             </div>
             <div>
@@ -119,19 +129,19 @@ const BodyMeasurements = () => {
                 <div className="grid grid-cols-2 grid-rows-2 text-center mt-3">
                     <div className="text-lime-400">
                         <p>Kalorie</p>
-                        <h4 className="text-2xl">{nutrients.calories} kcal</h4>
+                        <h4 className="text-2xl">{nutrients?.calories} kcal</h4>
                     </div>
                     <div className="text-cyan-300">
                         <p>Białko</p>
-                        <h4 className="text-2xl">{nutrients.proteins}g</h4>
+                        <h4 className="text-2xl">{nutrients?.proteins}g</h4>
                     </div>
                     <div className="text-yellow-400">
                         <p>Tłuszcze</p>
-                        <h4 className="text-2xl">{nutrients.fat}g</h4>
+                        <h4 className="text-2xl">{nutrients?.fat}g</h4>
                     </div>
                     <div className="text-rose-400">
                         <p>Węglowodany</p>
-                        <h4 className="text-2xl">{nutrients.carbs}g</h4>
+                        <h4 className="text-2xl">{nutrients?.carbs}g</h4>
                     </div>
                 </div>
             </div>
