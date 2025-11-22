@@ -1,9 +1,13 @@
 import TreningDay from "./TreningDay";
+import AddTrening from "./AddTrening";
 
 const Trening = () => {
 
     return(
         <div>
+            <div className="absolute flex items-center justify-center min-h-screen w-screen">
+                <AddTrening/>
+            </div>
             <div className="flex items-center justify-center min-h-screen flex-wrap gap-5">
                 <TreningDay 
                 day="Poniedziałek" 
