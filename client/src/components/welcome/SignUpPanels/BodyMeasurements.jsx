@@ -13,6 +13,13 @@ const BodyMeasurements = () => {
             carbs: 0,
             fat: 0,
     });
+    
+    const [inputsErrors, setInputsErrors] = useState({
+        weight: null,
+        height: null,
+    });
+
+
     const selectedStyle = {
         backgroundColor: "green"
     }
@@ -28,11 +35,26 @@ const BodyMeasurements = () => {
     useEffect(()=>{
         console.log(user?.weight, user?.height, user?.activityLevel);
         setCanProgress(()=>()=>{
-            if(user?.weight &&
-               user?.height && 
-               user?.activityLevel != null
-            ) return true;
-            else return false;
+
+            let isError = false;
+            let newErrors = {
+                weight: null,
+                height: null,
+            };
+
+
+            if (!user?.weight || user.weight.trim() === "") {
+                newErrors.weight = 1;
+                isError = true;
+            }
+            if (!user?.height || user.height.trim() === "") {
+                newErrors.height = 1;
+                isError = true;
+            }
+
+            setInputsErrors(prev => ({ ...prev, ...newErrors }));
+
+            return !isError;
         })
     }, [setCanProgress, user]);
 
@@ -55,7 +77,7 @@ const BodyMeasurements = () => {
         }
         try{
             const url = `age=${age}&gender=${gender}&height=${height}&weight=${weight}&activity=${activity}`;
-            const req = await fetch(`http://localhost:5000/nutrients?${url}`, {
+            const req = await fetch(`http://localhost:5000/nutrition/macronutrients?${url}`, {
                 method: "GET",
                 headers: {
                     "Accept": "application/json"
@@ -80,8 +102,8 @@ const BodyMeasurements = () => {
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user?.height}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user?.weight}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user?.height} valid={inputsErrors.height === null}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user?.weight} valid={inputsErrors.weight === null}/>
                 </div>
             </div>
             <div>
