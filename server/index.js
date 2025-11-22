@@ -29,10 +29,6 @@ app.get("/calories", (req, res)=>{
     getCalories(req.query, res)
 });
 
-app.get("/nutrients", (req,res)=>{
-    getMacronutrients(req.query, res);
-})
-
 app.get("/calendar/get", (req, res)=>{
     getCalendar(req.query, res);
 });

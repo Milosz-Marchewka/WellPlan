@@ -29,11 +29,12 @@ const Home = ()=>{
     }
 
     const recipes = async ()=>{
+        console.log("hi");
         try{
-            const req = await fetch("http://localhost:5000/nutrition/meals?type=main+dish&calories=2500", {
+            const req = await fetch("http://localhost:5000/nutrition/meals?product=Spaghetti+N.5&calories=1600", {
                 method: "GET"
             });
-
+            console.log("hi2");
             if(!req.ok){
                 console.log(await req.text());
             }
