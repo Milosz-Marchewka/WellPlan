@@ -7,7 +7,11 @@ import "./Lifestyle.css";
 
 const Lifestyle = () => {
 
-    const { handleChange, userData, handleSchedule, schedule } = useContext(SignupContext);
+    const { handleChange, user, handleSchedule, schedule } = useContext(SignupContext);
+
+    useEffect(()=>{
+        if(user === null) return;
+    }, [user])
 
 
     const [numOfRow, setNumOfRows] = useState(6);
@@ -36,14 +40,14 @@ const Lifestyle = () => {
     },[numOfRow])
 
     const getLengthOfSleep = () => {
-        if(userData.sleep == "" || userData.wake == ""){
+        if(user.sleep == "" || user.wake == ""){
             return "...";
         }
 
-        let [h1, m1] = userData.wake.split(":");
+        let [h1, m1] = user.wake.split(":");
         h1 = Number(h1);
         m1 = Number(m1);
-        let [h2, m2] = userData.sleep.split(":");
+        let [h2, m2] = user.sleep.split(":");
         h2 = Number(h2);
         m2 = Number(m2);
         
@@ -53,7 +57,7 @@ const Lifestyle = () => {
         let result = sleepH < wakeH ? wakeH - sleepH : wakeH + 24 - sleepH;
         result *= 100;
 
-        return Math.round(result)/100;
+        return `${Math.round(result)/100}h`;
     }
 
     const handleScheduleChange = (e) => {
@@ -116,8 +120,8 @@ const Lifestyle = () => {
                 <h2>Sen:</h2>
                 <div className="flex flex-row justify-between mt-1">
                     <div className="w-2/5 flex flex-col gap-5">
-                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={userData.wake}/>
-                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={userData.sleep}/>
+                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={user.wake}/>
+                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={user.sleep}/>
                     </div>
                     <div className="w-fit grid grid-cols-2 gap-3 items-center text-center">
                         <div className="text-indigo-400">

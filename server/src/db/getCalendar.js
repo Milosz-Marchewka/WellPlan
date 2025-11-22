@@ -9,7 +9,9 @@ export const getCalendar = async ({email, date}, res)=>{
         return res.status(400).json({error: "Nie znaleziono użytkownika."});
     }
 
-    const day = user.activities[date] || [];
-    console.log(day);
+    if(!user.activities) {
+        return res.status(200).json([]);
+    }
+    const day = user.activities [date] || [];
     return res.status(200).json(day);
 }

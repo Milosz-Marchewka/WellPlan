@@ -1,7 +1,40 @@
+import { useState, useEffect } from "react";
 import Owsianka from "../../assets/meals/Owsianka.jpg";
 import Meal from "./Meal";
 
 const Meals = () => {
+
+    const [meals, setMeals] = useState({});
+
+    useEffect(()=>{
+        (async()=>{
+            const temp = await fetchMeals("breakfast", 2500);
+            setMeals(temp);
+            console.log(temp);
+        })();
+    }, []);
+
+    const fetchMeals = async(type, calories)=>{
+        try{
+            const req = await fetch(`http://localhost:5000/nutrition/meals?type=${type}&calories=${calories}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if(!req.ok){
+                console.log("Błąd pobierania danych.", await req.text());
+                return;
+            }
+
+            const res = await req.json();
+
+            return res;
+        } catch(err){
+            console.log("Błąd serwera.");
+        }
+    }
     
     return(
         <div className="w-full">

@@ -4,16 +4,15 @@ import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
 
 const BodyMeasurements = () => {
-    const {handleChange, handleChangeManual,  userData} = useContext(SignupContext);
+    const {handleChange, handleChangeManual, user} = useContext(SignupContext);
 
+    const [activityLevel, setActivityLevel] = useState(userData?.activityLevel || 0);
     const [nutrients, setNutrients] = useState({
-        calories: 0,
-        proteins: 0,
-        fat: 0,
-        carbs: 0
-    });
-
-    const [activityLevel, setActivityLevel] = useState(userData.activityLevel == null ? null : userData.activityLevel);
+            calories: 0,
+            proteins: 0,
+            carbs: 0,
+            fat: 0,
+        });
 
     const handleActivityLevelChange = (level) => {
         setActivityLevel(level);
@@ -25,41 +24,54 @@ const BodyMeasurements = () => {
     }
 
     useEffect(()=>{
-        if([userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel].some(v=>v==null)) return;
-        console.log(activityLevel);
+        console.log(nutrients);
+        (async ()=>{
+            const data = await fetchNutrients(userData.age, userData.gender, userData.height, userData.weight, userData.activityLevel);
+            setNutrients(data);
+        })();
+    },[userData]);
+
+    const fetchNutrients = async (age, gender, height, weight, activity)=>{
+        console.log(age, height, weight, activity);
+        const empty = {
+            calories: 0,
+            proteins: 0,
+            carbs: 0,
+            fat: 0,
+        }
+        if([age,gender, height,weight,activity].some(v=>v==null)){
+            console.log("Nie wpisano wszystkich danych.");
+            return empty;
+        }
         try{
-            (async ()=>{
-                const url = `age=${userData.age}&gender=${userData.gender}&height=${userData.height}&weight=${userData.weight}&activity=${userData.activityLevel}`;
-                const req = await fetch(`http://localhost:5000/nutrition?${url}`, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                });
-
-                if(!req.ok){
-                    console.log(await req.text());
-                    return;
+            const url = `age=${age}&gender=${gender}&height=${height}&weight=${weight}&activity=${activity}`;
+            const req = await fetch(`http://localhost:5000/nutrients?${url}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
                 }
+            });
 
-                const res = await req.json();
-                console.log(res);
-                setNutrients(res);
-            })();
-        }
-        catch(e){
+            if(!req.ok){
+                console.log("Błąd obliczania danych.", await req.text());
+                return empty;
+            }
+
+            const result = await req.json();
+            return result;
+        }catch (e){
             console.log("Błąd serwera.");
-            return;
+            return empty;
         }
-    }, [userData.age, userData.gender, userData.weight, userData.height, userData.activityLevel]);
+    }
 
     return(
         <div className="flex flex-col gap-5">
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={userData.height}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={userData.weight}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user.height}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user.weight}/>
                 </div>
             </div>
             <div>
@@ -107,27 +119,19 @@ const BodyMeasurements = () => {
                 <div className="grid grid-cols-2 grid-rows-2 text-center mt-3">
                     <div className="text-lime-400">
                         <p>Kalorie</p>
-                        <h4 className="text-2xl">
-                            {nutrients.calories && nutrients.calories}g
-                        </h4>
+                        <h4 className="text-2xl">{nutrients.calories} kcal</h4>
                     </div>
                     <div className="text-cyan-300">
                         <p>Białko</p>
-                        <h4 className="text-2xl">
-                            {nutrients.protein && nutrients.protein}g
-                        </h4>
+                        <h4 className="text-2xl">{nutrients.proteins}g</h4>
                     </div>
                     <div className="text-yellow-400">
                         <p>Tłuszcze</p>
-                        <h4 className="text-2xl">
-                            { nutrients.fat && nutrients.fat }g
-                        </h4>
+                        <h4 className="text-2xl">{nutrients.fat}g</h4>
                     </div>
                     <div className="text-rose-400">
                         <p>Węglowodany</p>
-                        <h4 className="text-2xl">
-                            { nutrients.carbs && nutrients.carbs}g
-                        </h4>
+                        <h4 className="text-2xl">{nutrients.carbs}g</h4>
                     </div>
                 </div>
             </div>

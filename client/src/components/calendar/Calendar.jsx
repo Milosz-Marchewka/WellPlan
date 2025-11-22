@@ -11,9 +11,13 @@ const formatTimeToMinutes = (time)=>{
 }
 
 
-const Calendar = ()=>{
+const Calendar = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
+
+    useEffect(()=>{
+        if(user === null) return;
+    }, [user])
 
     useEffect(() => {
         if (!events || events.length === 0){

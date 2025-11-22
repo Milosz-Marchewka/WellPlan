@@ -3,13 +3,13 @@ import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 import GroupedEvents from "./GroupedEvents";
 
-const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
+const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
     const [date, setDate] = useState(new Date());
     const pointerRef = useRef(null);
 
     useEffect(()=>{
-        console.log("SDC", events)
-    })
+        if(user === null) return;
+    }, [user])
 
     // empty [] - runs once (componentDidMount) - pull initial data + scroll into view
     // if you're wondering what magic is (async()=>{})() go google IIFE JS :D
@@ -23,7 +23,8 @@ const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
             }
 
             try {
-                await fetchEvents("activities@test.pl", new Date());
+                console.log(user?.email);
+                await fetchEvents(user?.email, new Date());
             } catch (err) {
                 console.log("Błąd serwera.");
             }
@@ -32,7 +33,7 @@ const SingleDayCalendar = ({events, fetchEvents, formatDateForInput}) => {
 
     useEffect(()=>{
         try{
-            (async()=>{await fetchEvents("activities@test.pl", date)})();
+            (async()=>{await fetchEvents(user?.email, date)})();
         } catch(err){
             console.log("Błąd serwera.");
         }

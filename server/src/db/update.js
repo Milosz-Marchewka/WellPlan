@@ -1,12 +1,15 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 
-export const update = async()=>{
+export const update = async(body, res)=>{
 
     try{
-        if([body.name, body.surname, body.email, body.password, body.gender, body.age, body.height, body.weight].some((v)=>!v)){
-            return res.status(400).json({error: "Proszę wypełnić wszystkie pola formularza."});
+        if(!body.email){
+            return res.status(400).json({error: "Proszę wpisać adres email"});
         }
+
+        if([body.email.trim(), body.name.trim(), body.surname.trim(), body.gender].some(k=>(k == null || k === ""))) return res.status(400).json({error: "Wypełnij wszystkie wymagane pola."});
+        if([body.age, body.weight, body.height].some(k=>(k == null || k === 0))) return res.status(400).json({error: "Proszę wypełnić wszystkie wymagane pola - dla pól numerycznych, nie może to być zero."})
 
         const update = Object.fromEntries(Object.entries(body).filter(([key, value])=> key != null));
 

@@ -24,19 +24,19 @@ const SignUp = ({user, navigate}) => {
         }
     }, []);
 
-    const [userData, setUserData] = useState({
-        name: "",
-        surname: "",
-        email: "",
-        password: "",
-        gender: "male",
-        age: null,
-        activityLevel: null,
-        height: null,
-        weight: null,
-        wake: "",
-        sleep: "",
-    });
+    // const [userData, setUserData] = useState({
+    //     name: "",
+    //     surname: "",
+    //     email: "",
+    //     password: "",
+    //     gender: "male",
+    //     age: null,
+    //     activityLevel: null,
+    //     height: null,
+    //     weight: null,
+    //     wake: "",
+    //     sleep: "",
+    // });
 
     const [schedule, setSchedule] = useState([]);
 
@@ -87,12 +87,12 @@ const SignUp = ({user, navigate}) => {
 
     const handleChange = (e) => {
         
-        setUserData(prev => ({...prev, [e.target.name]: e.target.value}));
+        setUser(prev => ({...prev, [e.target.name]: e.target.value}));
         console.log("DebugText: ", userData);
     }
 
     const handleChangeManual = (name, value) => {
-        setUserData(prev => ({...prev, [name]: value}));
+        setUser(prev => ({...prev, [name]: value}));
         console.log("DebugText: ", userData);
     }
 
@@ -105,7 +105,7 @@ const SignUp = ({user, navigate}) => {
     }
 
     return(
-        <SignupContext.Provider value={{handleChange, handleChangeManual, userData, handleSchedule, schedule}}>
+        <SignupContext.Provider value={{handleChange, handleChangeManual, user, handleSchedule, schedule}}>
             <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
                 <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
                     <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">

@@ -1,10 +1,13 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 import StyledColorInput from "../inputs/StyledColorInput";
 
-const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
+const AddCalendarEvent = ({user, fetchEvents})=>{
+    useEffect(()=>{
+            if(user === null) return;
+        }, [user])
 
     const [isStartEqualEnd, setIsStartEqualEnd] = useState(false);
 
@@ -17,19 +20,20 @@ const AddCalendarEvent = ({events, setEvents, fetchEvents})=>{
     });
 
     const add = async ()=>{
-        console.log(await addEvent(eventData.title, eventData.date, eventData.start, eventData.end, eventData.color));
-        await fetchEvents("activities@test.pl", new Date());
+        console.log(await addEvent(user.email, eventData.title, eventData.date, eventData.start, eventData.end, eventData.color));
+        await fetchEvents(user?.email, new Date());
     }
 
-    const addEvent = async (name, date, start, end, color)=>{
+    const addEvent = async (email, name, date, start, end, color)=>{
         try{
+            console.log([email, name, date, start, end, color]);
             const req = await fetch("http://localhost:5000/calendar/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    email: "activities@test.pl",
+                    email,
                     name,
                     date,
                     start,

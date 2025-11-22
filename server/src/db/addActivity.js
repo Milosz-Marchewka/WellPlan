@@ -2,7 +2,6 @@ import { User } from "../models/User.js";
 import { emailRegex } from "../util/regex.js";
 
 export const addActivity = async ({email, name, date, start, end, color}, res)=>{
-    console.log(color);
     if(!email || !name || !date || !start || !end){
         return res.status(400).json({error: "Proszę wypełnić wszystkie pola formularza."});
     }

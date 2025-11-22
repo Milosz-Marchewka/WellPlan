@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/db.js";
-import { signup, login, getCalories, getCalendar, addActivity, getMacronutrients } from "./src/db/index.js";
+import { signup, login, getCalories, getCalendar, addActivity, getMacronutrients, getMeals, getTraining, addTraining } from "./src/db/index.js";
 
 const app = express();
 app.use(cors());
@@ -17,8 +17,12 @@ app.post("/login", (req,res)=>{
     login(req.body, res);
 })
 
-app.get("/nutrition", (req, res)=>{
+app.get("/nutrition/macronutrients", (req, res)=>{
     getMacronutrients(req.query, res);
+});
+
+app.get("/nutrition/meals", (req, res)=>{
+    getMeals(req.query, res);
 });
 
 app.get("/calories", (req, res)=>{
@@ -32,6 +36,15 @@ app.get("/calendar/get", (req, res)=>{
 app.post("/calendar/add", (req, res)=>{
     addActivity(req.body, res);
 });
+
+app.get("/training/get", (req, res)=>{
+    getTraining(req.query, res);
+});
+
+app.post("/training/add", (req, res)=>{
+    addTraining(req.body, res);
+});
+
 
 app.listen(5000, ()=>{
     console.log("App on port 5000");

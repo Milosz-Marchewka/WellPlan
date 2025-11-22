@@ -21,7 +21,7 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
 
     const nutrients = {
         calories: tdee,
-        protein: Math.round((tdee * 0.3)/4),
+        proteins: Math.round((tdee * 0.3)/4),
         carbs: Math.round((tdee * 0.45)/4),
         fat: Math.round((tdee * 0.25)/9)
     }

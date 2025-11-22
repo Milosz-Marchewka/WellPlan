@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     height: {type: Number, required: true},
     weight: {type: Number, required: true},
     activities: {type: Object, required: false},
+    training: {type: Object, required: false},
     wake: {type: Number, required: false},
     sleep: {type: Number, required: false}
 });
