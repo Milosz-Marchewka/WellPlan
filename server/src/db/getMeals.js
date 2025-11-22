@@ -1,6 +1,8 @@
 
 export const getMeals = async ({product, calories}, res)=>{
 
+    console.log(product, calories)
+
     if(!calories || !product) return res.status(400).json({error: "Proszę wypełnić wszystkie pola"});
 
     const food = await fetchFood(product, res);
@@ -8,7 +10,7 @@ export const getMeals = async ({product, calories}, res)=>{
 
 
     for(const p of filtered){
-        p.imageUrl = getImageUrl(p) || 'https://placehold.co/full?text=Hello+World&font=roboto';
+        p.imageUrl = getImageUrl(p) || 'https://placehold.co/200x200/transparent/00aa58?text=Brak+Zdjęcia';
     };
 
     return res.status(200).json(filtered);

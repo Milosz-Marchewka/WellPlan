@@ -6,6 +6,7 @@ import StyledColorInput from "../inputs/StyledColorInput";
 
 const AddCalendarEvent = ({user, fetchEvents})=>{
     useEffect(()=>{
+        console.log(user.email);
             if(user === null) return;
         }, [user])
 
@@ -81,7 +82,7 @@ const AddCalendarEvent = ({user, fetchEvents})=>{
                         <StyledCheckbox label="Taka sama godzina rozpoczęcia i zakończenia" onChange={(e) => handleCheckboxChange(e)}/>
                         <StyledColorInput label="Wybierz kolor" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/>
                         {/* <input type="color" name="color" id="color" value={eventData.color} onChange={(e)=>handleChange(e)}/> */}
-                        <StyledButton click={add} text="Dodaj"/>
+                        <StyledButton click={() => add()} text="Dodaj"/>
                 </div>
             </div>
         </div>

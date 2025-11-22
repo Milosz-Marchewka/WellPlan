@@ -3,7 +3,7 @@ import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 import GroupedEvents from "./GroupedEvents";
 
-const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
+const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, classTw = "", classesInside = ""}) => {
     const [date, setDate] = useState(new Date());
     const pointerRef = useRef(null);
 
@@ -24,7 +24,7 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
 
             try {
                 console.log(user?.email);
-                await fetchEvents(user?.email, new Date());
+                await fetchEvents(user.email, date);
             } catch (err) {
                 console.log("Błąd serwera.");
             }
@@ -32,8 +32,9 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
     }, []);
 
     useEffect(()=>{
+
         try{
-            (async()=>{await fetchEvents(user?.email, date)})();
+            (async()=>{await fetchEvents(user.email, date)})();
         } catch(err){
             console.log("Błąd serwera.");
         }
@@ -58,7 +59,7 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
     }
 
   return (
-    <div className="min-w-fit w-full lg:w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden">
+    <div className={`min-w-fit w-full lg:w-2/5 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden ${classTw}`}>
         <div className="bg-gray-900 text-emerald-400 flex justify-around h-20 text-xl">
             <button onClick={() => previousDay()}>&lt;</button>
             <input
@@ -69,8 +70,8 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput}) => {
             />
             <button onClick={() => nextDay()}>&gt;</button>
         </div>
-        <div className="h-[500px] overflow-auto z-100 p-5 pb-2 bg-gray-800 w-full">
-            <div className="relative w-full h-[1440px] bg-gray-800 grid grid-rows-[repeat(24,60px)]">
+        <div className={`h-[500px] overflow-auto z-100 p-5 pb-2 bg-gray-800 w-full ${classesInside}`}>
+            <div className={`relative w-full h-[1440px] bg-gray-800 grid grid-rows-[repeat(24,60px)]`}>
                 {[...Array(24)].map((_, i) => (
                     <div key={i} className="border-t border-gray-400 text-xs text-gray-400 pl-1 pt-0.5">
                         {i}:00
