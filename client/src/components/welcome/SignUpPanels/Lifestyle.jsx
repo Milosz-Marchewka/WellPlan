@@ -40,14 +40,14 @@ const Lifestyle = () => {
     },[numOfRow])
 
     const getLengthOfSleep = () => {
-        if(user.sleep == "" || user.wake == ""){
+        if(user?.sleep == "" || user?.wake == ""){
             return "...";
         }
 
-        let [h1, m1] = user.wake.split(":");
+        let [h1, m1] = user?.wake ? user?.wake.split(":") : [0,0.1];
         h1 = Number(h1);
         m1 = Number(m1);
-        let [h2, m2] = user.sleep.split(":");
+        let [h2, m2] = user?.sleep ? user?.sleep.split(":") : [0,0];
         h2 = Number(h2);
         m2 = Number(m2);
         
@@ -57,7 +57,7 @@ const Lifestyle = () => {
         let result = sleepH < wakeH ? wakeH - sleepH : wakeH + 24 - sleepH;
         result *= 100;
 
-        return `${Math.round(result)/100}h`;
+        return `${Math.round(result)/100}`;
     }
 
     const handleScheduleChange = (e) => {
@@ -120,8 +120,8 @@ const Lifestyle = () => {
                 <h2>Sen:</h2>
                 <div className="flex flex-row justify-between mt-1">
                     <div className="w-2/5 flex flex-col gap-5">
-                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={user.wake}/>
-                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={user.sleep}/>
+                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={user?.wake}/>
+                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={user?.sleep}/>
                     </div>
                     <div className="w-fit grid grid-cols-2 gap-3 items-center text-center">
                         <div className="text-indigo-400">

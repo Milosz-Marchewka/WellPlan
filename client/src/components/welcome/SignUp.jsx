@@ -11,34 +11,21 @@ export const SignupContext = createContext();
 
 const urls = ["/", "/bodyMeasurements", "/lifestyle"];
 
-const SignUp = ({user, navigate}) => {
+const SignUp = ({user, setUser, navigate}) => {
+    const [schedule, setSchedule] = useState([]);
     const [progress, setProgress] = useState(0);
+    const [canProgress, setCanProgress] = useState(()=>()=>false);
     
-    useEffect(()=>{
-        navigate(`/signup${urls[progress]}`);
-    }, [progress]);
-
     useEffect(()=>{
         if(user != null){
             navigate("/");
         }
     }, []);
 
-    // const [userData, setUserData] = useState({
-    //     name: "",
-    //     surname: "",
-    //     email: "",
-    //     password: "",
-    //     gender: "male",
-    //     age: null,
-    //     activityLevel: null,
-    //     height: null,
-    //     weight: null,
-    //     wake: "",
-    //     sleep: "",
-    // });
+    useEffect(()=>{
+        navigate(`/signup${urls[progress]}`);
+    }, [progress]);
 
-    const [schedule, setSchedule] = useState([]);
 
     const handleSchedule = (index, name, value) => {
         let temp = schedule;
@@ -86,18 +73,20 @@ const SignUp = ({user, navigate}) => {
     }
 
     const handleChange = (e) => {
-        
         setUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        console.log("DebugText: ", userData);
+        console.log("DebugText: ", user);
     }
 
     const handleChangeManual = (name, value) => {
         setUser(prev => ({...prev, [name]: value}));
-        console.log("DebugText: ", userData);
+        console.log("DebugText: ", user);
     }
 
     const nextStage = () => {
-        setProgress(p => p+1);
+        console.log("Hi?", canProgress());
+        if(canProgress()){
+            setProgress(p => p+1);
+        };
     }
 
     const prevStage = () => {
@@ -105,7 +94,7 @@ const SignUp = ({user, navigate}) => {
     }
 
     return(
-        <SignupContext.Provider value={{handleChange, handleChangeManual, user, handleSchedule, schedule}}>
+        <SignupContext.Provider value={{handleChange, handleChangeManual, user, handleSchedule, schedule, setCanProgress}}>
             <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
                 <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
                     <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">

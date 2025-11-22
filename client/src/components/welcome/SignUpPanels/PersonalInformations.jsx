@@ -6,18 +6,31 @@ import { SignupContext } from "../SignUp";
 
 const PersonalInformations = () => {
 
-    const {handleChange, handleChangeManual, user} = useContext(SignupContext);
+    const {handleChange, handleChangeManual, user, setCanProgress} = useContext(SignupContext);
+    const [passwordCopy, setPasswordCopy] = useState({iPassword: user?.password || "", iPasswordRepeat: user?.password || ""});
+    const [genderValue, setGenderValue] = useState(user?.gender == "male" ? 0 : 1);
+
+    useEffect(()=>{
+        
+        setCanProgress(()=>()=>{
+                if(user?.name?.trim() && 
+                user?.surname?.trim() &&
+                user?.email?.trim() &&
+                (passwordCopy?.iPassword && passwordCopy?.iPasswordRepeat && passwordCopy?.iPassword?.trim() === passwordCopy?.iPasswordRepeat?.trim()) &&
+                user?.age &&
+                user?.gender
+                ) return true;
+                else return false;
+        })
+    }, [setCanProgress, user]);
 
     useEffect(()=>{
         if(user === null) return;
-    }, [user])
-
-    const [passwordCopy, setPasswordCopy] = useState({iPassword: user?.password || "", iPasswordRepeat: user?.password || ""});
-    const [genderValue, setGenderValue] = useState(user.gender == "male" ? 0 : 1);
+    }, [user]);
 
     useEffect(()=>{
-        if(passwordCopy.iPassword === passwordCopy.iPasswordRepeat){
-            handleChangeManual("password", passwordCopy.iPassword);
+        if(passwordCopy?.iPassword === passwordCopy?.iPasswordRepeat){
+            handleChangeManual("password", passwordCopy?.iPassword);
         }else{
             handleChangeManual("password", "");
         }
@@ -46,12 +59,12 @@ const PersonalInformations = () => {
     return(
         <div className="flex flex-col gap-3">
             <h2>Dane osobowe:</h2>
-            <StyledInput label="Imię" name="name" onChange={handleChange} value={user.name}/>
-            <StyledInput label="Nazwisko" name="surname" onChange={handleChange} value={user.surname}/>
-            <StyledInput type="email" label="E-mail" name="email" onChange={handleChange} value={user.email}/>
-            <StyledInput id="iPassword" type="password" label="Hasło" name="password" value={passwordCopy.iPassword} onChange={handlePasswordChange}/>
-            <StyledInput id="iPasswordRepeat" type="password" label="Powtórz Hasło" name="password" value={passwordCopy.iPasswordRepeat} onChange={handlePasswordChange}/>
-            <StyledInput type="number" label="Wiek" name="age" onChange={handleChange} value={user.age}/>
+            <StyledInput label="Imię" name="name" onChange={handleChange} value={user?.name}/>
+            <StyledInput label="Nazwisko" name="surname" onChange={handleChange} value={user?.surname}/>
+            <StyledInput type="email" label="E-mail" name="email" onChange={handleChange} value={user?.email}/>
+            <StyledInput id="iPassword" type="password" label="Hasło" name="password" value={passwordCopy?.iPassword} onChange={handlePasswordChange}/>
+            <StyledInput id="iPasswordRepeat" type="password" label="Powtórz Hasło" name="password" value={passwordCopy?.iPasswordRepeat} onChange={handlePasswordChange}/>
+            <StyledInput type="number" label="Wiek" name="age" onChange={handleChange} value={user?.age}/>
             <div className="ml-2">
                 <StyledRadios options={["Mężczyzna", "Kobieta"]} name="gender" label="Płeć" onChange={handleGenderChange} selected={genderValue}/>
             </div>
