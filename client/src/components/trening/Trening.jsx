@@ -1,14 +1,31 @@
 import TreningDay from "./TreningDay";
 import AddTrening from "./AddTrening";
+import { useState } from "react";
 
 const Trening = () => {
 
+    const [isAddTreningShown, setIsAddTreningShown] = useState(false);
+
+    const showAddTrening= () => {
+        setIsAddTreningShown(true);
+    }
+
+    const hideAddTrening = () => {
+        setIsAddTreningShown(false);
+        console.log(isAddTreningShown);
+    }
+
     return(
         <div>
-            <div className="absolute flex items-center justify-center min-h-screen w-screen">
-                <AddTrening/>
-            </div>
-            <div className="flex items-center justify-center min-h-screen flex-wrap gap-5">
+            {
+                isAddTreningShown ?
+                <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80">
+                        <AddTrening cancelFunction={hideAddTrening}/>
+                </div>
+                :
+                <></>
+            }
+            <div className="flex items-center justify-center min-h-screen flex-wrap gap-5 z-50" style={isAddTreningShown ? {filter: "blur(20px)"} : {}}>
                 <TreningDay 
                 day="Poniedziałek" 
                 type="Push" 
@@ -46,7 +63,7 @@ const Trening = () => {
                 ]}
                 />
 
-                <div className="flex flex-col items-center gap-3 w-60">
+                <div className="flex flex-col items-center gap-3 w-60 cursor-pointer" onClick={showAddTrening}>
                     <div className="bg-emerald-500 text-center rounded-full flex items-center justify-center text-white w-20 h-20">
                         <div className="text-8xl transform -translate-y-1.5">+</div>
                     </div>
