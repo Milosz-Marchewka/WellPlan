@@ -1,6 +1,6 @@
 import TreningDay from "./TreningDay";
 import AddTrening from "./AddTrening";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Trening = ({user}) => {
 
@@ -14,6 +14,28 @@ const Trening = ({user}) => {
         setIsAddTreningShown(false);
         console.log(isAddTreningShown);
     }
+
+    useEffect(()=>{
+        
+        fetchTraining(user?.email);
+    }, [user]);
+
+    const fetchTraining = (email)=>{
+        try{
+            (async()=>{
+                const req = await fetch(`http://localhost:5000/training/get?email=testsubject1@gmail.com`, {
+                    method: "GET"
+                })
+
+                if(!req.ok) //
+
+                return await req.json();
+            })()
+        } catch(e){
+            //
+        }
+    } 
+
 
     return(
         <div>
