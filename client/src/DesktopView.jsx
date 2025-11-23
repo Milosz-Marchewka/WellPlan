@@ -54,7 +54,8 @@ function DesktopView(){
         if(currentUser == null){
             navigate("/login");
         } else {
-            navigate("/");
+            console.log("path:", location.pathname.split("/")[1]);
+            navigate(location.pathname.split("/")[1]);
         }
     }, []);
 
