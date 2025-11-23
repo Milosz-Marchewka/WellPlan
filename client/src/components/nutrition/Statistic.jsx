@@ -20,19 +20,19 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
             <div className="grid grid-cols-2 grid-row-2 md:flex justify-between p-5 text-white text-xl bg-gray-800 flex-wrap">
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Kalorie:</h4>
-                    <RadialProgress percentage={eaten?.calories || 0} color="lime"/>
+                    <RadialProgress percentage={eaten?.percentages?.calories || 0} color="lime"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Białko:</h4>
-                    <RadialProgress percentage={eaten?.proteins || 0} color="cyan"/>
+                    <RadialProgress percentage={eaten?.percentages?.proteins || 0} color="cyan"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Tłuszcze:</h4>
-                    <RadialProgress percentage={eaten?.fat || 0} color="yellow"/>
+                    <RadialProgress percentage={eaten?.percentages?.fat || 0} color="yellow"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Węglowodany:</h4>
-                    <RadialProgress percentage={eaten?.carbs || 0} color="lightcoral"/>
+                    <RadialProgress percentage={eaten?.percentages?.carbs || 0} color="lightcoral"/>
                 </div>
             </div>
         </div>

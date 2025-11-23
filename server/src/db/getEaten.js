@@ -20,7 +20,11 @@ export const getEaten = async({email}, res)=>{
             fat: Math.round((eaten.fat / ceil.fat) * 100),
             carbs: Math.round((eaten.carbs / ceil.carbs) * 100)
         }
-        return res.status(200).json(percentages);
+        return res.status(200).json({
+            eaten: eaten,
+            max: ceil,
+            percentages: percentages
+        });
     } catch(e){
         console.log(e.message);
         return res.status(500).json({error: "Błąd serwera."});
