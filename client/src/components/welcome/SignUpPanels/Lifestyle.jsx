@@ -37,7 +37,7 @@ const Lifestyle = () => {
             setNumOfRows(p => max+1);
         }
 
-    },[numOfRow])
+    },[numOfRow]);
 
     const getLengthOfSleep = () => {
         if(user?.sleep == "" || user?.wake == ""){

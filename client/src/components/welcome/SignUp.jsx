@@ -115,7 +115,7 @@ const SignUp = ({user, setUser, navigate}) => {
                             }
                             {
                                 progress == 2 ?
-                                <StyledButton text="Zarejestuj się" click={()=> console.log("Koniec")} />
+                                <StyledButton text="Zarejestuj się" click={()=> console.log(scheduleToNormalSchedule(schedule))} />
                                 :
                                 <StyledButton text="Dalej" click={nextStage} />
                             }

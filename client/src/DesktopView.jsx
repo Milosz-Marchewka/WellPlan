@@ -3,7 +3,6 @@ import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-
 import Home from "./components/home/Home";
 import Calendar from "./components/calendar/Calendar";
 import Nutrition from "./components/nutrition/Nutrition";
-import Statistics from "./components/statistics/Statistics";
 import Settings from "./components/settings/Settings";
 import LogIn from "./components/welcome/LogIn";
 import SignUp from "./components/welcome/SignUp";
@@ -73,7 +72,7 @@ function DesktopView(){
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
                 <Route path="trening" element={<Trening/>} />
-                <Route path="settings" element={<Settings/>} />
+                <Route path="settings" element={<Settings user={user}/>} />
             </Route>
             <Route path="/login">
                 <Route index element={<LogIn user={user} setUser={setUser} setWithExpiry={setWithExpiry} navigate={navigate}/>}/>
