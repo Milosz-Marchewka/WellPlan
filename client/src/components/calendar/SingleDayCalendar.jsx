@@ -11,8 +11,6 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
         if(user === null) return;
     }, [user])
 
-    // empty [] - runs once (componentDidMount) - pull initial data + scroll into view
-    // if you're wondering what magic is (async()=>{})() go google IIFE JS :D
     useEffect(() => {
         (async () => {
             if (pointerRef.current) {
@@ -23,18 +21,17 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
             }
 
             try {
-                console.log(user?.email);
-                await fetchEvents(user.email, date);
+                console.log("SDC:", user?.email);
+                await fetchEvents(user?.email, date);
             } catch (err) {
                 console.log("Błąd serwera.");
             }
         })();
-    }, []);
+    }, [user?.email]);
 
     useEffect(()=>{
-
         try{
-            (async()=>{await fetchEvents(user.email, date)})();
+            (async()=>{await fetchEvents(user?.email, date)})();
         } catch(err){
             console.log("Błąd serwera.");
         }

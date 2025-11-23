@@ -6,7 +6,6 @@ import StyledColorInput from "../inputs/StyledColorInput";
 
 const AddCalendarEvent = ({user, fetchEvents})=>{
     useEffect(()=>{
-        console.log(user.email);
             if(user === null) return;
         }, [user])
 

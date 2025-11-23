@@ -3,11 +3,11 @@ import SingleDayCalendar from "./SingleDayCalendar";
 import AddCalendarEvent from "./AddCalendarEvent";
 
 const formatDateForInput = (date)=>{
-    return date.toISOString().split("T")[0];
+    return date.toISOString()?.split("T")[0];
 }
 
 const formatTimeToMinutes = (time)=>{
-    return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
+    return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
 }
 
 
@@ -28,26 +28,26 @@ const Calendar = ({user})=>{
 
         if(events == []){
             events.sort((a, b) => {
-                return formatTimeToMinutes(a.start) - formatTimeToMinutes(b.start);
+                return formatTimeToMinutes(a?.start) - formatTimeToMinutes(b?.start);
             });
         }
 
         const groups = [];
         let currentGroup = [events[0]];
-        let currentEnd = formatTimeToMinutes(events[0].end);
+        let currentEnd = formatTimeToMinutes(events[0]?.end);
 
         for (let i = 1; i < events.length; i++) {
-            const start = formatTimeToMinutes(events[i].start);
+            const start = formatTimeToMinutes(events[i]?.start);
             console.log(events[i]);
             
             if (start <= currentEnd) {
                 currentGroup.push(events[i]);
-                const thisEnd = formatTimeToMinutes(events[i].end);
+                const thisEnd = formatTimeToMinutes(events[i]?.end);
                 currentEnd = Math.max(currentEnd, thisEnd);
             } else {
                 groups.push(currentGroup);
                 currentGroup = [events[i]];
-                currentEnd = formatTimeToMinutes(events[i].end);
+                currentEnd = formatTimeToMinutes(events[i]?.end);
             }
         }
         groups.push(currentGroup);

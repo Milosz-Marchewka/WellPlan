@@ -54,7 +54,8 @@ function DesktopView(){
         if(currentUser == null){
             navigate("/login");
         } else {
-            navigate("/");
+            console.log("path:", location.pathname.split("/")[1]);
+            navigate(location.pathname.split("/")[1]);
         }
     }, []);
 
@@ -67,12 +68,12 @@ function DesktopView(){
 
     return(
         <Routes>
-            <Route path="/" element={<Layout user={user} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}>
+            <Route path="/" element={<Layout user={user} setUser={setUser} selectedOption={selectedOption} setSelectedOption={setSelectedOption} navigate={navigate}/>}>
                 <Route index element={<Home user={user}/>}/>
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
-                <Route path="settings" element={<Settings user={user}/>} />
                 <Route path="trening" element={<Trening user={user}/>} />
+                <Route path="settings" element={<Settings user={user}/>} />
             </Route>
             <Route path="/login">
                 <Route index element={<LogIn user={user} setUser={setUser} setWithExpiry={setWithExpiry} navigate={navigate}/>}/>

@@ -64,14 +64,13 @@ const BodyMeasurements = () => {
     }
 
     const fetchNutrients = async (age, gender, height, weight, activity)=>{
-        console.log(age, height, weight, activity);
         const empty = {
             calories: 0,
             proteins: 0,
             carbs: 0,
             fat: 0,
         }
-        if([age,gender, height,weight,activity].some(v=>v==null)){
+        if([age,gender,height,weight,activity].some(v=>v==null)){
             console.log("Nie wpisano wszystkich danych.");
             return empty;
         }

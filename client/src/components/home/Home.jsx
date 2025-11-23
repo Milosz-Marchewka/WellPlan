@@ -8,64 +8,13 @@ const formatDateForInput = (date)=>{
 }
 
 const formatTimeToMinutes = (time)=>{
-    return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
+    return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
 }
 
 const Home = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
     const [date, setDate] = useState(new Date());
-
-    const add = async ()=>{
-        console.log("sup");
-        try{
-            const req = await fetch("http://localhost:5000/signup",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name: "Test",
-                    surname: "Subject1",
-                    email: "testsubject1@gmail.com",
-                    password: "password",
-                    gender: "Male",
-                    age: 1,
-                    weight: 1,
-                    height: 1
-                })
-            });
-            if(!req.ok) console.log(await req.text());
-        } catch(e){
-            console.log(e);
-        }
-    }
-
-    const del = ()=>{
-        localStorage.removeItem("user");
-    }
-
-    const recipes = async ()=>{
-        console.log("hi");
-        try{
-            const req = await fetch("http://localhost:5000/nutrition/meals?product=Spaghetti+N.5&calories=1600", {
-                method: "GET"
-            });
-            console.log("hi2");
-            if(!req.ok){
-                console.log(await req.text());
-            }
-        } catch(e){
-            console.log(e);
-        }
-    }
-    {/* <button onClick={add}>add user</button>
-    <button onClick={del}>delete pseudosession lol</button>
-    <br/>
-    <button onClick={recipes} className="bg-white rounded p-6 cursor-pointer">please don't explode</button> */}
-    
-
-    //NOWE
 
     useEffect(()=>{
             if(user === null) return;
@@ -85,25 +34,23 @@ const Home = ({user})=>{
 
         const groups = [];
         let currentGroup = [events[0]];
-        let currentEnd = formatTimeToMinutes(events[0].end);
+        let currentEnd = formatTimeToMinutes(events[0]?.end);
 
         for (let i = 1; i < events.length; i++) {
-            const start = formatTimeToMinutes(events[i].start);
+            const start = formatTimeToMinutes(events[i]?.start);
             console.log(events[i]);
             
             if (start <= currentEnd) {
                 currentGroup.push(events[i]);
-                const thisEnd = formatTimeToMinutes(events[i].end);
+                const thisEnd = formatTimeToMinutes(events[i]?.end);
                 currentEnd = Math.max(currentEnd, thisEnd);
             } else {
                 groups.push(currentGroup);
                 currentGroup = [events[i]];
-                currentEnd = formatTimeToMinutes(events[i].end);
+                currentEnd = formatTimeToMinutes(events[i]?.end);
             }
         }
         groups.push(currentGroup);
-
-        console.log("Ready to go", groups);
         setGroupEvents(groups);
         
     }, [events]);

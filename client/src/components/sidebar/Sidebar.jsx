@@ -19,7 +19,9 @@ const menuItemsMobile = [
     {title: "Trening", url: "trening", iconUrl: TreningIcon},
 ];
 
-function Sidebar({user, selectedOption}){
+// fixed left-0 top-0 w-fit lg:w-70 lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 pt-5 bg-gray-800 ring-2 ring-gray-900
+
+function Sidebar({user, setUser, selectedOption, navigate}){
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [isProfileSelected, setIsProfileSelected] = useState(false);
@@ -32,6 +34,12 @@ function Sidebar({user, selectedOption}){
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    const logout = ()=>{
+        localStorage.removeItem("user");
+        setUser(null);
+        navigate("/login", {replace: true});
+    }
 
     return(
         <>
@@ -76,7 +84,7 @@ function Sidebar({user, selectedOption}){
                         <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url}/>
                     ))
                     }
-                    <div className="border-t border-white mt-auto w-full pt-2">
+                    <div className="border-t border-white mt-auto w-full pt-2" onClick={logout}>
                         <h4 className="mt-auto text-red-300 text-xl hover:bg-gray-900 w-full text-center py-3 rounded-xl cursor-pointer transition">Wyloguj</h4>
                     </div>
                 </nav>

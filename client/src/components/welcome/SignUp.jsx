@@ -107,7 +107,7 @@ const SignUp = ({user, setUser, navigate}) => {
                         <div className="mt-auto flex justify-between">
                             {
                                 progress == 0 ? 
-                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1">
+                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={setUser(null)}>
                                     Wróć do logowania
                                 </Link>
                                 :
