@@ -4,7 +4,7 @@ import StyledSelect from "../inputs/StyledSelect";
 import { use, useEffect, useState } from "react";
 import "./AddTrening.css";
 
-const AddTrening = ({user, cancelFunction}) => {
+const AddTrening = ({user, cancelFunction, foreignSet}) => {
 
     const [inputsErrors, setInputsErrors] = useState({
         day: null,
@@ -71,7 +71,6 @@ const AddTrening = ({user, cancelFunction}) => {
         }));
     }
 
-    //Tu zapraszam robic backend
     const addTrening = () => {
         if(treningData.type.trim() == ""){
             setInputsErrors(prev => ({...prev, type: 1}));
@@ -80,11 +79,10 @@ const AddTrening = ({user, cancelFunction}) => {
         console.log(treningData);
 
         (async()=>{
-            console.log("TRAINING:", user);
             await addTraining(user?.email, treningData);
+            foreignSet(user?.email);
         })();
 
-        //KONIEC
         cancelFunction();
     }
 

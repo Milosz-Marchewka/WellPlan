@@ -34,15 +34,14 @@ const Trening = ({user}) => {
     useEffect(()=>{
         (async()=>{
             let x = await fetchTraining(user?.email);
-            if(x.error){
+            if(x?.error){
                 return;
             }
-            console.log(x);
-            setTrenings(milesObjectToMyArray(x));
+            setTrenings(objectToMyArray(x));
         })()
     }, [user, isAddTreningShown]);
     
-    const milesObjectToMyArray = (object) => {
+    const objectToMyArray = (object) => {
         let array = [];
         for(let i in object){
             for(let j of object[i]){
@@ -66,6 +65,14 @@ const Trening = ({user}) => {
         }
     }; 
 
+    const foreignSet = (email)=>{
+        (async()=>{
+            const fetched = await fetchTraining(email);
+            if(fetched?.error) return;
+            setTrenings(objectToMyArray(fetched));
+        })();
+    }
+
 
     return(
         <div>
@@ -76,7 +83,7 @@ const Trening = ({user}) => {
             {
                 isAddTreningShown ?
                 <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80">
-                        <AddTrening user={user} cancelFunction={hideAddTrening}/>
+                        <AddTrening user={user} cancelFunction={hideAddTrening} foreignSet={foreignSet}/>
                 </div>
                 :
                 <></>
@@ -88,7 +95,7 @@ const Trening = ({user}) => {
                         <TreningDay day={polishNameOfDay(element.day)} type={element.type} exercises={element.plan}/>
                     ))
                     :
-                    <>ddadad</>
+                    <></>
                 }
 
                 <div className="flex flex-col items-center gap-3 w-60 cursor-pointer" onClick={showAddTrening}>
