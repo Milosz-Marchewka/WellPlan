@@ -2,7 +2,7 @@ import Meals from "./Meals";
 import Statistic from "./Statistic";
 import AddMeal from "./AddMeal";
 
-const Nutrition = ()=>{
+const Nutrition = ({user})=>{
 
     
 
@@ -19,7 +19,7 @@ const Nutrition = ()=>{
                 </div>
                 <div className="flex-2 flex flex-col gap-3">
                     <Statistic/>
-                    <AddMeal/>
+                    <AddMeal user={user}/>
                 </div>
             </div>
         </div>

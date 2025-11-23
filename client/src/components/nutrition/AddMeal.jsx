@@ -4,7 +4,7 @@ import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 import StyledColorInput from "../inputs/StyledColorInput";
 
-const AddMeal = () => {
+const AddMeal = ({user}) => {
 
     const [mealData, setMealData] = useState({
         title: "",
@@ -20,7 +20,32 @@ const AddMeal = () => {
     }
 
     const add = () => {
-        console.log(mealData);
+        (async()=>{
+            console.log(user?.email, mealData.calories, mealData.protein, mealData.fats, mealData.carbs);
+            try{
+                const req = await fetch("http://localhost:5000/nutrition/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: user?.email,
+                        calories: mealData.calories,
+                        protein: mealData.protein,
+                        fat: mealData.fats,
+                        carbs: mealData.carbs
+                    })
+                })
+
+                if(!req.ok){
+                    console.log(await req.text())
+                }
+
+                console.log(await req.json());
+            } catch(e){
+                console.log("err");
+            }
+        })();
     }
 
     return(

@@ -21,7 +21,6 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
             }
 
             try {
-                console.log("SDC:", user?.email);
                 await fetchEvents(user?.email, date);
             } catch (err) {
                 console.log("Błąd serwera.");

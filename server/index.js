@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/db.js";
-import { signup, login, getCalories, getCalendar, addActivity, getMacronutrients, getMeals, getTraining, addTraining, update } from "./src/db/index.js";
+import { signup, login, getCalendar, addActivity, getMacronutrients, getMeals, getTraining, addTraining, update, addEaten, getEaten } from "./src/db/index.js";
 
 const app = express();
 app.use(cors());
@@ -23,6 +23,14 @@ app.get("/nutrition/macronutrients", (req, res)=>{
 
 app.get("/nutrition/meals", (req, res)=>{
     getMeals(req.query, res);
+});
+
+app.post("/nutrition/add", (req, res)=>{
+    addEaten(req.body, res);
+});
+
+app.get("/nutrition/get", (req, res)=>{
+    getEaten(req.query, res);
 });
 
 app.get("/calendar/get", (req, res)=>{
