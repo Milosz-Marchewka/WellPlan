@@ -43,6 +43,14 @@ const AddMeal = ({user, fetchEaten}) => {
                 }
 
                 console.log(await req.json());
+
+                setMealData({
+                    title: "",
+                    calories: "",
+                    protein: "",
+                    fats: "",
+                    carbs: ""
+                });
             } catch(e){
                 console.log("err");
             }

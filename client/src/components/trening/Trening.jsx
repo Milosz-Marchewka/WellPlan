@@ -2,12 +2,28 @@ import TreningDay from "./TreningDay";
 import AddTrening from "./AddTrening";
 import { useState, useEffect } from "react";
 
+const polishNameOfDay = (name) => {
+    const map = {
+        monday: "Poniedziałek",
+        tuesday: "Wtorek",
+        wednesday: "Środa",
+        thursday: "Czwartek",
+        friday: "Piątek",
+        saturday: "Sobota",
+        sunday: "Niedziela",
+    };
+    return map[name.toLowerCase()] || name;
+};
+
+
 const Trening = ({user}) => {
 
     const [isAddTreningShown, setIsAddTreningShown] = useState(false);
+    const [trenings, setTrenings] = useState([]);
 
     const showAddTrening= () => {
         setIsAddTreningShown(true);
+        console.log(trenings);
     }
 
     const hideAddTrening = () => {
@@ -16,25 +32,39 @@ const Trening = ({user}) => {
     }
 
     useEffect(()=>{
-        
-        fetchTraining(user?.email);
-    }, [user]);
-
-    const fetchTraining = (email)=>{
-        try{
-            (async()=>{
-                const req = await fetch(`http://localhost:5000/training/get?email=testsubject1@gmail.com`, {
-                    method: "GET"
-                })
-
-                if(!req.ok) //
-
-                return await req.json();
-            })()
-        } catch(e){
-            //
+        (async()=>{
+            let x = await fetchTraining(user?.email);
+            if(x.error){
+                return;
+            }
+            console.log(x);
+            setTrenings(milesObjectToMyArray(x));
+        })()
+    }, [user, isAddTreningShown]);
+    
+    const milesObjectToMyArray = (object) => {
+        let array = [];
+        for(let i in object){
+            for(let j of object[i]){
+                array.push({day: i, type: j.type, plan: j.plan});
+            }
         }
-    } 
+        return array;
+    }
+
+    const fetchTraining = async(email)=>{
+        try{
+            const req = await fetch(`http://localhost:5000/training/get?email=${email}`, {
+                method: "GET"
+            })
+
+            if(!req.ok) console.log('req');
+
+            return await req.json();
+        } catch(e){
+            console.log('catch');
+        }
+    }; 
 
 
     return(
@@ -52,42 +82,14 @@ const Trening = ({user}) => {
                 <></>
             }
             <div className="flex items-center justify-center flex-wrap gap-5 z-50" style={isAddTreningShown ? {filter: "blur(20px)"} : {}}>
-                <TreningDay 
-                day="Poniedziałek" 
-                type="Push" 
-                exercises={[
-                    ["Wyciskanie sztangi na ławce poziomej", 4, "6–8"],
-                    ["Wyciskanie hantli na skosie dodatnim", 3, "8–10"],
-                    ["Pompki na poręczach (dipy)", 3, "6–10"],
-                    ["Wyciskanie sztangi nad głowę (OHP)", 4, "5–8"],
-                    ["Unoszenie hantli bokiem", 3, "12–15"],
-                    ["Prostowanie ramion na wyciągu (triceps)", 3, "10–12"]
-                ]}
-                />
-                <TreningDay 
-                day="Środa" 
-                type="Pull" 
-                exercises={[
-                    ["Podciąganie nachwytem", 4, "max 6–10"],
-                    ["Wiosłowanie sztangą", 4, "6–8"],
-                    ["Ściąganie drążka wyciągu do klatki", 3, "10–12"],
-                    ["Wiosłowanie hantlem", 3, "8–10"],
-                    ["Face pull", 3, "12–15"],
-                    ["Uginanie ramion ze sztangą", 3, "8–12"]
-                ]}
-                />
-                <TreningDay 
-                day="Piątek" 
-                type="Legs" 
-                exercises={[
-                    ["Przysiady ze sztangą", 4, "5–8"],
-                    ["Martwy ciąg na prostych nogach (RDL)", 3, "6–10"],
-                    ["Wykroki z hantlami", 3, "10–12 na stronę"],
-                    ["Odwodzenie nóg na maszynie", 3, "12–15"],
-                    ["Uginanie nóg leżąc (dwugłowe)", 3, "10–12"],
-                    ["Wspięcia na palce stojąc", 4, "12–15"]
-                ]}
-                />
+                {
+                    Array.isArray(trenings) && trenings.length > 0 ?
+                    trenings.map((element, index) => (
+                        <TreningDay day={polishNameOfDay(element.day)} type={element.type} exercises={element.plan}/>
+                    ))
+                    :
+                    <>ddadad</>
+                }
 
                 <div className="flex flex-col items-center gap-3 w-60 cursor-pointer" onClick={showAddTrening}>
                     <div className="bg-emerald-500 text-center rounded-full flex items-center justify-center text-white w-20 h-20">
