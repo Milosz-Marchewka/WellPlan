@@ -138,14 +138,14 @@ const Home = ({user})=>{
                 <h1 className='mt-5 text-emerald-200 text-3xl'>Ekran główny</h1>
             </div>
                 
-            <div className="grid grid-cols-1 gap-5 gap-x-15 mx-auto items-center w-3/4">
-                <div >
+            <div className="w-full px-5 flex flex-col xl:grid xl:grid-cols-1 gap-5 gap-x-15 xl:mx-auto items-center xl:max-w-[1200px]">
+                <div className="w-full" >
                     <Statistic/>
                 </div>
-                <div className="col-start-1 row-start-2">
+                <div className="w-full lg:col-start-1 lg:row-start-2 xl:min-w-[550px] flex justify-center">
                     <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]"/>
                 </div>
-                <div className="row-span-2 col-start-2 row-start-1">
+                <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1">
                     <TreningDay 
                     day="Poniedziałek" 
                     type="Push" 

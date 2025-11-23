@@ -4,7 +4,7 @@ import StyledSelect from "../inputs/StyledSelect";
 import { use, useEffect, useState } from "react";
 import "./AddTrening.css";
 
-const AddTrening = ({cancelFunction}) => {
+const AddTrening = ({user, cancelFunction}) => {
 
     const [inputsErrors, setInputsErrors] = useState({
         day: null,
@@ -79,9 +79,39 @@ const AddTrening = ({cancelFunction}) => {
         }
         console.log(treningData);
 
+        (async()=>{
+            console.log("TRAINING:", user);
+            await addTraining(user?.email, treningData);
+        })();
 
         //KONIEC
         cancelFunction();
+    }
+
+    const addTraining = async(email, data)=>{
+        console.log("ADD");
+        try{
+            const req = await fetch("http://localhost:5000/training/add", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    training: data
+                })
+            });
+
+            if(!req.ok){
+                return;
+            }
+
+            const res = await req.json();
+            return res;
+        }
+        catch(e){
+            return;
+        }
     }
 
     return(

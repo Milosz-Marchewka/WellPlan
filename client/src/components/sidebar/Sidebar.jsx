@@ -19,8 +19,6 @@ const menuItemsMobile = [
     {title: "Trening", url: "trening", iconUrl: TreningIcon},
 ];
 
-// fixed left-0 top-0 w-fit lg:w-70 lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 pt-5 bg-gray-800 ring-2 ring-gray-900
-
 function Sidebar({user, selectedOption}){
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

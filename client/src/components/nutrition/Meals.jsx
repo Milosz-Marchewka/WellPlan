@@ -16,7 +16,7 @@ const Meals = () => {
 
     useEffect(()=>{
         (async()=>{
-            const temp = await fetchMeals("", 2500);
+            const temp = await fetchMeals();
             setMeals(temp);
             console.log(temp);
         })();
