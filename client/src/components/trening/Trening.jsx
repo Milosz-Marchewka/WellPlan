@@ -17,6 +17,10 @@ const Trening = ({user}) => {
 
     return(
         <div>
+            <div className="w-fit h-fit px-15 pt-2 flex gap-1 flex-col align-middle text-shadow-md text-shadow-gray-900">
+                <h1 className='mt-5 text-emerald-200 text-3xl'>Trening</h1>
+                <p className="mb-4 text-gray-200 text-lg">Zarządzaj swoimi treningami</p>
+            </div>
             {
                 isAddTreningShown ?
                 <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80">
@@ -25,7 +29,7 @@ const Trening = ({user}) => {
                 :
                 <></>
             }
-            <div className="flex items-center justify-center min-h-screen flex-wrap gap-5 z-50" style={isAddTreningShown ? {filter: "blur(20px)"} : {}}>
+            <div className="flex items-center justify-center flex-wrap gap-5 z-50" style={isAddTreningShown ? {filter: "blur(20px)"} : {}}>
                 <TreningDay 
                 day="Poniedziałek" 
                 type="Push" 

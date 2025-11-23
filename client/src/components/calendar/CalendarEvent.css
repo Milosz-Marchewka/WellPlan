@@ -1,0 +1,7 @@
+.event-div p{
+    display: none;
+}
+
+.event-div:hover p {
+    display: block;
+} 

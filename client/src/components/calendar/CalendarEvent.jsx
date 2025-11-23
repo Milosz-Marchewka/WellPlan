@@ -1,3 +1,5 @@
+import { useState } from "react";
+import "./CalendarEvent.css"
 
 const CalendarEvent = ({title, start, end, color, offset})=>{
 
@@ -19,7 +21,7 @@ const CalendarEvent = ({title, start, end, color, offset})=>{
         }
     }
  
-    const classes = "text-center left-0 w-full rounded-xs";
+    const classes = "event-div text-center left-0 w-full rounded-xs cursor-pointer flex justify-center items-start";
 
     const styles = {
         top: getTopMinutes(start),
@@ -28,15 +30,26 @@ const CalendarEvent = ({title, start, end, color, offset})=>{
         marginTop: (getTopMinutes(start) - offset)
     }
 
+    const [isStartEqualEnd, _] = useState(start == end); 
+
     return(
-        <div className={classes} style={styles}>
-                {
-                (getHeight(start, end) < 25) ?
-                <h6 className="text-center inline-block px-4 rounded-xs" style={getStyleForH6()}>{title}</h6>
-                :
-                <h6 className="text-center inline-block px-4 rounded-xs">{title}</h6>
-                }
-        </div>
+        <>
+            <div className={classes} style={styles}>
+                    {
+                    (getHeight(start, end) < 25) ?
+                    <h6 className="event-div text-center inline-block px-4 rounded-xs relative w-fit whitespace-nowrap" style={getStyleForH6()}>
+                        {title}
+                        <p className={`${isStartEqualEnd ? "w-15" : "w-30"} absolute text-center top-[30px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-black italic z-200 rounded-lg`} style={{backgroundColor: color}}>{isStartEqualEnd ? start : `${start} - ${end}`}</p>
+                    </h6>
+                    :
+                    <h6 className="event-div text-center inline-block px-4 rounded-xs relative">
+                        <p className="w-30 absolute text-center top-[33px] left-1/2 -translate-x-1/2 -translate-y-1/2 text-black italic z-200 rounded-lg" style={{backgroundColor: color}}>{start} - {end}</p>
+                        {title}
+                    </h6>
+                    }
+            </div>
+    
+        </>
     );
 }
 
