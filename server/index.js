@@ -9,7 +9,6 @@ app.use(express.json());
 
 
 app.post("/signup", (req, res)=>{
-    console.log("hi!");
     signup(req.body, res);
 });
 

@@ -83,7 +83,7 @@ const SignUp = ({user, setUser, navigate}) => {
                 }
             }
         }
-        console.log(result);
+        return result;
     }
 
     const handleChange = (e) => {
@@ -111,6 +111,39 @@ const SignUp = ({user, setUser, navigate}) => {
         console.log(newUser);
         console.log(schedule);//Tymczasowy Schedule, nie używasz tego do backendu.
         console.log(scheduleToNormalSchedule(schedule));//To używasz do backednu, pamiętaj by najpierw sprawdzić czy newUser.isScheduleSkipped bo pod tym warunkiem zapisujesz plan lekcji
+        (async()=>{
+            await addUser();
+        })();
+    }
+
+    const addUser = async()=>{
+        const {isScheduleSkipped, ...postUser} = newUser;
+        const body = {
+            ...postUser,
+            ...(!isScheduleSkipped && {schedule: scheduleToNormalSchedule(schedule)})
+        }
+        console.log("BODY: ", body);
+        console.log(isScheduleSkipped, scheduleToNormalSchedule(schedule));
+        try{
+            console.log('a');
+            const req = await fetch("http://localhost:5000/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify(body)
+            });
+            console.log('b');
+            if(!req.ok) return;
+            console.log('c');
+            
+            const res = await req.json();
+            console.log("RES:", res);
+            setUser(res);
+            navigate("/");
+        } catch(e){
+            console.log(e.message);
+        }
     }
 
     const prevStage = () => {
@@ -131,7 +164,7 @@ const SignUp = ({user, setUser, navigate}) => {
                         <div className="mt-auto flex justify-between">
                             {
                                 progress == 0 ? 
-                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={setUser(null)}>
+                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={()=>setUser(null)}>
                                     Wróć do logowania
                                 </Link>
                                 :

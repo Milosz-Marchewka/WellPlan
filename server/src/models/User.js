@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     activityLevel: {type: Number, required: true},
     activities: {type: Object, required: false},
     training: {type: Object, required: false},
+    schedule: {type: Object, required: false},
     eaten: {type: Object, required: false},
     wake: {type: Number, required: false},
     sleep: {type: Number, required: false}
