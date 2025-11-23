@@ -152,9 +152,9 @@ const SignUp = ({user, setUser, navigate}) => {
 
     return(
         <SignupContext.Provider value={{handleChange, handleChangeManual, newUser, handleSchedule, schedule, setCanProgress}}>
-            <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
-                <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
-                    <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">
+            <div className="flex w-screen min-h-screen justify-center items-center px-1 py-10 sm:px-5 md:py-10">
+                <div className="flex w-full lg:w-[800px] lg:max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
+                    <div className="w-full py-5 px-1 flex-3 flex flex-col bg-gray-800 text-white sm:p-5 sm:py-10 lg:p-10 h-fit">
                         <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
                         <div className="my-5 flex flex-col gap-2">
                             {
@@ -180,7 +180,7 @@ const SignUp = ({user, setUser, navigate}) => {
                     </div>
                     {
                         progress !== 2 ?
-                        <div className="flex-2 bg-emerald-600 flex items-center justify-center">
+                        <div className="hidden flex-2 bg-emerald-600 md:flex items-center justify-center ">
                             <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
                         </div>
                         :

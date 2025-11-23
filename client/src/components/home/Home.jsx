@@ -26,7 +26,7 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
             return;
         }
 
-        if(events == []){
+        if(events.length > 0){
             events.sort((a, b) => {
                 return formatTimeToMinutes(a.start) - formatTimeToMinutes(b.start);
             });
@@ -90,7 +90,7 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                     <Statistic user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>
                 </div>
                 <div className="w-full lg:col-start-1 lg:row-start-2 xl:min-w-[550px] flex justify-center">
-                    <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]"/>
+                    <SingleDayCalendar selectedDate={null} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]"/>
                 </div>
                 <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1">
                     <TreningDay 

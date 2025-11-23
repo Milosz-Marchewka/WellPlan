@@ -145,13 +145,13 @@ const Lifestyle = () => {
     }
 
     return(
-        <div className="flex flex-col gap-3 h-[525px] overflow-auto pr-3">
+        <div className="flex flex-col gap-3 w-full overflow-hidden overflow-y-auto pr-3">
             <div className="flex justify-between">
                 <h2>Plan lekcji:</h2> 
                  <StyledCheckbox label="Pomiń dodanie planu lekcji" checked={isScheduleSkipped} onChange={handleScheduleToogle}/>
             </div>
-            <div className={isScheduleSkipped ? disabledScheduleClasses : ""}>
-                <table className={isScheduleSkipped ? "" : inputsErrors.schedule != null ? "error" : ""}>
+            <div className={(isScheduleSkipped ? disabledScheduleClasses : "") + "overflow-x-scroll h-fit"}>
+                <table className={(isScheduleSkipped ? "" : inputsErrors.schedule != null ? "error" : "") + "w-[700px] md:w-full"}>
                     <thead>
                         <tr>
                             <th>Godzina</th>
@@ -166,9 +166,8 @@ const Lifestyle = () => {
                         {
                             [...Array(numOfRow)].map((_, i) => (
                                 <tr key={i} data-id={i}>
-                                    <td className="flex">
+                                    <td className="flex flex-col md:flex-row">
                                         <input type="time" name="start" className="scheduleInput" onChange={handleScheduleChange}/>
-                                        <em><sub>-</sub></em>
                                         <input type="time" name="end" className="scheduleInput" onChange={handleScheduleChange}/>
                                     </td>
                                     <td><input type="text" name="monday" className="scheduleInput" onChange={handleScheduleChange}/></td>
@@ -188,19 +187,19 @@ const Lifestyle = () => {
             </div>
             <div>
                 <h2>Sen:</h2>
-                <div className="flex flex-row justify-between mt-1">
-                    <div className="w-2/5 flex flex-col gap-5">
+                <div className="flex flex-col lg:flex-row justify-between mt-1 w-full">
+                    <div className="w-full lg:flex-2 flex lg:flex-col gap-1 lg:gap-5">
                         <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={newUser?.wake} valid={inputsErrors.wake === null}/>
                         <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={newUser?.sleep} valid={inputsErrors.sleep === null}/>
                     </div>
-                    <div className="w-fit grid grid-cols-2 gap-3 items-center text-center">
-                        <div className="text-indigo-400">
+                    <div className="my-5 lg:my-0 w-full lg:flex-3 flex justify-around lg:gap-3 items-center text-center">
+                        <div className="text-indigo-400 w-fit">
                             <p className="">Zalecany czas snu:</p>
-                            <h4 className="text-6xl">8h-10h</h4>
+                            <h4 className="text-3xl sm:text-4xl lg:text-6xl">8h-10h</h4>
                         </div>
-                        <div className="text-amber-200">
+                        <div className="text-amber-200 w-fit">
                             <p className="">Twój czas snu:</p>
-                            <h4 className="text-6xl">{getLengthOfSleep()}h</h4>
+                            <h4 className="text-3xl sm:text-4xl lg:text-6xl">{getLengthOfSleep()}h</h4>
                         </div>
                     </div>
                 </div>

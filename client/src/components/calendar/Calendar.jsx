@@ -14,7 +14,8 @@ const formatTimeToMinutes = (time)=>{
 const Calendar = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
-    const [date, setDate] = useState(new Date());
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     useEffect(()=>{
         if(user === null) return;
@@ -26,11 +27,13 @@ const Calendar = ({user})=>{
             return;
         }
 
-        if(events == []){
+        if(events.length > 0){
             events.sort((a, b) => {
                 return formatTimeToMinutes(a?.start) - formatTimeToMinutes(b?.start);
             });
         }
+
+        console.log(events);
 
         const groups = [];
         let currentGroup = [events[0]];
@@ -58,7 +61,10 @@ const Calendar = ({user})=>{
     }, [events]);
 
 
+
     const fetchEvents = async (email, date)=>{
+        console.log("TERAZ FETCHUJE", date);
+        setSelectedDate(date);
         try{
             const formatted = formatDateForInput(date);
             const req = await fetch(`http://localhost:5000/calendar/get?email=${email}&date=${formatted}`, {
@@ -89,7 +95,7 @@ const Calendar = ({user})=>{
             </div>
             
             <div className="flex flex-col gap-5 px-5 pb-5 lg:flex-row lg:justify-center lg:items-start lg:pt-20 lg:gap-20">
-                <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
+                <SingleDayCalendar selectedDate={selectedDate} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
                 <AddCalendarEvent user={user} events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>
         

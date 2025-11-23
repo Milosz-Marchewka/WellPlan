@@ -1,15 +1,4 @@
 
-const prepDifficultyToText = (value) => {
-    switch(value){
-        case 0:
-            return "Łatwe";
-        case 1:
-            return "Średnie";
-        case 2:
-            return "Trudne";
-    }
-}
-
 const Meal = ({imgUrl, title, ingredients, macronutrients}) => {
     
 

@@ -21,7 +21,7 @@ const AddCalendarEvent = ({user, fetchEvents})=>{
 
     const add = async ()=>{
         console.log(await addEvent(user.email, eventData.title, eventData.date, eventData.start, eventData.end, eventData.color));
-        await fetchEvents(user?.email, new Date());
+        await fetchEvents(user?.email, new Date(eventData.date));
     }
 
     const addEvent = async (email, name, date, start, end, color)=>{
@@ -48,6 +48,14 @@ const AddCalendarEvent = ({user, fetchEvents})=>{
             }
 
             const res = await req.json();
+            setEventData({
+                title: "",
+                date: new Date().toISOString().split("T")[0],
+                start: "",
+                end: "",
+                color: "#FFFFFF"
+            });
+            onEventAdded(date);
             return res.message ? res.message : res.error;
         } catch(err){
             console.log("Błąd serwera.");

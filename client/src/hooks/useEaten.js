@@ -14,8 +14,9 @@ export const useEaten = (email)=>{
                 console.log(await req.text());
                 return;
             }
-
+            
             const data = await req.json();
+            console.log("EATEN hook", data);
             setEaten(data);
         } catch(e){
             console.log('catcherr');

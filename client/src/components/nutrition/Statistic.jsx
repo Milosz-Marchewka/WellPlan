@@ -9,7 +9,7 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
         (async()=>{
             const eat = await fetchEaten();
             setEaten(eat);
-            console.log(eat);
+            console.log("EATEN:", eat);
         })()
     }, [user]);
 

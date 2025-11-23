@@ -3,8 +3,8 @@ import CalendarEvent from "./CalendarEvent";
 import Pointer from "./Pointer";
 import GroupedEvents from "./GroupedEvents";
 
-const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, classTw = "", classesInside = ""}) => {
-    const [date, setDate] = useState(new Date());
+const SingleDayCalendar = ({selectedDate = null, user, events, fetchEvents, formatDateForInput, classTw = "", classesInside = ""}) => {
+    const [date, setDate] = useState((selectedDate == null ? new Date() : selectedDate));
     const pointerRef = useRef(null);
 
     useEffect(()=>{
@@ -36,7 +36,11 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
         }
     }, [date]);
 
-
+    useEffect(()=>{
+        if(selectedDate != null){
+            setDate(selectedDate)
+        }
+    }, [selectedDate]);
 
     function previousDay() {
         setDate((prevDate) => {

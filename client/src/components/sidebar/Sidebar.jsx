@@ -62,7 +62,7 @@ function Sidebar({user, setUser, selectedOption, navigate}){
                                     <img src={SettingsIcon} alt="" className="size-7 filter invert" />
                                     <h3 className={"text-lg text-center block "}>Ustawienia</h3>
                                 </Link>
-                                <div className="border-t border-white mt-auto w-full pt-2">
+                                <div className="border-t border-white mt-auto w-full pt-2" onClick={logout}>
                                     <h4 className="mt-auto text-red-300 text-xl hover:bg-gray-900 w-full text-center py-3 rounded-xl cursor-pointer transition">Wyloguj</h4>
                                 </div>
                             </div>
