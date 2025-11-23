@@ -15,7 +15,21 @@ const SignUp = ({user, setUser, navigate}) => {
     const [schedule, setSchedule] = useState([]);
     const [progress, setProgress] = useState(0);
     const [canProgress, setCanProgress] = useState(()=>()=>false);
-    
+    const [newUser, setNewUser] = useState({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        age: null,
+        gender: "male",
+        height: null,
+        weight: null,
+        activityLevel: 0,
+        wake: null,
+        sleep: null,
+        isScheduleSkipped: false,
+    });
+
     useEffect(()=>{
         if(user != null){
             navigate("/");
@@ -73,13 +87,13 @@ const SignUp = ({user, setUser, navigate}) => {
     }
 
     const handleChange = (e) => {
-        setUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        console.log("DebugText: ", user);
+        setNewUser(prev => ({...prev, [e.target.name]: e.target.value}));
+        console.log("DebugText: ", newUser);
     }
 
     const handleChangeManual = (name, value) => {
-        setUser(prev => ({...prev, [name]: value}));
-        console.log("DebugText: ", user);
+        setNewUser(prev => ({...prev, [name]: value}));
+        console.log("DebugText: ", newUser);
     }
 
     const nextStage = () => {
@@ -89,12 +103,22 @@ const SignUp = ({user, setUser, navigate}) => {
         };
     }
 
+    const register = () => {
+        if(!canProgress()){
+            return;
+        }
+        console.log("Dane nowego uzytkownika:")
+        console.log(newUser);
+        console.log(schedule);//Tymczasowy Schedule, nie używasz tego do backendu.
+        console.log(scheduleToNormalSchedule(schedule));//To używasz do backednu, pamiętaj by najpierw sprawdzić czy newUser.isScheduleSkipped bo pod tym warunkiem zapisujesz plan lekcji
+    }
+
     const prevStage = () => {
         setProgress(p => p-1);
     }
 
     return(
-        <SignupContext.Provider value={{handleChange, handleChangeManual, user, handleSchedule, schedule, setCanProgress}}>
+        <SignupContext.Provider value={{handleChange, handleChangeManual, newUser, handleSchedule, schedule, setCanProgress}}>
             <div className="flex w-screen min-h-screen items-center justify-center flex-col py-10 gap-10">
                 <div className="flex w-[800px] max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
                     <div className="flex-3 flex flex-col bg-gray-800 text-white w-1/4 min-w-sm p-10 h-[720px]">
@@ -115,7 +139,7 @@ const SignUp = ({user, setUser, navigate}) => {
                             }
                             {
                                 progress == 2 ?
-                                <StyledButton text="Zarejestuj się" click={()=> console.log(scheduleToNormalSchedule(schedule))} />
+                                <StyledButton text="Zarejestuj się" click={register} />
                                 :
                                 <StyledButton text="Dalej" click={nextStage} />
                             }

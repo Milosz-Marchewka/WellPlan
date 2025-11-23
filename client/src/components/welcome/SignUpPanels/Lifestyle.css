@@ -1,11 +1,16 @@
 table{
     border-collapse: collapse;
-        border: 1px solid white;
+    border: 1px solid white;
+    transition: 300ms;
 }
 th,td{
     border: 1px solid white;
     padding: 0px 0px;
     text-align: center;
+}
+
+table.error{
+    background-color: #532323;
 }
 
 table input{
