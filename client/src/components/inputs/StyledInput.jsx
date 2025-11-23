@@ -11,6 +11,7 @@ const StyledInput = ({id, type="text", label, name, value, width = "w-full", mt 
 
     useEffect(() => {
         setIsValid(valid);
+        console.log(value);
     }, [valid]);
 
 

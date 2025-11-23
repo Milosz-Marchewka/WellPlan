@@ -7,17 +7,80 @@ import "./Lifestyle.css";
 
 const Lifestyle = () => {
 
-    const { handleChange, user, handleSchedule, schedule } = useContext(SignupContext);
+    const { handleChange, handleChangeManual, newUser, handleSchedule, schedule, setCanProgress } = useContext(SignupContext);
+    const [inputsErrors, setInputsErrors] = useState({
+        sleep: null,
+        wake: null,
+        schedule: null,
+    });
 
     useEffect(()=>{
-        if(user === null) return;
-    }, [user])
-
+        if(newUser === null) return;
+    }, [newUser])
 
     const [numOfRow, setNumOfRows] = useState(6);
-    const [isScheduleSkipped, setIsScheduleSkipped] = useState(false)
+    const [isScheduleSkipped, setIsScheduleSkipped] = useState(newUser.isScheduleSkipped);
 
     const disabledScheduleClasses = "pointer-events-none select-none opacity-60 font-italic italic";
+
+    useEffect(()=>{
+        console.log(newUser?.wake, newUser?.sleep, schedule);
+        setCanProgress(() => validate)   
+    }, [setCanProgress, newUser]);
+
+    const validate = () => {
+        let isError = false;
+        let newErrors = {
+            sleep: null,
+            wake: null,
+            schedule: null,
+        };
+
+
+        if (!newUser?.sleep || newUser.sleep.trim() === "") {
+            newErrors.sleep = 1;
+            isError = true;
+        }
+        if (!newUser?.wake || newUser.wake.trim() === "") {
+            newErrors.wake = 1;
+            isError = true;
+        }
+
+        for(let i of schedule){
+            if(i.start == "" || i.end == ""){
+                if(i.monday.trim() != ""){
+                    newErrors.schedule = 1;
+                    isError = true;
+                    break;
+                }
+                if(i.tuesday.trim() != ""){
+                    newErrors.schedule = 1;
+                    isError = true;
+                    break;
+                }
+                if(i.wednesday.trim() != ""){
+                    newErrors.schedule = 1;
+                    isError = true;
+                    break;
+                }
+                if(i.thursday.trim() != ""){
+                    newErrors.schedule = 1;
+                    isError = true;
+                    break;
+                }
+                if(i.friday.trim() != ""){
+                    newErrors.schedule = 1;
+                    isError = true;
+                    break;
+                }
+            }
+        }
+
+        setInputsErrors(prev => ({ ...prev, ...newErrors }));
+        console.log(newErrors, newUser, schedule);
+        return !isError;
+
+    }
 
     const addRow = () => {
         setNumOfRows(n => n+1)
@@ -40,14 +103,14 @@ const Lifestyle = () => {
     },[numOfRow]);
 
     const getLengthOfSleep = () => {
-        if(user?.sleep == "" || user?.wake == ""){
+        if(newUser?.sleep == "" || newUser?.wake == ""){
             return "...";
         }
 
-        let [h1, m1] = user?.wake ? user?.wake.split(":") : [0,0.1];
+        let [h1, m1] = newUser?.wake ? newUser?.wake.split(":") : [0,0.1];
         h1 = Number(h1);
         m1 = Number(m1);
-        let [h2, m2] = user?.sleep ? user?.sleep.split(":") : [0,0];
+        let [h2, m2] = newUser?.sleep ? newUser?.sleep.split(":") : [0,0];
         h2 = Number(h2);
         m2 = Number(m2);
         
@@ -62,6 +125,13 @@ const Lifestyle = () => {
 
     const handleScheduleChange = (e) => {
         handleSchedule(e.target.parentElement.parentElement.dataset.id, e.target.name, e.target.value);
+        setInputsErrors(prev => ({...prev, schedule: null}));
+    }
+
+    const handleScheduleToogle = () => {
+        handleChangeManual("isScheduleSkipped", !isScheduleSkipped);
+        setIsScheduleSkipped(prev => !prev);
+        setInputsErrors(prev => ({...prev, schedule: null}));
     }
 
     const getValue = (index, name) => {
@@ -78,10 +148,10 @@ const Lifestyle = () => {
         <div className="flex flex-col gap-3 h-[525px] overflow-auto pr-3">
             <div className="flex justify-between">
                 <h2>Plan lekcji:</h2> 
-                 <StyledCheckbox label="Pomiń dodanie planu lekcji" checked={isScheduleSkipped} onChange={() => setIsScheduleSkipped(prev => !prev)}/>
+                 <StyledCheckbox label="Pomiń dodanie planu lekcji" checked={isScheduleSkipped} onChange={handleScheduleToogle}/>
             </div>
             <div className={isScheduleSkipped ? disabledScheduleClasses : ""}>
-                <table>
+                <table className={isScheduleSkipped ? "" : inputsErrors.schedule != null ? "error" : ""}>
                     <thead>
                         <tr>
                             <th>Godzina</th>
@@ -120,8 +190,8 @@ const Lifestyle = () => {
                 <h2>Sen:</h2>
                 <div className="flex flex-row justify-between mt-1">
                     <div className="w-2/5 flex flex-col gap-5">
-                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={user?.wake}/>
-                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={user?.sleep}/>
+                        <StyledInput type="time" label="Wstawanie" name="wake" onChange={handleChange} value={newUser?.wake} valid={inputsErrors.wake === null}/>
+                        <StyledInput type="time" label="Zasypianie" name="sleep" onChange={handleChange} value={newUser?.sleep} valid={inputsErrors.sleep === null}/>
                     </div>
                     <div className="w-fit grid grid-cols-2 gap-3 items-center text-center">
                         <div className="text-indigo-400">
@@ -133,9 +203,6 @@ const Lifestyle = () => {
                             <h4 className="text-6xl">{getLengthOfSleep()}h</h4>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <p></p>
                 </div>
             </div>
         </div>

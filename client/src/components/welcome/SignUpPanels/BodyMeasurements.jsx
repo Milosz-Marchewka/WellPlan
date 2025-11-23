@@ -4,9 +4,9 @@ import StyledInput from "../../inputs/StyledInput";
 import StyledButton from "../../buttons/StyledButton";
 
 const BodyMeasurements = () => {
-    const {handleChange, handleChangeManual, user, setCanProgress} = useContext(SignupContext);
+    const {handleChange, handleChangeManual, newUser, setCanProgress} = useContext(SignupContext);
 
-    const [activityLevel, setActivityLevel] = useState(user?.activityLevel || 0);
+    const [activityLevel, setActivityLevel] = useState(newUser?.activityLevel || 0);
     const [nutrients, setNutrients] = useState({
             calories: 0,
             proteins: 0,
@@ -27,36 +27,38 @@ const BodyMeasurements = () => {
     useEffect(()=>{
         console.log(nutrients);
         (async ()=>{
-            const data = await fetchNutrients(user?.age, user?.gender, user?.height, user?.weight, user?.activityLevel);
+            const data = await fetchNutrients(newUser?.age, newUser?.gender, newUser?.height, newUser?.weight, newUser?.activityLevel);
             setNutrients(data);
         })();
-    },[user]);
+    },[newUser]);
 
     useEffect(()=>{
-        console.log(user?.weight, user?.height, user?.activityLevel);
-        setCanProgress(()=>()=>{
+        console.log(newUser?.weight, newUser?.height, newUser?.activityLevel);
+        setCanProgress(() => validate)   
+    }, [setCanProgress, newUser]);
 
-            let isError = false;
-            let newErrors = {
-                weight: null,
-                height: null,
-            };
+    const validate = () => {
+        let isError = false;
+        let newErrors = {
+            weight: null,
+            height: null,
+        };
 
 
-            if (!user?.weight || user.weight.trim() === "") {
-                newErrors.weight = 1;
-                isError = true;
-            }
-            if (!user?.height || user.height.trim() === "") {
-                newErrors.height = 1;
-                isError = true;
-            }
+        if (!newUser?.weight || newUser.weight.trim() === "") {
+            newErrors.weight = 1;
+            isError = true;
+        }
+        if (!newUser?.height || newUser.height.trim() === "") {
+            newErrors.height = 1;
+            isError = true;
+        }
 
-            setInputsErrors(prev => ({ ...prev, ...newErrors }));
+        setInputsErrors(prev => ({ ...prev, ...newErrors }));
 
-            return !isError;
-        })
-    }, [setCanProgress, user]);
+        return !isError;
+
+    }
 
     const handleActivityLevelChange = (level) => {
         setActivityLevel(level);
@@ -101,8 +103,8 @@ const BodyMeasurements = () => {
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={user?.height} valid={inputsErrors.height === null}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={user?.weight} valid={inputsErrors.weight === null}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={newUser?.height} valid={inputsErrors.height === null}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={newUser?.weight} valid={inputsErrors.weight === null}/>
                 </div>
             </div>
             <div>
