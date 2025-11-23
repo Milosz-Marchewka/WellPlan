@@ -1,7 +1,12 @@
 const activities = [1.2, 1.375, 1.55, 1.725, 1.9];
 
 export const getMacronutrients = ({age, height, weight, gender, activity}, res)=>{
-    console.log(activity);
+    if(gender === "1" || gender === "Male"){
+        gender = "male";
+    } else if(gender === "0" || gender==="Female"){
+        gender = "female";
+    }
+
     if([age, height, weight, gender, activity].some(v=>!v)){
         return res.status(400).json({error: "Niepełne dane."});
     }
@@ -11,7 +16,7 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
 
 
     let bmr = (10 * weight) + (6.25 * height) - (5 * age);
-    if(gender === "Mężczyzna"){
+    if(gender === "male"){
         bmr += 5;
     } else {
         bmr -= 161;

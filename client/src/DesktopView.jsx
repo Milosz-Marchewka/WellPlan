@@ -71,7 +71,7 @@ function DesktopView(){
                 <Route index element={<Home user={user}/>}/>
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition/>} />
-                <Route path="trening" element={<Trening/>} />
+                <Route path="trening" element={<Trening user={user}/>} />
                 <Route path="settings" element={<Settings user={user}/>} />
             </Route>
             <Route path="/login">

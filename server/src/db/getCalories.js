@@ -10,7 +10,7 @@ export const getCalories = (({age, height, weight, gender, activity}, res)=>{
     }
     try{
         let val = (10 * weight) + (6.25 * height) - (5 * age);
-        if(gender === "Mężczyzna"){
+        if(gender === "male"){
             val += 5;
         } else {
             val -= 161;
@@ -18,7 +18,6 @@ export const getCalories = (({age, height, weight, gender, activity}, res)=>{
         return res.status(200).json({cal: Math.ceil(val * activities[activity])});
     }
     catch(e){
-        console.log(e);
         return res.status(500).json({error: "Błąd serwera."});
     }
 });

@@ -4,7 +4,7 @@ import CalendarEvent from "./CalendarEvent";
 const GroupedEvents = ({group}) => {
 
     const getTopMinutes = (time)=>{
-        return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
+        return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
     }
 
     const getHeight = (time1, time2)=>{
@@ -18,10 +18,10 @@ const GroupedEvents = ({group}) => {
     });
 
     return(
-        <div className="absolute flex w-full h-fit gap-1" style={{top: getTopMinutes(group[0].start)}}>
+        <div className="absolute flex w-full h-fit gap-1" style={{top: getTopMinutes(group[0]?.start)}}>
             {
                 group.map((element, index)=>(
-                    <CalendarEvent key={index} title={element.name} start={element.start} end={element.end} color={element.color} offset={getTopMinutes(group[0].start)}/>
+                    <CalendarEvent key={index} title={element?.name} start={element?.start} end={element?.end} color={element?.color} offset={getTopMinutes(group[0]?.start)}/>
                 ))
             }
         </div>

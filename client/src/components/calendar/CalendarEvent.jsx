@@ -2,7 +2,7 @@
 const CalendarEvent = ({title, start, end, color, offset})=>{
 
     const getTopMinutes = (time)=>{
-        return Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]);
+        return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
     }
 
     const getHeight = (time1, time2)=>{
