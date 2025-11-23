@@ -24,7 +24,7 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
 
             try {
                 console.log(user?.email);
-                await fetchEvents(user.email, date);
+                await fetchEvents(user?.email, date);
             } catch (err) {
                 console.log("Błąd serwera.");
             }
@@ -34,7 +34,7 @@ const SingleDayCalendar = ({user, events, fetchEvents, formatDateForInput, class
     useEffect(()=>{
 
         try{
-            (async()=>{await fetchEvents(user.email, date)})();
+            (async()=>{await fetchEvents(user?.email, date)})();
         } catch(err){
             console.log("Błąd serwera.");
         }
