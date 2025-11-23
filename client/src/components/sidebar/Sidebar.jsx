@@ -71,8 +71,8 @@ function Sidebar({user, selectedOption}){
                     lg:w-60">
                     <div className="text-white text-center w-full border-b border-white pb-4 text-lg">
                         <img src={UserIcon} alt="" className="h-20 mx-auto"/>
-                        <h4 className="w-full">{user.name} {user.surname}</h4>
-                        <h6 className="text-gray-400 text-center italic text-sm">{user.email}</h6>
+                        <h4 className="w-full">{user?.name} {user?.surname}</h4>
+                        <h6 className="text-gray-400 text-center italic text-sm">{user?.email}</h6>
                     </div>
                     {menuItems.map((item, index) => (
                         <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url}/>

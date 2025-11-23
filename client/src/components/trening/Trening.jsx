@@ -2,7 +2,7 @@ import TreningDay from "./TreningDay";
 import AddTrening from "./AddTrening";
 import { useState } from "react";
 
-const Trening = () => {
+const Trening = ({user}) => {
 
     const [isAddTreningShown, setIsAddTreningShown] = useState(false);
 
@@ -20,7 +20,7 @@ const Trening = () => {
             {
                 isAddTreningShown ?
                 <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80">
-                        <AddTrening cancelFunction={hideAddTrening}/>
+                        <AddTrening user={user} cancelFunction={hideAddTrening}/>
                 </div>
                 :
                 <></>

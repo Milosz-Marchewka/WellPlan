@@ -1,24 +1,34 @@
 
 export const getMeals = async ({product, calories}, res)=>{
+    try{
+        const food = await fetchFood(product);
+        let filtered = [];
+        if(food && food?.products) {
+            const cleaned = food?.products?.filter(k=>k.nutriments?.['energy-kcal_value'] !== null);
+            filtered = calories ? cleaned.filter(k=>k.nutriments['energy-kcal_value'] !== undefined && k.nutriments['energy-kcal_value'] <= calories) : cleaned;
+        }
 
-    console.log(product, calories)
+        filtered = filtered || [];
 
-    if(!calories || !product) return res.status(400).json({error: "Proszę wypełnić wszystkie pola"});
+        for(const p of filtered){
+            p.imageUrl = getImageUrl(p) || 'https://placehold.co/200x200/transparent/00aa58?text=Brak+Zdjęcia';
+        };
 
-    const food = await fetchFood(product, res);
-    const filtered = food.products.filter(k=>k.nutriments['energy-kcal_value'] !== undefined && k.nutriments['energy-kcal_value'] <= calories);
-
-
-    for(const p of filtered){
-        p.imageUrl = getImageUrl(p) || 'https://placehold.co/200x200/transparent/00aa58?text=Brak+Zdjęcia';
-    };
-
-    return res.status(200).json(filtered);
+        return res.status(200).json(filtered);
+    } catch(e){
+        return res.status(500).json({error: "Błąd serwera."});
+    }
 }
 
-const fetchFood = async (product, res)=>{
-    try{
-        const req = await fetch(`https://world.openfoodfacts.net/cgi/search.pl?search_terms=${encodeURIComponent(product)}&fields=product_name,nutriments,generic_name,ingredients_text,images,code&page_size=5&json=true`, {
+const fetchFood = async (product)=>{
+        let query;
+        if((product == undefined || product==="undefined") || product?.trim() === ""){
+            query = `search_terms=''&fields=product_name,nutriments,generic_name,ingredients_text,images,code&page_size=5&json=true`;
+        } else {
+            query = `search_terms=${product?.trim()}&fields=product_name,nutriments,generic_name,ingredients_text,images,code&page_size=5&json=true`;
+        }
+
+        const req = await fetch(`https://world.openfoodfacts.net/cgi/search.pl?${query}`, {
             method: "GET",
             headers: {
                 'User-Agent': 'StudentPlanner/1.0 (miloszmarchewka.2020@gmail.com)'
@@ -27,42 +37,12 @@ const fetchFood = async (product, res)=>{
         });
 
         if(!req.ok){
-            console.log(await req.text());
-            return res.status(500).json({error: "Błąd serwera."});
+            throw new Error("req");
         }
-
         const result = await req.json();
         return result;
-    } catch(e){
-        return res.status(500).json({error: e.message});
-    }
 }
 
-const translate = async (text)=>{
-    console.log("hi?");
-    try{
-        const req = await fetch("https://translate.argosopentech.com/translate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                q: text,
-                source: "auto",
-                target: "pl",
-                format: "text"
-            })
-        });
-
-        console.log(req.status);
-
-        if(!req.ok) console.log("what");
-
-        const res = await req.text();
-
-        console.log(res.translatedText);
-    } catch (e){
-        console.log("what...", e.message);
-    }
-}
 
 const getImageUrl = (product, imgField = "front_en", size = "400")=>{
   const img = product.images?.[imgField];
