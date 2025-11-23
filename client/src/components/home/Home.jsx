@@ -11,7 +11,7 @@ const formatTimeToMinutes = (time)=>{
     return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
 }
 
-const Home = ({user})=>{
+const Home = ({user, eaten, setEaten, fetchEaten})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
     const [date, setDate] = useState(new Date());
@@ -87,7 +87,7 @@ const Home = ({user})=>{
                 
             <div className="w-full px-5 flex flex-col xl:grid xl:grid-cols-1 gap-5 gap-x-15 xl:mx-auto items-center xl:max-w-[1200px]">
                 <div className="w-full" >
-                    <Statistic/>
+                    <Statistic user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>
                 </div>
                 <div className="w-full lg:col-start-1 lg:row-start-2 xl:min-w-[550px] flex justify-center">
                     <SingleDayCalendar user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]"/>

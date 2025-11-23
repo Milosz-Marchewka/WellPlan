@@ -1,6 +1,18 @@
+import { useEffect, useState } from "react";
 import RadialProgress from "./RadialProgress";
+import { useEaten } from "../../hooks/useEaten";
 
-const Statistic = ({user}) => {
+const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
+
+    useEffect(()=>{
+        if(!user?.email) return;
+        (async()=>{
+            const eat = await fetchEaten();
+            setEaten(eat);
+            console.log(eat);
+        })()
+    }, [user]);
+
 
     return(
         <div className="bg-gray-900 text-emerald-500 text-4xl text-center rounded-3xl w-full overflow-hidden">
@@ -8,19 +20,19 @@ const Statistic = ({user}) => {
             <div className="grid grid-cols-2 grid-row-2 md:flex justify-between p-5 text-white text-xl bg-gray-800 flex-wrap">
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Kalorie:</h4>
-                    <RadialProgress percentage={65} color="lime"/>
+                    <RadialProgress percentage={eaten?.calories || 0} color="lime"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Białko:</h4>
-                    <RadialProgress percentage={73} color="cyan"/>
+                    <RadialProgress percentage={eaten?.proteins || 0} color="cyan"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Tłuszcze:</h4>
-                    <RadialProgress percentage={60} color="yellow"/>
+                    <RadialProgress percentage={eaten?.fat || 0} color="yellow"/>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-2">Węglowodany:</h4>
-                    <RadialProgress percentage={50} color="lightcoral"/>
+                    <RadialProgress percentage={eaten?.carbs || 0} color="lightcoral"/>
                 </div>
             </div>
         </div>

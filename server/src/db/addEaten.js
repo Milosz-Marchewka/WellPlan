@@ -12,7 +12,7 @@ export const addEaten = async ({email, calories, protein, fat, carbs}, res)=>{
 
         await user.updateOne({$inc: {
             [`eaten.${today}.calories`]: Number(calories) || 0,
-            [`eaten.${today}.protein`]: Number(protein) || 0,
+            [`eaten.${today}.proteins`]: Number(protein) || 0,
             [`eaten.${today}.fat`]: Number(fat) || 0,
             [`eaten.${today}.carbs`]: Number(carbs) || 0
         }});

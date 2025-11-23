@@ -1,4 +1,5 @@
 import { User } from "../models/User.js"
+import { getMacronutrientsRouteless } from "./getMacronutrients.js";
 
 export const getEaten = async({email}, res)=>{
     if(!email) return res.status(400).json({error: "Nie podano użytkownika."});
@@ -6,12 +7,22 @@ export const getEaten = async({email}, res)=>{
     try{
         const user = await User.findOne({email});
 
-        if(!user) return res.status(400).json({error: "Nie znaleziono użytkownika."});
+        if(!user) return res.status(400).json({error: "Nie znaleziono użytkownika.", user: email});
 
         const today = new Date().toISOString()?.split("T")[0];
+        const eaten = user.eaten[today];
+        const ceil = getMacronutrientsRouteless({age: user?.age, weight: user?.weight, height: user?.height, gender: user?.gender, activity: user?.activityLevel}, res);
 
-        return res.status(200).json(user.eaten[today]);
+
+        const percentages = {
+            calories: Math.round((eaten.calories / ceil.calories) * 100),
+            proteins: Math.round((eaten.proteins / ceil.proteins) * 100),
+            fat: Math.round((eaten.fat / ceil.fat) * 100),
+            carbs: Math.round((eaten.carbs / ceil.carbs) * 100)
+        }
+        return res.status(200).json(percentages);
     } catch(e){
+        console.log(e.message);
         return res.status(500).json({error: "Błąd serwera."});
     }
 }

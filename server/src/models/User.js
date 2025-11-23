@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     age: {type: Number, required: true},
     height: {type: Number, required: true},
     weight: {type: Number, required: true},
+    activityLevel: {type: Number, required: true},
     activities: {type: Object, required: false},
     training: {type: Object, required: false},
     eaten: {type: Object, required: false},

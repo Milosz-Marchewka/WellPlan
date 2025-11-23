@@ -4,7 +4,7 @@ import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 import StyledColorInput from "../inputs/StyledColorInput";
 
-const AddMeal = ({user}) => {
+const AddMeal = ({user, fetchEaten}) => {
 
     const [mealData, setMealData] = useState({
         title: "",
@@ -20,6 +20,7 @@ const AddMeal = ({user}) => {
     }
 
     const add = () => {
+        fetchEaten();
         (async()=>{
             console.log(user?.email, mealData.calories, mealData.protein, mealData.fats, mealData.carbs);
             try{

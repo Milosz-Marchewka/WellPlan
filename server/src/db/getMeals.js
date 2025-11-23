@@ -16,6 +16,7 @@ export const getMeals = async ({product, calories}, res)=>{
 
         return res.status(200).json(filtered);
     } catch(e){
+        console.log(e.message);
         return res.status(500).json({error: "Błąd serwera."});
     }
 }
@@ -37,7 +38,7 @@ const fetchFood = async (product)=>{
         });
 
         if(!req.ok){
-            throw new Error("req");
+            throw new Error(await req.text());
         }
         const result = await req.json();
         return result;

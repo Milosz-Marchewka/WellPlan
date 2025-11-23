@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useEaten } from "./hooks/useEaten";
 import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import Home from "./components/home/Home";
 import Calendar from "./components/calendar/Calendar";
@@ -19,6 +20,7 @@ function DesktopView(){
     const location = useLocation();
     // normally it'd be session but its a prototype
     const [user, setUser] = useState(null);
+    const {eaten, setEaten, fetchEaten} = useEaten(user?.email);
 
     // expiry, default 3 days
     const setWithExpiry = (user, ttl = 1000 * 60 * 24 * 3)=>{
@@ -68,9 +70,9 @@ function DesktopView(){
     return(
         <Routes>
             <Route path="/" element={<Layout user={user} setUser={setUser} selectedOption={selectedOption} setSelectedOption={setSelectedOption} navigate={navigate}/>}>
-                <Route index element={<Home user={user}/>}/>
+                <Route index element={<Home user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>}/>
                 <Route path="calendar" element={<Calendar user={user}/>} />
-                <Route path="nutrition" element={<Nutrition user={user}/>} />
+                <Route path="nutrition" element={<Nutrition user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>} />
                 <Route path="trening" element={<Trening user={user}/>} />
                 <Route path="settings" element={<Settings user={user}/>} />
             </Route>
