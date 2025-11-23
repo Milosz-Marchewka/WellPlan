@@ -3,7 +3,6 @@ import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-
 import Home from "./components/home/Home";
 import Calendar from "./components/calendar/Calendar";
 import Nutrition from "./components/nutrition/Nutrition";
-import Statistics from "./components/statistics/Statistics";
 import Settings from "./components/settings/Settings";
 import LogIn from "./components/welcome/LogIn";
 import SignUp from "./components/welcome/SignUp";

@@ -52,7 +52,7 @@ function Sidebar({user, setUser, selectedOption, navigate}){
                         <MenuOption key={index} title={item.title} url={item.url} iconUrl={item.iconUrl} isActive={selectedOption === item.url}/>
                     ))
                     }
-                    <div className={"relative w-fit lg:w-full h-15 flex gap-5 px-5 py-2 justify-start items-center text-white rounded-xl hover:bg-emerald-700 hover:cursor-pointer transition " + (isProfileSelected ? "bg-emerald-400 hover:bg-emerald-400" : "")} onClick={() => setIsProfileSelected(prev => !isProfileSelected)} onMouseOut={() => setIsProfileSelected(false)}>
+                    <div className={"relative w-fit lg:w-full h-15 flex gap-5 px-5 py-2 justify-start items-center text-white rounded-xl hover:bg-emerald-700 hover:cursor-pointer transition " + (isProfileSelected ? "bg-emerald-400 hover:bg-emerald-400" : "")} onClick={() => setIsProfileSelected(prev => !isProfileSelected)}>
                         <img src={UserIcon} alt="Profil" className="size-7" />
                         <h3 className={"text-lg text-center hidden lg:block "}>Profil</h3>
                         {
@@ -76,7 +76,7 @@ function Sidebar({user, setUser, selectedOption, navigate}){
                     md:top-0 md:w-fit md:flex-col md:gap-5 md:min-h-screen md:justify-start
                     lg:w-60">
                     <div className="text-white text-center w-full border-b border-white pb-4 text-lg">
-                        <img src={UserIcon} alt="" className="h-20 mx-auto"/>
+                        <img src={UserIcon} alt="" className="h-20 mx-auto p-3"/>
                         <h4 className="w-full">{user?.name} {user?.surname}</h4>
                         <h6 className="text-gray-400 text-center italic text-sm">{user?.email}</h6>
                     </div>

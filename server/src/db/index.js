@@ -7,5 +7,6 @@ import { getMeals } from "./getMeals.js";
 import { login } from "./login.js";
 import { getTraining } from "./getTraining.js";
 import { addTraining } from "./addTraining.js";
+import { update } from "./update.js";
 
-export { signup, getCalories, getCalendar, addActivity, login, getMacronutrients , getMeals, getTraining, addTraining};
+export { signup, getCalories, getCalendar, addActivity, login, getMacronutrients , getMeals, getTraining, addTraining, update};

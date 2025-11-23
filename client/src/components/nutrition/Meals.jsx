@@ -16,7 +16,7 @@ const Meals = () => {
 
     useEffect(()=>{
         (async()=>{
-            const temp = await fetchMeals();
+            const temp = await fetchMeals("", 2500);
             setMeals(temp);
             console.log(temp);
         })();
@@ -80,10 +80,6 @@ const Meals = () => {
                         :
                         <h3 className="text-white">Nie znaleziono posiłków</h3>
                     }
-                    {/* <Meal imgUrl={Owsianka} title="Owsianka" prepDifficulty={0} prepTime="30min" macronutrients={{calories: 700, protein: 30, fat: 20, carbs: 40}}/>
-                    <Meal imgUrl={Owsianka} title="Owsianka" prepDifficulty={0} prepTime="30min" macronutrients={{calories: 700, protein: 30, fat: 20, carbs: 40}}/>
-                    <Meal imgUrl={Owsianka} title="Owsianka" prepDifficulty={0} prepTime="30min" macronutrients={{calories: 700, protein: 30, fat: 20, carbs: 40}}/>
-                    <Meal imgUrl={Owsianka} title="Owsianka" prepDifficulty={0} prepTime="30min" macronutrients={{calories: 700, protein: 30, fat: 20, carbs: 40}}/> */}
                 </div>
             </div>
         </div>
