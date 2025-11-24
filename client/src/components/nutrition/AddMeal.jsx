@@ -4,7 +4,7 @@ import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 import StyledColorInput from "../inputs/StyledColorInput";
 
-const AddMeal = ({user, fetchEaten}) => {
+const AddMeal = ({user, setEaten, fetchEaten}) => {
 
     const [mealData, setMealData] = useState({
         title: "",
@@ -93,6 +93,7 @@ const AddMeal = ({user, fetchEaten}) => {
                 setLog({level: "error", message: "Błąd serwera"});
             }
         })();
+        setEaten(fetchEaten());
     }
 
     return(

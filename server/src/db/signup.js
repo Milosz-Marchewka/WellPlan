@@ -36,6 +36,8 @@ export const signup = async (body, res)=>{
             height: body.height,
             weight: body.weight,
             activityLevel: body.activityLevel,
+            activities: {},
+            training: {},
             ...(body?.schedule && {schedule: body?.schedule})
         }
 

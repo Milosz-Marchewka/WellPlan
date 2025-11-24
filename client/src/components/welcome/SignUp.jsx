@@ -134,7 +134,10 @@ const SignUp = ({user, setUser, navigate}) => {
                 body: JSON.stringify(body)
             });
             console.log('b');
-            if(!req.ok) return;
+            if(!req.ok){
+                console.log(await req.text());
+                return;
+            }
             console.log('c');
             
             const res = await req.json();

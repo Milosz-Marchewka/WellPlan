@@ -10,9 +10,8 @@ export const getEaten = async({email}, res)=>{
         if(!user) return res.status(400).json({error: "Nie znaleziono użytkownika.", user: email});
 
         const today = new Date().toISOString()?.split("T")[0];
-        const eaten = user?.eaten[today];
+        const eaten = user?.eaten?.[today];
         const ceil = getMacronutrientsRouteless({age: user?.age, weight: user?.weight, height: user?.height, gender: user?.gender, activity: user?.activityLevel}, res);
-
 
         const percentages = {
             calories: eaten?.calories == null ? 0 : Math.round((eaten?.calories / ceil?.calories) * 100),
