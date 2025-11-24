@@ -45,7 +45,7 @@ const Meals = () => {
 
             if(!req.ok){
                 console.log("Błąd pobierania danych.", await req.text());
-                setLog("Błąd pobierania danych.", await req.text());
+                setLog("Błąd pobierania danych", await req.text());
                 return;
             }
 
@@ -53,7 +53,7 @@ const Meals = () => {
             setLog(null);
             return res;
         } catch(err){
-            setLog("Błąd serwera.");
+            setLog("Błąd serwera");
             console.log("Błąd serwera.");
         }
     }
@@ -68,7 +68,7 @@ const Meals = () => {
                 <div className="flex flex-col gap-3 items-center">
                     {   
                         log !== null ?
-                            <div className="bg-red-700/75 w-1/4 min-w-sm rounded-lg p-3 border border-red-500 shadow-sm shadow-red-800">
+                            <div className="bg-gray-800 text-red-400 w-1/4 min-w-sm rounded-lg p-3 ">
                                 <h5 className="text-2xl">Błąd:</h5>
                                 <p className="text-lg">{log}</p>
                             </div>

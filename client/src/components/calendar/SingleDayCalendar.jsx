@@ -82,7 +82,7 @@ const SingleDayCalendar = ({selectedDate = null, user, events, fetchEvents, form
                         </div>
                     ))}
                     <div className="absolute w-full h-[1440px] z-50 flex justify-center ml-5">
-                        <div className="relative w-4/5">
+                        <div className="relative w-9/10">
                             {
                                 events.map((group, index) => (
                                     <GroupedEvents

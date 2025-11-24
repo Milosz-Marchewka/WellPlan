@@ -25,7 +25,6 @@ const GroupedEvents = ({group}) => {
                 ))
             }
         </div>
-
     );
 
 }
