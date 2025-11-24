@@ -14,9 +14,9 @@ const formatTimeToMinutes = (time)=>{
 const Calendar = ({user})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
-
     const [selectedDate, setSelectedDate] = useState(new Date());
-
+    const [calendarLog, setCalendarLog] = useState({level: "", message: ""});
+    
     useEffect(()=>{
         if(user === null) return;
     }, [user])
@@ -74,19 +74,20 @@ const Calendar = ({user})=>{
                 }
             });
             if(!req.ok){
-                console.log("Błąd pobierania danych.");
+                setCalendarLog({level: "error", message: "Błąd serwera"});
                 setEvents([]);
             }
             const res = await req.json();
+            setCalendarLog({level: "", message: ""});
             console.log("res", res);
             setEvents(res || []);
         } catch(err){
             console.log("Błąd serwera.");
+            setCalendarLog({level: "error", message: "Błąd serwera"});
             setEvents([]);
         }
     }
 
-    // flex justify-center items-start pt-20 gap-20
     return(
         <div>
             <div className="w-fit h-fit px-15 pt-2 flex gap-1 flex-col align-middle text-shadow-md text-shadow-gray-900">
@@ -95,7 +96,7 @@ const Calendar = ({user})=>{
             </div>
             
             <div className="flex flex-col gap-5 px-5 pb-5 lg:flex-row lg:justify-center lg:items-start lg:pt-20 lg:gap-20">
-                <SingleDayCalendar selectedDate={selectedDate} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput}/>
+                <SingleDayCalendar selectedDate={selectedDate} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} propLog={calendarLog}/>
                 <AddCalendarEvent user={user} events={events} setEvents={setEvents} fetchEvents={fetchEvents}/>
             </div>
         

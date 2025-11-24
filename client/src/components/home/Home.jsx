@@ -15,13 +15,14 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
     const [date, setDate] = useState(new Date());
+    const [calendarLog, setCalendarLog] = useState({level: "", message: ""});
 
     useEffect(()=>{
             if(user === null) return;
             (async()=>{
                 console.log("TRAINING:", await fetchTraining(user?.email));
             })();
-        }, [user])
+    }, [user])
     
     useEffect(() => {
         if (!events || events.length === 0){
@@ -69,14 +70,16 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                 }
             });
             if(!req.ok){
-                console.log("Błąd pobierania danych.");
+                setCalendarLog({level: "error", message: "Błąd serwera"});
                 setEvents([]);
             }
             const res = await req.json();
+            setCalendarLog({level: "", message: ""});
             console.log("res", res);
             setEvents(res || []);
         } catch(err){
             console.log("Błąd serwera.");
+            setCalendarLog({level: "error", message: "Błąd serwera"});
             setEvents([]);
         }
     }
@@ -117,7 +120,7 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                     <Statistic user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>
                 </div>
                 <div className="w-full lg:col-start-1 lg:row-start-2 xl:min-w-[550px] flex justify-center">
-                    <SingleDayCalendar selectedDate={null} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]"/>
+                    <SingleDayCalendar selectedDate={null} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]" propLog={calendarLog}/>
                 </div>
                 <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1">
                     <TreningDay 
