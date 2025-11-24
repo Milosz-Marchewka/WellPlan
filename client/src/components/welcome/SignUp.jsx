@@ -6,6 +6,7 @@ import Lifestyle from "./SignUpPanels/Lifestyle";
 import StyledButton from "../buttons/StyledButton";
 import Person from "../../assets/icons/signForm/person.png";
 import Dumbell from "../../assets/icons/signForm/dumbell.png";
+import Disclaimer from "../disclaimer/Disclaimer";
 
 export const SignupContext = createContext();
 
@@ -190,6 +191,7 @@ const SignUp = ({user, setUser, navigate}) => {
                         ""
                     }
                 </div>
+                <Disclaimer/>
             </div>
         </SignupContext.Provider>
     );

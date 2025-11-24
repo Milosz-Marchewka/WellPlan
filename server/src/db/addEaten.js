@@ -19,7 +19,6 @@ export const addEaten = async ({email, calories, protein, fat, carbs}, res)=>{
 
         return res.status(200).json({message: "Pomyślnie dodano."});
     } catch(e){
-        console.log(e.message);
         return res.status(500).json({error: "Błąd serwera."});
     }
 }

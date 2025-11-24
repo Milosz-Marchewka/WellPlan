@@ -16,7 +16,6 @@ export const getMeals = async ({product, calories}, res)=>{
 
         return res.status(200).json(filtered);
     } catch(e){
-        console.log(e.message);
         return res.status(500).json({error: "Błąd serwera."});
     }
 }

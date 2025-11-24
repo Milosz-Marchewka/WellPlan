@@ -18,10 +18,4 @@ const userSchema = new mongoose.Schema({
     sleep: {type: Number, required: false}
 });
 
-// plan: {
-//     '2025-05-11': {
-//         stuff
-//     }
-// }
-
 export const User = mongoose.model("user", userSchema);
