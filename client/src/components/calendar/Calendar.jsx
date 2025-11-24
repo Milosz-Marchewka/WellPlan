@@ -79,7 +79,7 @@ const Calendar = ({user})=>{
             }
             const res = await req.json();
             setCalendarLog({level: "", message: ""});
-            console.log("res", res);
+            console.log("CALENDAR:", res);
             setEvents(res || []);
         } catch(err){
             console.log("Błąd serwera.");
@@ -87,7 +87,6 @@ const Calendar = ({user})=>{
             setEvents([]);
         }
     }
-
     return(
         <div>
             <div className="w-fit h-fit px-15 pt-2 flex gap-1 flex-col align-middle text-shadow-md text-shadow-gray-900">
