@@ -24,9 +24,5 @@ export const useEaten = (email)=>{
         }
     }
 
-    useEffect(()=>{
-        fetchEaten();
-    }, [eaten]);
-
     return {eaten, setEaten, fetchEaten};
 }

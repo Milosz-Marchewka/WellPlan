@@ -2,6 +2,7 @@ import { User } from "../models/User";
 
 export const getSchedule = async ({email}, res)=>{
     try{
+        if(!email) return res.status(400).json({error: "Proszę wprowadzić e-mail."});
         const user = User.findOne({email});
 
         if(!user) return res.status(400).json({error: "Nie znaleziono użytkownika."});

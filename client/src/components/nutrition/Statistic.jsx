@@ -13,6 +13,10 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
         })()
     }, [user]);
 
+    useEffect(()=>{
+        fetchEaten();
+    }, []);
+
 
     return(
         <div className="bg-gray-900 text-emerald-500 text-4xl text-center rounded-3xl w-full overflow-hidden">
@@ -21,22 +25,22 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-1">Kalorie:</h4>
                     <RadialProgress percentage={eaten?.percentages?.calories || 0} color="lime"/>
-                    <h6 className="text-[lime]">{eaten?.eaten?.calories}/{eaten?.max?.calories}</h6>
+                    <h6 className="text-[lime]">{eaten?.eaten?.calories || 0}/{eaten?.max?.calories}</h6>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-1">Białko:</h4>
                     <RadialProgress percentage={eaten?.percentages?.proteins || 0} color="cyan"/>
-                    <h6 className="text-[cyan]">{eaten?.eaten?.proteins}/{eaten?.max?.proteins}</h6>
+                    <h6 className="text-[cyan]">{eaten?.eaten?.proteins || 0}/{eaten?.max?.proteins}</h6>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-1">Tłuszcze:</h4>
                     <RadialProgress percentage={eaten?.percentages?.fat || 0} color="yellow"/>
-                    <h6 className="text-[yellow]">{eaten?.eaten?.fat}/{eaten?.max?.fat}</h6>
+                    <h6 className="text-[yellow]">{eaten?.eaten?.fat || 0}/{eaten?.max?.fat}</h6>
                 </div>
                 <div className="flex-1 flex flex-col align-items min-w-[120px]">
                     <h4 className="mb-1">Węglowodany:</h4>
                     <RadialProgress percentage={eaten?.percentages?.carbs || 0} color="lightcoral"/>
-                    <h6 className="text-[lightcoral]">{eaten?.eaten?.carbs}/{eaten?.max?.carbs}</h6>
+                    <h6 className="text-[lightcoral]">{eaten?.eaten?.carbs || 0}/{eaten?.max?.carbs}</h6>
                 </div>
             </div>
         </div>
