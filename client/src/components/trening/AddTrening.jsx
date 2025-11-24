@@ -4,7 +4,7 @@ import StyledSelect from "../inputs/StyledSelect";
 import { use, useEffect, useState } from "react";
 import "./AddTrening.css";
 
-const AddTrening = ({user, cancelFunction, foreignSet}) => {
+const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
 
     const [inputsErrors, setInputsErrors] = useState({
         day: null,
@@ -19,6 +19,8 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
         day: "monday",
         plan: []
     });
+    
+    const [log, setLog] = useState({level: "", message: ""})
 
     const [exercise, setExercise] = useState({
         name: "",
@@ -26,6 +28,13 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
         repeat: "",
     });
 
+    const [inputsError, setInputsError] = useState({
+        type: null,
+        name: null,
+        series: null,
+        repeat: null,
+        plan: null,
+    });
 
     const handleChange = (e) => {
         setTreningData(prev => ({...prev, [e.target.name]: e.target.value}));
@@ -54,9 +63,11 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
         }
 
         if(isErrors){
+            setLog({level: "error", message: "Prosze wypełnić wszystkie pola dodaj ćwiczenie"});
             return;
         }
 
+        setInputsErrors(prev => ({...prev, plan: null}));
         setTreningData(prev => ({
             ...prev,
             plan: [
@@ -72,11 +83,18 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
     }
 
     const addTrening = () => {
+        console.log(inputsErrors.plan);
         if(treningData.type.trim() == ""){
             setInputsErrors(prev => ({...prev, type: 1}));
+            setLog({level: "error", message: "Prosze wypełnić pole typ treningu"});
             return;
         }
-        console.log(treningData);
+        if(treningData.plan.length < 1){
+            setInputsErrors(prev => ({...prev, plan: 1}));
+            setLog({level: "error", message: "Wymagane jest przynajmniej jedno ćwiczenie"});
+            return;
+        }
+
 
         (async()=>{
             await addTraining(user?.email, treningData);
@@ -105,9 +123,11 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
             }
 
             const res = await req.json();
+            setParentLog({level: "info", message: "Pomyślnie dodano nowy trening"});
             return res;
         }
         catch(e){
+            setParentLog({level: "error", message: "Nie dodano treningu, błąd serwera"});
             return;
         }
     }
@@ -145,7 +165,7 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
                         <StyledButton text="Dodaj" click={addExercise}/>
                     </div>
                 </div>
-                <table className="text-white w-full mx-auto">
+                <table className="text-white w-full mx-auto" style={(inputsErrors.plan == 1 ? {border: "2px solid red"} : {})}>
                     <thead>
                         <tr>
                             <th>Ćwiczenie</th>
@@ -167,6 +187,12 @@ const AddTrening = ({user, cancelFunction, foreignSet}) => {
                 </table>
                 <StyledButton text="Dodaj trening" click={addTrening}/>
             </div>
+                {
+                    log.level == "error" ?
+                    <h1 className="text-2xl bg-red-400 text-gray-900 p-3">{log.message}</h1>
+                    :
+                    <></>
+                }
         </div>
     );
 }
