@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, use } from "react";
 import { Outlet, Link } from "react-router-dom";
 import PersonalInformations from "./SignUpPanels/PersonalInformations";
 import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
@@ -16,6 +16,7 @@ const SignUp = ({user, setUser, navigate}) => {
     const [schedule, setSchedule] = useState([]);
     const [progress, setProgress] = useState(0);
     const [canProgress, setCanProgress] = useState(()=>()=>false);
+    const [log, setLog] = useState({level: "", message: "dadada"});
     const [newUser, setNewUser] = useState({
         name: "",
         surname: "",
@@ -80,7 +81,7 @@ const SignUp = ({user, setUser, navigate}) => {
         for(let i of temp){
             for(let j of ["monday", "tuesday", "wednesday", "thursday", "friday"]){
                 if(i[j] != ""){
-                    result[j].push({name: i[j],  start: i.start, end: i.end});
+                    result[j].push({name: i[j],  start: i.start, end: i.end, color: "AliceBlue"});
                 }
             }
         }
@@ -146,7 +147,7 @@ const SignUp = ({user, setUser, navigate}) => {
             setUser(res);
             navigate("/");
         } catch(e){
-            console.log(e.message);
+            setLog({level: "error", message: "Błąd serwera"});
         }
     }
 
@@ -157,39 +158,52 @@ const SignUp = ({user, setUser, navigate}) => {
     return(
         <SignupContext.Provider value={{handleChange, handleChangeManual, newUser, handleSchedule, schedule, setCanProgress}}>
             <div className="flex w-screen min-h-screen justify-center items-center px-1 py-10 sm:px-5 md:py-10">
-                <div className="flex w-full lg:w-[800px] lg:max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden">
+                <div className="flex w-full lg:w-[800px] lg:max-w-3/4 rounded-lg shadow-lg shadow-gray-800 overflow-hidden mb-40 sm:mb-20">
+                {
+                    log.level == "error" ?
                     <div className="w-full py-5 px-1 flex-3 flex flex-col bg-gray-800 text-white sm:p-5 sm:py-10 lg:p-10 h-fit">
-                        <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
-                        <div className="my-5 flex flex-col gap-2">
-                            {
-                                <Outlet/>
-                            }
-                        </div>
-                        <div className="mt-auto flex justify-between">
-                            {
-                                progress == 0 ? 
-                                <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={()=>setUser(null)}>
-                                    Wróć do logowania
-                                </Link>
-                                :
-                                <StyledButton text="Wstesz" click={prevStage}/>
-                            }
-                            {
-                                progress == 2 ?
-                                <StyledButton text="Zarejestuj się" click={register} />
-                                :
-                                <StyledButton text="Dalej" click={nextStage} />
-                            }
-                        </div>
+                        <h1 className="text-red-400 text-4xl">Błąd:</h1>
+                        <h2 className="text-red-400 text-2xl">Nie można zarejstrować użytkownika: {log.message}</h2>
+                        <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={()=>setUser(null)}>
+                            Wróć do logowania
+                        </Link>
                     </div>
-                    {
-                        progress !== 2 ?
-                        <div className="hidden flex-2 bg-emerald-600 md:flex items-center justify-center ">
-                            <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
+                    :
+                    <>
+                        <div className="w-full py-5 px-1 flex-3 flex flex-col bg-gray-800 text-white sm:p-5 sm:py-10 lg:p-10 h-fit">
+                            <h2 className="text-emerald-400 text-3xl">Rejestracja</h2>
+                            <div className="my-5 flex flex-col gap-2">
+                                {
+                                    <Outlet/>
+                                }
+                            </div>
+                            <div className="mt-auto flex justify-between">
+                                {
+                                    progress == 0 ? 
+                                    <Link to="/login" className="pt-2 text-emerald-400 hover:underline ml-1" onClick={()=>setUser(null)}>
+                                        Wróć do logowania
+                                    </Link>
+                                    :
+                                    <StyledButton text="Wstesz" click={prevStage}/>
+                                }
+                                {
+                                    progress == 2 ?
+                                    <StyledButton text="Zarejestuj się" click={register} />
+                                    :
+                                    <StyledButton text="Dalej" click={nextStage} />
+                                }
+                            </div>
                         </div>
-                        :
-                        ""
-                    }
+                        {
+                            progress !== 2 ?
+                            <div className="hidden flex-2 bg-emerald-600 md:flex items-center justify-center ">
+                                <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
+                            </div>
+                            :
+                            ""
+                        }
+                    </>
+                }
                 </div>
                 <Disclaimer/>
             </div>

@@ -87,11 +87,7 @@ const PersonalInformation = ({user, setUser})=>{
             });
 
             if(!req.ok){
-<<<<<<< HEAD
                 setLog({level: "error", message: "Błąd serwera"});
-=======
-                console.log("Błąd pobierania danych.", await req.text());
->>>>>>> df1088f80e3a7960985a62e1256f9f71e9c90b8d
                 return await req.text();
             }
             
@@ -104,18 +100,18 @@ const PersonalInformation = ({user, setUser})=>{
     }
 
     return(
-        <div className="min-w-60 h-fit w-1/3 max-w-1/3 rounded-2xl overflow-hidden">
-            <div className="min-w-60 h-fit w-full bg-gray-800 flex flex-col pt-7 pb-4 pl-5 pr-5">
+        <div className="w-full max-w-[600px] h-fit rounded-2xl overflow-hidden">
+            <div className="min-w-60 h-fit w-full  bg-gray-800 flex flex-col pt-7 pb-4 pl-5 pr-5">
                 <h3 className="mb-8 text-emerald-500 text-2xl">Dane osobowe</h3>
-                <div className="flex gap-4">
-                    <StyledInput name="name" label="Imię" value={newUserData?.name} width="w-1/2" onChange={handleChange} valid={inputsError.name == null}/>
-                    <StyledInput name="surname" label="Nazwisko" value={newUserData?.surname} width="w-1/2" onChange={handleChange} valid={inputsError.surname == null}/>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <StyledInput name="name" label="Imię" value={newUserData?.name} width=" w-full sm:w-1/2" onChange={handleChange} valid={inputsError.name == null}/>
+                    <StyledInput name="surname" label="Nazwisko" value={newUserData?.surname} width="w-full sm:w-1/2" onChange={handleChange} valid={inputsError.surname == null}/>
                 </div>
                 <StyledInput name="email" type="email" label="Email" value={newUserData?.email} mt="mt-6" onChange={handleChange} valid={inputsError.email == null} errorText={inputsError.email != 1 ? inputsError.email : ""}/>
-                <div className="flex gap-4 mt-6">
-                    <StyledInput name="age" type="number" label="Wiek" value={newUserData?.age} width="w-1/3" onChange={handleChange} valid={inputsError.age == null}/>
-                    <StyledInput name="height" type="number" label="Wzrost" value={newUserData?.height} width="w-1/3" onChange={handleChange} valid={inputsError.height == null}/>
-                    <StyledInput name="weight" type="number" label="Waga" value={newUserData?.weight} width="w-1/3" onChange={handleChange} valid={inputsError.weight == null}/>
+                <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                    <StyledInput name="age" type="number" label="Wiek" value={newUserData?.age} width="w-full sm:w-1/3" onChange={handleChange} valid={inputsError.age == null}/>
+                    <StyledInput name="height" type="number" label="Wzrost" value={newUserData?.height} width="w-full sm:w-1/3" onChange={handleChange} valid={inputsError.height == null}/>
+                    <StyledInput name="weight" type="number" label="Waga" value={newUserData?.weight} width="w-full sm:w-1/3" onChange={handleChange} valid={inputsError.weight == null}/>
                 </div>
                 <StyledButton text="Zapisz zmiany" classTw="mt-6" click={() => save()}/>
             </div>

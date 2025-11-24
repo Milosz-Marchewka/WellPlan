@@ -18,7 +18,7 @@ const Meal = ({imgUrl, title, ingredients, macronutrients}) => {
                     <div className="flex-2 text-left h-30 lg:h-35 overflow-clip mask-b-from-1% mask-b-to-70%">
                         {ingredients}
                     </div>
-                    <div className="basis-1/3 flex justify-around lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:justify-center h-28">
+                    <div className="basis-1/3 grid grid-cols-2 grid-rows-2 justify-center sm:flex sm:justify-around lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:justify-center h-28">
                         <div className="text-green-500"><h4 className="text-sm">Kalorie:</h4><p className="inline-block text-2xl">{macronutrients.calories}</p>kcal</div>
                         <div className="text-blue-500"><h4 className="text-sm">Białko:</h4><p className="inline-block text-2xl">{macronutrients.protein}</p>g</div>
                         <div className="text-yellow-500"><h4 className="text-sm">Tłuszcze:</h4><p className="inline-block text-2xl">{macronutrients.fat}</p>g</div>

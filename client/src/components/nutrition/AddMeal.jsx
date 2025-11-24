@@ -103,7 +103,7 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
                 <div className="bg-gray-800 p-2">
                     <div className="mx-auto w-5/6 flex flex-col gap-5 bg-gray-800 py-2">
                         <StyledInput label="Nazwa" name="title" onChange={handleChange} value={mealData.title} valid={inputsError.title == null}/>
-                        <div className="grid grid-cols-2 grid-rows-2 gap-2">
+                        <div className="flex flex-col sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-2">
                             <StyledInput type="number" label="Kalorie (kcal)" name="calories" value={mealData.calories} onChange={handleChange} valid={inputsError.calories == null}/>
                             <StyledInput type="number" label="Białko (g)" name="protein" value={mealData.protein} onChange={handleChange} valid={inputsError.protein == null}/>
                             <StyledInput type="number" label="Tłuszcze (g)" name="fats" value={mealData.fats} onChange={handleChange} valid={inputsError.fats == null}/>

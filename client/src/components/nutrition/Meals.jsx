@@ -60,9 +60,9 @@ const Meals = () => {
     
     return(
         <div className="w-full">
-            <div className="w-full bg-emerald-600 h-20 rounded-2xl flex items-center justify-around">
-                <StyledInput label="Szukaj posiłek" width="w-1/2" name="product" value={searchingValues.product} onChange={(e) => handleChange(e)}/>
-                <StyledInput label="Podaj max ilosc kalorii" type="number" name="calories" value={searchingValues.calories} width="w-1/3" onChange={(e) => handleChange(e)}/>
+            <div className="w-full bg-emerald-600 h-fit py-5 px-3 rounded-2xl flex-col sm:flex-row sm:flex items-center justify-around gap-5">
+                <StyledInput label="Szukaj posiłek" width="w-full sm:w-2/3" name="product" value={searchingValues.product} onChange={(e) => handleChange(e)}/>
+                <StyledInput label="Podaj max ilosc kalorii" type="number" name="calories" value={searchingValues.calories} width="w-full sm:w-1/3" mt="mt-2 sm:mt-0" onChange={(e) => handleChange(e)}/>
             </div>
             <div className="w-full py-2">
                 <div className="flex flex-col gap-3 items-center">
