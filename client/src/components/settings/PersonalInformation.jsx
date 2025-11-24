@@ -44,7 +44,7 @@ const PersonalInformation = ({user, setUser})=>{
             });
 
             if(!req.ok){
-                console.log("Błąd pobierania danych.");
+                console.log("Błąd pobierania danych.", await req.text());
                 return await req.text();
             }
 

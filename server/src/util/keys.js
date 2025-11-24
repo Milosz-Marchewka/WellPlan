@@ -1,1 +1,1 @@
-export const keys = ["_id", "name", "surname", "email", "password", "gender", "age", "height", "activityLevel", "__v", "eaten", "training", "activities"];
+export const keys = ["_id", "name", "surname", "email", "password", "gender", "age", "height", "weight", "activityLevel", "__v", "eaten", "training", "activities"];
