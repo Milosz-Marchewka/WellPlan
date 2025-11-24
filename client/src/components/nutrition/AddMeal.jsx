@@ -4,7 +4,7 @@ import StyledButton from "../buttons/StyledButton";
 import StyledCheckbox from "../inputs/StyledCheckbox";
 import StyledColorInput from "../inputs/StyledColorInput";
 
-const AddMeal = ({user, fetchEaten}) => {
+const AddMeal = ({user, setEaten, fetchEaten}) => {
 
     const [mealData, setMealData] = useState({
         title: "",
@@ -20,7 +20,6 @@ const AddMeal = ({user, fetchEaten}) => {
     }
 
     const add = () => {
-        fetchEaten();
         (async()=>{
             console.log(user?.email, mealData.calories, mealData.protein, mealData.fats, mealData.carbs);
             try{
@@ -43,7 +42,6 @@ const AddMeal = ({user, fetchEaten}) => {
                 }
 
                 console.log(await req.json());
-
                 setMealData({
                     title: "",
                     calories: "",
@@ -55,6 +53,7 @@ const AddMeal = ({user, fetchEaten}) => {
                 console.log("err");
             }
         })();
+        setEaten(fetchEaten());
     }
 
     return(

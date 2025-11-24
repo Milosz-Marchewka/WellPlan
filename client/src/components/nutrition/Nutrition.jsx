@@ -19,7 +19,7 @@ const Nutrition = ({user, eaten, setEaten, fetchEaten})=>{
                 </div>
                 <div className="flex-2 flex flex-col gap-3">
                     <Statistic user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>
-                    <AddMeal user={user} fetchEaten={fetchEaten}/>
+                    <AddMeal user={user} setEaten={setEaten} fetchEaten={fetchEaten}/>
                 </div>
             </div>
         </div>
