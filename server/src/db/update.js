@@ -4,6 +4,7 @@ import { keys } from "../util/keys.js";
 export const update = async(body, res)=>{
 
     try{
+        console.log(body);
         if(!body.email){
             return res.status(400).json({error: "Proszę wpisać adres email"});
         }

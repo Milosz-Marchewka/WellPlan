@@ -87,7 +87,11 @@ const PersonalInformation = ({user, setUser})=>{
             });
 
             if(!req.ok){
+<<<<<<< HEAD
                 setLog({level: "error", message: "Błąd serwera"});
+=======
+                console.log("Błąd pobierania danych.", await req.text());
+>>>>>>> df1088f80e3a7960985a62e1256f9f71e9c90b8d
                 return await req.text();
             }
             
