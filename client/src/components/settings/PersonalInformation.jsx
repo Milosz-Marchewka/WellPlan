@@ -1,11 +1,16 @@
 import { useState } from "react";
 import StyledButton from "../buttons/StyledButton";
 import StyledInput from "../inputs/StyledInput";
+import { useEffect } from "react";
 
-const PersonalInformation = ({user})=>{
+const PersonalInformation = ({user, setUser})=>{
 
     //NOWE DANE
     const [newUserData, setNewUserData] = useState(user);
+
+    useEffect(()=>{
+        setNewUserData(user);
+    }, [user]);
 
     const handleChange = (e) => {
         setNewUserData(prev => ({...prev, [e.target.name]: e.target.value}));
@@ -14,10 +19,11 @@ const PersonalInformation = ({user})=>{
 
     //Probowalem cos zrobic ale ni ciul
     const save = async ()=>{
-        console.log(await saveData(newUserData?.name, newUserData?.surname, newUserData?.email, newUserData?.age, newUserData?.gender, newUserData?.height, newUserData?.weight));
+        const ret = await saveData(newUserData?.name, newUserData?.surname, newUserData?.email, newUserData?.email !== user?.email && user?.email, newUserData?.age, newUserData?.gender, newUserData?.height, newUserData?.weight);
+        setUser(ret.user);
     }
     //tu tez
-    const saveData = async (name, surname, email, age, gender, height, weight)=>{
+    const saveData = async (name, surname, email, oldEmail, age, gender, height, weight)=>{
         try{
             console.log([name, surname, email, age, gender, height, weight]);
             const req = await fetch("http://localhost:5000/update", {
@@ -28,7 +34,8 @@ const PersonalInformation = ({user})=>{
                 body: JSON.stringify({
                     name,
                     surname, 
-                    email, 
+                    email,
+                    oldEmail, 
                     age,
                     gender,
                     height, 
@@ -42,7 +49,7 @@ const PersonalInformation = ({user})=>{
             }
 
             const res = await req.json();
-            return res.message ? res.message : res.error;
+            return res;
         } catch(err){
             console.log("Błąd serwera.");
         }

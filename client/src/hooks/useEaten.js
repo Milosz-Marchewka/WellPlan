@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const useEaten = (email)=>{
     const [eaten, setEaten] = useState(null);

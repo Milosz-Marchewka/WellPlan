@@ -1,6 +1,6 @@
 import PersonalInformation from "./PersonalInformation";
 
-const Settings = ({user})=>{
+const Settings = ({user, setUser})=>{
     return(
         <div className="w-full bg-transparent">
             <div className="w-fit h-fit px-15 pt-2 flex gap-1 flex-col align-middle text-shadow-md text-shadow-gray-900">
@@ -8,7 +8,7 @@ const Settings = ({user})=>{
                 <p className="mb-4 text-gray-200 text-lg">Zarządzaj swoim kontem i preferencjami</p>
             </div>
             <div className="flex justify-center gap-5">
-                <PersonalInformation user={user}/>
+                <PersonalInformation user={user} setUser={setUser}/>
             </div>
         </div>
     )

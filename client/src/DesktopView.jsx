@@ -74,7 +74,7 @@ function DesktopView(){
                 <Route path="calendar" element={<Calendar user={user}/>} />
                 <Route path="nutrition" element={<Nutrition user={user} eaten={eaten} setEaten={setEaten} fetchEaten={fetchEaten}/>} />
                 <Route path="trening" element={<Trening user={user}/>} />
-                <Route path="settings" element={<Settings user={user}/>} />
+                <Route path="settings" element={<Settings user={user} setUser={setUser}/>} />
             </Route>
             <Route path="/login">
                 <Route index element={<LogIn user={user} setUser={setUser} setWithExpiry={setWithExpiry} navigate={navigate}/>}/>

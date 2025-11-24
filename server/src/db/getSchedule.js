@@ -10,6 +10,6 @@ export const getSchedule = async ({email}, res)=>{
         return res.status(200).json({message: "Pomyślnie pobrano plan.", schedule: user.schedule})
     } catch(e){
         console.log(e);
-        return res.status(500).json({error: "Błąd serwera."});
+        return res.status(500).json({error: e.message});
     }
 }
