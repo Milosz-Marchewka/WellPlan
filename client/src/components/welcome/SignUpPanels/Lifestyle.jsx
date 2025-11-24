@@ -151,7 +151,7 @@ const Lifestyle = () => {
                  <StyledCheckbox label="Pomiń dodanie planu lekcji" checked={isScheduleSkipped} onChange={handleScheduleToogle}/>
             </div>
             <div className={(isScheduleSkipped ? disabledScheduleClasses : "") + "overflow-x-scroll h-fit"}>
-                <table className={(isScheduleSkipped ? "" : inputsErrors.schedule != null ? "error" : "") + "w-[700px] md:w-full"}>
+                <table className={(isScheduleSkipped ? "" : inputsErrors.schedule != null ? "error" : "") + " w-[700px] md:w-full"}>
                     <thead>
                         <tr>
                             <th>Godzina</th>

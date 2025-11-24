@@ -45,11 +45,11 @@ const BodyMeasurements = () => {
         };
 
 
-        if (!newUser?.weight || newUser.weight.trim() === "") {
+        if (!newUser?.weight || newUser.weight.trim() === "" || newUser.weight <= 0) {
             newErrors.weight = 1;
             isError = true;
         }
-        if (!newUser?.height || newUser.height.trim() === "") {
+        if (!newUser?.height || newUser.height.trim() === "" || newUser.height <= 0) {
             newErrors.height = 1;
             isError = true;
         }
@@ -57,7 +57,6 @@ const BodyMeasurements = () => {
         setInputsErrors(prev => ({ ...prev, ...newErrors }));
 
         return !isError;
-
     }
 
     const handleActivityLevelChange = (level) => {
@@ -103,8 +102,8 @@ const BodyMeasurements = () => {
             <div>
                 <h2>Dane biometryczne:</h2>
                 <div className="grid grid-cols-2 gap-2 mt-3">
-                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={handleChange} value={newUser?.height} valid={inputsErrors.height === null}/>
-                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={handleChange} value={newUser?.weight} valid={inputsErrors.weight === null}/>
+                    <StyledInput type="number" label="Wzrost (cm)" name="height" onChange={(e) => {handleChange(e); setInputsErrors(prev => ({...prev, [e.target.name]: null}))}} value={newUser?.height} valid={inputsErrors.height === null}/>
+                    <StyledInput type="number" label="Waga (kg)" name="weight" onChange={(e) => {handleChange(e); setInputsErrors(prev => ({...prev, [e.target.name]: null}))}} value={newUser?.weight} valid={inputsErrors.weight === null}/>
                 </div>
             </div>
             <div>

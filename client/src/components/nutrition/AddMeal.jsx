@@ -114,10 +114,10 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
                 </div>
                 {
                     log.level == "error" ?
-                    <h1 className="text-2xl bg-red-400 text-gray-900 p-3">{log.message}</h1>
+                    <h1 className="text-2xl bg-red-400 text-gray-900 p-3 text-center">{log.message}</h1>
                     :
                     log.level == "info" ?
-                    <h1 className="text-2xl bg-green-400 text-gray-900 p-3">{log.message}</h1>
+                    <h1 className="text-2xl bg-green-400 text-gray-900 p-3 text-center">{log.message}</h1>
                     :
                     <></>
                 }

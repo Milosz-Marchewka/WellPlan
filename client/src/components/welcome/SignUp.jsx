@@ -108,10 +108,10 @@ const SignUp = ({user, setUser, navigate}) => {
         if(!canProgress()){
             return;
         }
-        console.log("Dane nowego uzytkownika:")
-        console.log(newUser);
-        console.log(schedule);//Tymczasowy Schedule, nie używasz tego do backendu.
-        console.log(scheduleToNormalSchedule(schedule));//To używasz do backednu, pamiętaj by najpierw sprawdzić czy newUser.isScheduleSkipped bo pod tym warunkiem zapisujesz plan lekcji
+        // console.log("Dane nowego uzytkownika:")
+        // console.log(newUser);
+        // console.log(schedule);//Tymczasowy Schedule, nie używasz tego do backendu.
+        // console.log(scheduleToNormalSchedule(schedule));//To używasz do backednu, pamiętaj by najpierw sprawdzić czy newUser.isScheduleSkipped bo pod tym warunkiem zapisujesz plan lekcji
         (async()=>{
             await addUser();
         })();
