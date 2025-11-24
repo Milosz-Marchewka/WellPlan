@@ -7,7 +7,7 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
     useEffect(()=>{
         if(!user?.email) return;
         (async()=>{
-            const eat = await fetchEaten();
+            const eat = fetchEaten();
             setEaten(eat);
             console.log("EATEN:", eat);
         })()

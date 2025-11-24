@@ -18,6 +18,9 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
 
     useEffect(()=>{
             if(user === null) return;
+            (async()=>{
+                console.log("TRAINING:", await fetchTraining(user?.email));
+            })();
         }, [user])
     
     useEffect(() => {
@@ -76,6 +79,30 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
             console.log("Błąd serwera.");
             setEvents([]);
         }
+    }
+
+    const fetchTraining = async (email)=>{
+        let training;
+        const days = ['_', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+        try{
+            const req = await fetch(`http://localhost:5000/training/get?email=${email}`, {
+                method: "GET"
+            })
+
+            if(!req.ok) return {};
+
+            training = await req.json();
+        } catch(e){
+            console.log('catch');
+            return {};
+        }
+
+        for(const key in training){
+            // tylko 0 index z tego dnia
+            if(key === days[new Date().getDay() || -1]) return training[key][0];
+        }
+
+        return {};
     }
     
 
