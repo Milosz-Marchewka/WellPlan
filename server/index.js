@@ -6,6 +6,7 @@ import { signup, login, getCalendar, addActivity, getMacronutrients, getMeals, g
 const app = express();
 app.use(cors());
 app.use(express.json());
+connectDB();
 
 
 app.post("/signup", (req, res)=>{
@@ -53,7 +54,4 @@ app.post("/update", (req, res)=>{
 });
 
 
-app.listen(5000, ()=>{
-    console.log("App on port 5000");
-    connectDB();
-})
+export default app;
