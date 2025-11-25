@@ -131,7 +131,7 @@ const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
     }
 
     return(
-        <div className="text-center mx-1 h-fit md:w-3/4 lg:w-1/3 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden md:mx-auto">
+        <div className="text-center mx-1 h-fit w-full md:w-3/4 lg:w-4/5 lg:max-w-170 shadow-lg shadow-gray-800 rounded-2xl overflow-hidden md:mx-auto">
             <h3 className="w-full bg-gray-900 text-emerald-400 text-2xl p-5 flex justify-around">
                 <div></div>
                 <div className="flex-1">
@@ -157,7 +157,7 @@ const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
                 <div className="border-y border-white py-5">
                     <h6 className="text-white text-left mb-1">Dodaj ćwiczenie:</h6>
                     <StyledInput label={"Nazwa ćwiczenia"} name="name" value={exercise.name} valid={inputsErrors.name === null} onChange={handleExerciseChange}/>
-                    <div className="flex gap-2 mt-2">
+                    <div className="grid lg:flex gap-2 mt-2">
                         <StyledInput label={"Ilość serii"} name="series" value={exercise.series} valid={inputsErrors.series === null} onChange={handleExerciseChange}/>
                         <StyledInput label={"Ilość powtórzeń/Długość"} name="repeat" value={exercise.repeat} valid={inputsErrors.repeat === null} onChange={handleExerciseChange}/>
                         <StyledButton text="Dodaj" click={addExercise}/>

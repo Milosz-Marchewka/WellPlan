@@ -100,7 +100,7 @@ const Trening = ({user}) => {
             </div>
             {
                 isAddTreningShown ?
-                <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80">
+                <div className="absolute min-h-screen w-screen top-0 left-0 flex items-center z-80 md:pl-40 pb-20 pt-5">
                         <AddTrening user={user} cancelFunction={hideAddTrening} foreignSet={foreignSet} setParentLog={setMiniLog}/>
                 </div>
                 :
