@@ -70,7 +70,7 @@ const Meals = () => {
                         :
                         Array.isArray(meals) && meals.length > 0 ?
                         meals.map((element, index) => (
-                            <Meal imgUrl={element.imageUrl} title={element.product_name} ingredients={element.ingredients_text} macronutrients={{calories: element.nutriments["energy-kcal"], protein: element.nutriments.proteins, fat: element.nutriments.fat, carbs: element.nutriments.carbohydrates}}/>
+                            <Meal key={index} imgUrl={element.imageUrl} title={element.product_name} ingredients={element.ingredients_text} macronutrients={{calories: element.nutriments["energy-kcal"], protein: element.nutriments.proteins, fat: element.nutriments.fat, carbs: element.nutriments.carbohydrates}}/>
                         ))
                         :
                         <h3 className="text-white">Nie znaleziono posiłków</h3>

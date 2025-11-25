@@ -173,8 +173,8 @@ const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
                     </thead>
                     <tbody>
                         {
-                            treningData.plan.map((element, _) => (
-                                <tr>
+                            treningData.plan.map((element, index) => (
+                                <tr key={index}>
                                     <td>{element[0]}</td>
                                     <td>{element[1]}</td>
                                     <td>{element[2]}</td>

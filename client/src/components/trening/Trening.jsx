@@ -115,7 +115,7 @@ const Trening = ({user}) => {
                     :
                     Array.isArray(trenings) && trenings.length > 0 ?
                     trenings.map((element, index) => (
-                        <TreningDay day={polishNameOfDay(element.day)} type={element.type} exercises={element.plan}/>
+                        <TreningDay key={index} day={polishNameOfDay(element.day)} type={element.type} exercises={element.plan}/>
                     ))
                     :
                     <></>
