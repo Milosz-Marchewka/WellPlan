@@ -170,7 +170,7 @@ const SignUp = ({user, setUser, navigate}) => {
                                         Wróć do logowania
                                     </Link>
                                     :
-                                    <StyledButton text="Wstesz" click={prevStage}/>
+                                    <StyledButton text="Wstecz" click={prevStage}/>
                                 }
                                 {
                                     progress == 2 ?
