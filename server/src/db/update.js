@@ -22,7 +22,7 @@ export const update = async(body, res)=>{
         if(result.matchedCount === 0) return res.status(400).json({error: "Błąd aktualizowania danych."});
         const user = await User.findOne({email: body.email});
         const {password, __v, _id, ...safe} = user.toObject();
-        return res.status(200).json({message: "Pomyślnie zaktualizowano dane użytkownika.", user: safe})
+        return res.status(200).json({message: "Pomyślnie zaktualizowano dane użytkownika.", user: safe || {}})
     } catch(e){
         return res.status(500).json({error: "Błąd serwera."});
     }

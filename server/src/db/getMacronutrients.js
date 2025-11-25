@@ -31,7 +31,7 @@ export const getMacronutrients = ({age, height, weight, gender, activity}, res)=
         fat: Math.round((tdee * 0.25)/9)
     }
 
-    return res.status(200).json(nutrients);
+    return res.status(200).json(nutrients || {});
 }
 
 export const getMacronutrientsRouteless = ({age, height, weight, gender, activity})=>{

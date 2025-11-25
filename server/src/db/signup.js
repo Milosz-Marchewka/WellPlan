@@ -39,7 +39,7 @@ export const signup = async (body, res)=>{
         await newUser.save();
         
         const {password, ...safe} = userObj;
-        return res.status(201).json(safe);
+        return res.status(201).json(safe || {});
     } catch(err){
         return res.status(500).json({error: "Błąd serwera."});
     }

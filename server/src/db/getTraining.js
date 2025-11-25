@@ -8,7 +8,7 @@ export const getTraining = async ({email}, res)=>{
 
         if(!user) return res.status(400).json({error: "Nie znaleziono użytkownika."});
 
-        return res.status(200).json(user?.training);
+        return res.status(200).json(user?.training || {});
     } catch(e){
         return res.status(500).json({error: "Błąd serwera."});
     }

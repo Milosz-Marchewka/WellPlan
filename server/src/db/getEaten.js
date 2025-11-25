@@ -23,7 +23,7 @@ export const getEaten = async({email}, res)=>{
             eaten: eaten,
             max: ceil,
             percentages: percentages
-        });
+        } || {});
     } catch(e){
         return res.status(500).json({error: "Błąd serwera."});
     }

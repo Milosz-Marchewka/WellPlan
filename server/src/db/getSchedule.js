@@ -15,7 +15,7 @@ export const getSchedule = async ({email, date}, res)=>{
             }
         }
 
-        return res.status(200).json({schedule: scheduleDay})
+        return res.status(200).json({schedule: scheduleDay || {}})
     } catch(e){
         console.log(e);
         return res.status(500).json({error: e.message});

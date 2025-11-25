@@ -16,5 +16,5 @@ export const login = async ({email, password}, res)=>{
     }
 
     const {password: _pass, _id, __v, ...safe} = user.toObject();
-    return res.status(200).json({message: "Pomyślnie zalogowano.", user: safe});
+    return res.status(200).json({message: "Pomyślnie zalogowano.", user: safe || {}});
 }

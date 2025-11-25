@@ -14,7 +14,7 @@ export const getMeals = async ({product, calories}, res)=>{
             p.imageUrl = getImageUrl(p) || 'https://placehold.co/200x200/transparent/00aa58?text=Brak+Zdjęcia';
         };
 
-        return res.status(200).json(filtered);
+        return res.status(200).json(filtered || {});
     } catch(e){
         return res.status(500).json({error: "Błąd serwera."});
     }
