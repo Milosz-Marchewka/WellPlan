@@ -1,0 +1,31 @@
+table{
+    border-collapse: collapse;
+        border: 1px solid white;
+}
+th,td{
+    border: 1px solid white;
+    padding: 0px 0px;
+    text-align: center;
+}
+
+table input{
+    width: 100%;
+    text-align: center;
+    outline: none;
+    height: 100%;
+    padding: 5px 0px;
+}
+
+table input:focus{
+    background-color: #384b69;
+}
+
+.addingRow{
+    background-color: #009c6b;
+    cursor: pointer;
+}
+
+.addingRow:hover{
+    background-color: #00b37a;
+    transition: 300ms;
+}
