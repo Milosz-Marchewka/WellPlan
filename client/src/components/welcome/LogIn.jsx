@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
+import Banner from "../../assets/banner/full.png"
 
 const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
     const [userLogData, setUserLogData] = useState({
@@ -81,7 +82,7 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
 
     return(
         <div className="flex w-screen min-h-screen items-center justify-start flex-col px-1 pt-10 md:pt-40 gap-5 ">
-            <h1 className="text-6xl text-white text-center text-shadow-md text-shadow-gray-900 mb-5"><span className="text-emerald-400">Well</span>Plan</h1>
+            <img src={Banner} alt="banner" className="mb-5 w-100"/>
             <div className="bg-gray-800 max-w-130 lg:max-w-screen text-white w-full md:w-1/2 lg:w-120 py-10 px-3 md:p-10 pb-5 rounded-lg shadow-lg shadow-gray-800">
                 <h2 className="text-emerald-400 text-3xl">Logowanie</h2>
                 <div className="my-5 flex flex-col gap-2">

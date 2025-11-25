@@ -88,6 +88,7 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
     }
 
     const fetchTraining = async (email)=>{
+        if(email === 'undefined' || typeof email === undefined) return;
         let training;
         const days = ['_', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
         try{
