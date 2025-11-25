@@ -59,14 +59,14 @@ const SingleDayCalendar = ({selectedDate = null, user, events, fetchEvents, form
   return (
     <div className={`min-w-fit w-full lg:w-3/5 lg:max-w-[700px] shadow-lg shadow-gray-800 rounded-2xl overflow-hidden ${classTw}`}>
         <div className="bg-gray-900 text-emerald-400 flex justify-around h-20 text-xl">
-            <button onClick={() => previousDay()}>&lt;</button>
+            <button onClick={() => previousDay()} className="text-4xl w-5 cursor-pointer">&lt;</button>
             <input
                 type="date"
                 value={formatDateForInput(date)}
                 className="w-fit"
                 onChange={(e) => setDate(new Date(e.target.value))}
             />
-            <button onClick={() => nextDay()}>&gt;</button>
+            <button onClick={() => nextDay()} className="text-4xl w-5 cursor-pointer">&gt;</button>
         </div>
         {
             log.level == "error" ?
