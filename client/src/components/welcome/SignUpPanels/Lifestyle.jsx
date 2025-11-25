@@ -24,7 +24,6 @@ const Lifestyle = () => {
     const disabledScheduleClasses = "pointer-events-none select-none opacity-60 font-italic italic";
 
     useEffect(()=>{
-        console.log(newUser?.wake, newUser?.sleep, schedule);
         setCanProgress(() => validate)   
     }, [setCanProgress, newUser]);
 
@@ -77,7 +76,6 @@ const Lifestyle = () => {
         }
 
         setInputsErrors(prev => ({ ...prev, ...newErrors }));
-        console.log(newErrors, newUser, schedule);
         return !isError;
 
     }

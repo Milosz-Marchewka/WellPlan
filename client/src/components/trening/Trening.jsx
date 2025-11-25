@@ -26,12 +26,10 @@ const Trening = ({user}) => {
 
     const showAddTrening= () => {
         setIsAddTreningShown(true);
-        console.log(trenings);
     }
 
     const hideAddTrening = () => {
         setIsAddTreningShown(false);
-        console.log(isAddTreningShown);
     }
 
     useEffect(()=>{
@@ -78,9 +76,6 @@ const Trening = ({user}) => {
             setTrenings(objectToMyArray(fetched));
         })();
     }
-
-
-    useEffect(()=>console.log(log), [log]);
 
     return(
         <div>

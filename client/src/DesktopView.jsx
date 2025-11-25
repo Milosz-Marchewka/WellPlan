@@ -41,17 +41,11 @@ function DesktopView(){
             localStorage.removeItem("user");
             return null;
         }
-        console.log(user);
         return item.user;
     }
 
-
-    // HACK: this works instead of sessions lol
-    // try to go to another url, it will pull you back unless the state is saturated lol
-    // edit: now featuring pseudosessions&trade;
     useEffect(()=>{
         const currentUser = getUserWithExpiry();
-        console.log("C:", currentUser);
         setUser(currentUser);
         if(currentUser == null){
             navigate("/login");
@@ -59,8 +53,6 @@ function DesktopView(){
             navigate(location.pathname.split("/")[1]);
         }
     }, []);
-
-    useEffect(()=>{console.log("U:", user)}, [user]);
 
 
     useEffect(()=>{

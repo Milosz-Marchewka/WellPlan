@@ -83,7 +83,6 @@ const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
     }
 
     const addTrening = () => {
-        console.log(inputsErrors.plan);
         if(treningData.type.trim() == ""){
             setInputsErrors(prev => ({...prev, type: 1}));
             setLog({level: "error", message: "Prosze wypełnić pole typ treningu"});
@@ -105,7 +104,6 @@ const AddTrening = ({user, cancelFunction, foreignSet, setParentLog}) => {
     }
 
     const addTraining = async(email, data)=>{
-        console.log("ADD");
         try{
             const req = await fetch("http://localhost:5000/training/add", {
                 method: "POST", 

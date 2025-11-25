@@ -50,7 +50,6 @@ const PersonalInformations = () => {
         }else{
             const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if(!reg.test(newUser?.email)){
-                console.log("sprawdza email");
                 newErrors.email = "Nieprawidłowy adres email";
                 isError = true;
             }
@@ -58,7 +57,6 @@ const PersonalInformations = () => {
         if(passwordCopy?.iPassword){
             const reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
             if(!reg.test(passwordCopy?.iPassword)){
-                console.log("sprawdza password");
                 newErrors.password = "Hasło musi przynajmniej zawierać: 8 znaków, jedną literę, cyfrę, znak specjalny";
                 isError = true;
             }else if(passwordCopy.iPassword.trim() === "" || passwordCopy.iPasswordRepeat.trim() === "" || passwordCopy.iPassword !== passwordCopy.iPasswordRepeat) {
@@ -71,11 +69,7 @@ const PersonalInformations = () => {
             isError = true;
         }
 
-        console.log("NEW ERRORS: ", newErrors);
         setInputsErrors(prev => newErrors);
-        console.log(newUser);
-        console.log(inputsErrors);
-
         return !isError;
     }
 
@@ -104,7 +98,6 @@ const PersonalInformations = () => {
             ...prev,
             [e.target.id]: e.target.value
         }));
-        console.log(passwordCopy.iPassword, passwordCopy.iPasswordRepeat);
     }
 
     const handleGenderChange = (value) => {

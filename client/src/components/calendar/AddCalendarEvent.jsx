@@ -52,13 +52,12 @@ const AddCalendarEvent = ({user, fetchEvents})=>{
             return;
         }
 
-        console.log(await addEvent(user.email, eventData.title, eventData.date, eventData.start, eventData.end, eventData.color));
+        await addEvent(user.email, eventData.title, eventData.date, eventData.start, eventData.end, eventData.color);
         await fetchEvents(user?.email, new Date(eventData.date));
     }
 
     const addEvent = async (email, name, date, start, end, color)=>{
         try{
-            console.log([email, name, date, start, end, color]);
             const req = await fetch("http://localhost:5000/calendar/add", {
                 method: "POST",
                 headers: {

@@ -25,7 +25,6 @@ const BodyMeasurements = () => {
     }
 
     useEffect(()=>{
-        console.log(nutrients);
         (async ()=>{
             const data = await fetchNutrients(newUser?.age, newUser?.gender, newUser?.height, newUser?.weight, newUser?.activityLevel);
             setNutrients(data);
@@ -33,7 +32,6 @@ const BodyMeasurements = () => {
     },[newUser]);
 
     useEffect(()=>{
-        console.log(newUser?.weight, newUser?.height, newUser?.activityLevel);
         setCanProgress(() => validate)   
     }, [setCanProgress, newUser]);
 
@@ -72,7 +70,6 @@ const BodyMeasurements = () => {
             fat: 0,
         }
         if([age,gender,height,weight,activity].some(v=>v==null)){
-            console.log("Nie wpisano wszystkich danych.");
             return empty;
         }
         try{
@@ -85,14 +82,12 @@ const BodyMeasurements = () => {
             });
 
             if(!req.ok){
-                console.log("Błąd obliczania danych.", await req.text());
                 return empty;
             }
 
             const result = await req.json();
             return result;
         }catch (e){
-            console.log("Błąd serwera.");
             return empty;
         }
     }

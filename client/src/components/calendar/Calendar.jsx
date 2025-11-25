@@ -33,7 +33,6 @@ const Calendar = ({user})=>{
             });
         }
 
-        console.log(events);
 
         const groups = [];
         let currentGroup = [events[0]];
@@ -41,7 +40,6 @@ const Calendar = ({user})=>{
 
         for (let i = 1; i < events.length; i++) {
             const start = formatTimeToMinutes(events[i]?.start);
-            console.log(events[i]);
             
             if (start <= currentEnd) {
                 currentGroup.push(events[i]);
@@ -55,7 +53,6 @@ const Calendar = ({user})=>{
         }
         groups.push(currentGroup);
 
-        console.log("Ready to go", groups);
         setGroupEvents(groups);
         
     }, [events]);
@@ -63,7 +60,6 @@ const Calendar = ({user})=>{
 
 
     const fetchEvents = async (email, date)=>{
-        console.log("TERAZ FETCHUJE", date);
         setSelectedDate(date);
         try{
             const formatted = formatDateForInput(date);
@@ -79,10 +75,8 @@ const Calendar = ({user})=>{
             }
             const res = await req.json();
             setCalendarLog({level: "", message: ""});
-            console.log("CALENDAR:", res);
             setEvents(res || []);
         } catch(err){
-            console.log("Błąd serwera.");
             setCalendarLog({level: "error", message: "Błąd serwera"});
             setEvents([]);
         }

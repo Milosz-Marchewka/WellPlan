@@ -10,7 +10,6 @@ const Statistic = ({user, eaten, setEaten, fetchEaten}) => {
         if(!user?.email) return;
         (async()=>{
             const fetchLog = await fetchEaten();
-            console.log("FetchEaten:", fetchLog);
             setLog(fetchLog);
         })()
     }, [user]);

@@ -48,7 +48,6 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
 
         for (let i = 1; i < events.length; i++) {
             const start = formatTimeToMinutes(events[i]?.start);
-            console.log(events[i]);
             
             if (start <= currentEnd) {
                 currentGroup.push(events[i]);
@@ -81,10 +80,8 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
             }
             const res = await req.json();
             setCalendarLog({level: "", message: ""});
-            console.log("res", res);
             setEvents(res || []);
         } catch(err){
-            console.log("Błąd serwera.");
             setCalendarLog({level: "error", message: "Błąd serwera"});
             setEvents([]);
         }
@@ -105,10 +102,8 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
 
             setTrainingLog({level: "", message: ""});
             training = await req.json();
-            console.log(training);
             for(let i in training){
                 if(i.toLocaleLowerCase() == getDateForTraining().toLocaleLowerCase()){
-                    console.log(training[i]);
                     return training[i][0];
                 }
             }
@@ -143,7 +138,7 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                 <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1">
                     {
                         !todayTrening?.type ?
-                        <div className="w-90 h-180 bg-gray-800 rounded-xl flex flex-col text-[15px] border-5 flex justify-center items-center">
+                        <div className="w-90 h-180 bg-gray-800 rounded-xl flex flex-col text-[15px] border-5 justify-center items-center">
                             {
                                 trainingLog.level == "error" ?
                                 <h1 className="text-4xl text-center text-red-400">{trainingLog.message}</h1>

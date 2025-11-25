@@ -12,11 +12,6 @@ const GroupedEvents = ({group}) => {
         return h == 0 ? 1 : h; 
     }
 
-
-    useEffect(()=>{
-        console.log("Grouped", group);
-    });
-
     return(
         <div className="absolute flex w-full h-fit gap-1" style={{top: getTopMinutes(group[0]?.start)}}>
             {

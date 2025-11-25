@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Owsianka from "../../assets/meals/Owsianka.jpg";
 import Meal from "./Meal";
 import StyledInput from "../inputs/StyledInput";
 
@@ -18,7 +17,6 @@ const Meals = () => {
         (async()=>{
             const temp = await fetchMeals("", 2500);
             setMeals(temp);
-            console.log(temp);
         })();
     }, []);
 
@@ -26,7 +24,6 @@ const Meals = () => {
         (async()=>{
             const temp = await fetchMeals(searchingValues.product, searchingValues.calories);
             setMeals(temp);
-            console.log(temp);
         })();
     }, [searchingValues]);
 
@@ -44,7 +41,6 @@ const Meals = () => {
             });
 
             if(!req.ok){
-                console.log("Błąd pobierania danych.", await req.text());
                 setLog("Błąd pobierania danych", await req.text());
                 return;
             }
@@ -54,7 +50,6 @@ const Meals = () => {
             return res;
         } catch(err){
             setLog("Błąd serwera");
-            console.log("Błąd serwera.");
         }
     }
     

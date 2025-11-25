@@ -1,8 +1,6 @@
 import {useState} from "react"
 import StyledInput from "../inputs/StyledInput";
 import StyledButton from "../buttons/StyledButton";
-import StyledCheckbox from "../inputs/StyledCheckbox";
-import StyledColorInput from "../inputs/StyledColorInput";
 
 const AddMeal = ({user, setEaten, fetchEaten}) => {
 
@@ -59,7 +57,6 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
         }
 
         (async()=>{
-            console.log(user?.email, mealData.calories, mealData.protein, mealData.fats, mealData.carbs);
             try{
                 const req = await fetch("http://localhost:5000/nutrition/add", {
                     method: "POST",
@@ -76,10 +73,8 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
                 })
 
                 if(!req.ok){
-                    console.log(await req.text())
                     setLog({level: "error", message: req.text()})
                 }
-                console.log(await req.json());
                 setLog({level: "info", message: "Pomyślnie dodano posiłek"})
 
                 setMealData({

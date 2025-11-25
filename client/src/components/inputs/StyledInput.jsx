@@ -41,7 +41,7 @@ const StyledInput = ({id, type="text", label, name, value, width = "w-full", mt 
         <div className={`relative ${width} ${mt} ${additionalClasses}`}>
             <input type={isHidden ? type : "text"} id={id} className={`bg-gray-600 peer text-white outline-none border ${isValid ? "border-white" : "border-red-500"} rounded-xl px-3 pt-5 pb-2 w-full focus:outline-none focus:border focus:border-emerald-400`} name={name} value={value} placeholder=" " disabled={disabled}  onChange={(e)=>handleInputChange(e)}/>
             <label htmlFor={id} className={`absolute left-3 top-1 text-gray-200 text-sm transition-all peer-placeholder-shown:top-3.5 ${isValid ? "peer-placeholder-shown:text-gray-200" : "text-red-400"} peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-sm peer-focus:text-emerald-400 pointer-events-none`}>{label}</label>
-            <span className={"absolute right-4 top-3.5 cursor-pointer"} onClick={handleClick}><img className="size-6 filter invert" src={isHidden ? EyeHidden : EyeShow}/></span>
+            <span className={"absolute right-4 top-3.5 cursor-pointer"} onClick={handleClick}><img className="size-6" src={isHidden ? EyeHidden : EyeShow}/></span>
             {
                 !isValid ?
                 <p className="m-0 p-0 w-fit whitespace-nowrap absolute bottom-[-11px] left-2 bg-red-500 px-3 text-[11px] sm:text-[13px] z-500 rounded-lg">{errorText}</p>

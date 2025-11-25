@@ -19,8 +19,6 @@ const menuItemsMobile = [
     {title: "Trening", url: "trening", iconUrl: TreningIcon},
 ];
 
-// fixed left-0 top-0 w-fit lg:w-70 lg:max-w-1/4 flex flex-col gap-5 min-h-screen p-2 pt-5 bg-gray-800 ring-2 ring-gray-900
-
 function Sidebar({user, setUser, selectedOption, navigate}){
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -59,7 +57,7 @@ function Sidebar({user, setUser, selectedOption, navigate}){
                             isProfileSelected ?
                             <div className="absolute w-50 p-2 bg-gray-800 left--20 top-[-160px] left-[-120px] flex flex-col justify-center rounded-xl ring-2 ring-gray-900">
                                 <Link to={`/settings`} className={"w-full h-15 flex gap-5 mb-2 justify-start px-5 items-center text-white rounded-xl hover:bg-emerald-700 hover:cursor-pointer transition "}>
-                                    <img src={SettingsIcon} alt="" className="size-7 filter invert" />
+                                    <img src={SettingsIcon} alt="" className="size-7" />
                                     <h3 className={"text-lg text-center block "}>Ustawienia</h3>
                                 </Link>
                                 <div className="border-t border-white mt-auto w-full pt-2" onClick={logout}>

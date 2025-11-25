@@ -36,7 +36,7 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
             });
 
             if(!req.ok){
-                console.log("Błąd pobierania danych.");
+                setLog("Błąd pobierania danych.");
             }
 
             const res = await req.json();
@@ -47,7 +47,6 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
                 navigate("/");
             } else {
                 setUser(null);
-                console.log(res);
                 setLog(res.error);
                 switch(res.id){
                     case 1:
@@ -71,7 +70,6 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
                 }
             }
         } catch(err){
-            console.log("Błąd serwera.");
             setLog("Błąd serwera.");
         }
     }

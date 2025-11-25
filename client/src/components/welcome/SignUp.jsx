@@ -5,7 +5,7 @@ import BodyMeasurements from "./SignUpPanels/BodyMeasurements";
 import Lifestyle from "./SignUpPanels/Lifestyle";
 import StyledButton from "../buttons/StyledButton";
 import Person from "../../assets/icons/signForm/person.png";
-import Dumbell from "../../assets/icons/signForm/dumbell.png";
+import Body from "../../assets/icons/signForm/body.png";
 import Disclaimer from "../disclaimer/Disclaimer";
 
 export const SignupContext = createContext();
@@ -49,13 +49,11 @@ const SignUp = ({user, setUser, navigate}) => {
             if(temp[i].index == Number(index)){
                 temp[i][name] = value;
                 setSchedule(prev => temp);
-                console.log(temp);
                 return;
             }
         }
         temp.push({index: Number(index), start: "", end: "", monday: "", tuesday: "", wednesday: "", thursday: "", friday: "", [name]: value});
 
-        console.log(temp);
         setSchedule(prev => temp);
     }
 
@@ -90,16 +88,13 @@ const SignUp = ({user, setUser, navigate}) => {
 
     const handleChange = (e) => {
         setNewUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        console.log("DebugText: ", newUser);
     }
 
     const handleChangeManual = (name, value) => {
         setNewUser(prev => ({...prev, [name]: value}));
-        console.log("DebugText: ", newUser);
     }
 
     const nextStage = () => {
-        console.log("Hi?", canProgress());
         if(canProgress()){
             setProgress(p => p+1);
         };
@@ -109,10 +104,6 @@ const SignUp = ({user, setUser, navigate}) => {
         if(!canProgress()){
             return;
         }
-        // console.log("Dane nowego uzytkownika:")
-        // console.log(newUser);
-        // console.log(schedule);//Tymczasowy Schedule, nie używasz tego do backendu.
-        // console.log(scheduleToNormalSchedule(schedule));//To używasz do backednu, pamiętaj by najpierw sprawdzić czy newUser.isScheduleSkipped bo pod tym warunkiem zapisujesz plan lekcji
         (async()=>{
             await addUser();
         })();
@@ -124,10 +115,8 @@ const SignUp = ({user, setUser, navigate}) => {
             ...postUser,
             ...(!isScheduleSkipped && {schedule: scheduleToNormalSchedule(schedule)})
         }
-        console.log("BODY: ", body);
-        console.log(isScheduleSkipped, scheduleToNormalSchedule(schedule));
+
         try{
-            console.log('a');
             const req = await fetch("http://localhost:5000/signup", {
                 method: "POST",
                 headers: {
@@ -135,15 +124,12 @@ const SignUp = ({user, setUser, navigate}) => {
                 }, 
                 body: JSON.stringify(body)
             });
-            console.log('b');
             if(!req.ok){
-                console.log(await req.text());
+                setLog({level: "error", message: "Błąd serwera"});
                 return;
             }
-            console.log('c');
             
             const res = await req.json();
-            console.log("RES:", res);
             setUser(res);
             navigate("/");
         } catch(e){
@@ -197,7 +183,7 @@ const SignUp = ({user, setUser, navigate}) => {
                         {
                             progress !== 2 ?
                             <div className="hidden flex-2 bg-emerald-600 md:flex items-center justify-center ">
-                                <img src={progress == 0 ? Person : Dumbell} alt="" className="w-2/3 filter brightness-10" />
+                                <img src={progress == 0 ? Person : Body} alt="" className="w-2/3 filter brightness-10" />
                             </div>
                             :
                             ""

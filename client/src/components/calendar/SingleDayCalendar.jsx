@@ -91,7 +91,6 @@ const SingleDayCalendar = ({selectedDate = null, user, events, fetchEvents, form
                                     />
                                 ))
                             }
-                            {/* <CalendarEvent key={1} title="a" start={{hh: 2, mm: 2}} end={{hh: 2, mm: 2}} color="cyan" /> */}
                             <Pointer ref={pointerRef} now={{hh: date.getHours(), mm: date.getMinutes()}}/>
                         </div>
                     </div>
