@@ -19,5 +19,5 @@ export const getCalendar = async ({email, date}, res) => {
         ...(user?.schedule?.[weekDay] || [])
     ];
 
-    return res.status(200).json(result);
+    return res.status(200).json(result || []);
 };
