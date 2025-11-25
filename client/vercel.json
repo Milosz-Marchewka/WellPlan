@@ -1,0 +1,12 @@
+{
+  "builds": [
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "redirects": [
+  { "source": "/login/", "destination": "/login", "permanent": true },
+  { "source": "/signup/", "destination": "/signup", "permanent": true }
+]
+}
