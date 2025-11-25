@@ -59,12 +59,11 @@ const Trening = ({user}) => {
             const req = await fetch(`http://localhost:5000/training/get?email=${email}`, {
                 method: "GET"
             })
-
             if(!req.ok){
                 setLog({level: "error", message: "Błąd serwera"})
                 return;
             }
-
+            
             setLog({level: "", message: ""})
             return await req.json();
         } catch(e){

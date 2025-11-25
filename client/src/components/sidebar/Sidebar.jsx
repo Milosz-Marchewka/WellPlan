@@ -72,9 +72,9 @@ function Sidebar({user, setUser, selectedOption, navigate}){
                     </div>
                 </nav>
                 :
-                <nav className="fixed bottom-0 flex items-center justify-around h-fit w-screen p-2 bg-gray-800 ring-2 ring-gray-900 z-100 
+                <nav className="fixed bottom-0 flex items-center justify-around h-screen w-screen p-2 bg-gray-800 ring-2 ring-gray-900 z-100 
                     md:top-0 md:w-fit md:flex-col md:gap-5 md:min-h-screen md:justify-start
-                    lg:w-60">
+                    lg:w-60 overflow-y-auto">
                     <div className="text-white text-center w-full border-b border-white pb-4 text-lg">
                         <img src={UserIcon} alt="" className="h-20 mx-auto p-3"/>
                         <h4 className="w-full">{user?.name} {user?.surname}</h4>

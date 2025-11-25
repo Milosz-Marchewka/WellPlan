@@ -103,7 +103,7 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
                 <div className="bg-gray-800 p-2">
                     <div className="mx-auto w-5/6 flex flex-col gap-5 bg-gray-800 py-2">
                         <StyledInput label="Nazwa" name="title" onChange={handleChange} value={mealData.title} valid={inputsError.title == null}/>
-                        <div className="grid grid-cols-2 grid-rows-2 gap-2">
+                        <div className="flex flex-col sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-2">
                             <StyledInput type="number" label="Kalorie (kcal)" name="calories" value={mealData.calories} onChange={handleChange} valid={inputsError.calories == null}/>
                             <StyledInput type="number" label="Białko (g)" name="protein" value={mealData.protein} onChange={handleChange} valid={inputsError.protein == null}/>
                             <StyledInput type="number" label="Tłuszcze (g)" name="fats" value={mealData.fats} onChange={handleChange} valid={inputsError.fats == null}/>
@@ -114,10 +114,10 @@ const AddMeal = ({user, setEaten, fetchEaten}) => {
                 </div>
                 {
                     log.level == "error" ?
-                    <h1 className="text-2xl bg-red-400 text-gray-900 p-3">{log.message}</h1>
+                    <h1 className="text-2xl bg-red-400 text-gray-900 p-3 text-center">{log.message}</h1>
                     :
                     log.level == "info" ?
-                    <h1 className="text-2xl bg-green-400 text-gray-900 p-3">{log.message}</h1>
+                    <h1 className="text-2xl bg-green-400 text-gray-900 p-3 text-center">{log.message}</h1>
                     :
                     <></>
                 }

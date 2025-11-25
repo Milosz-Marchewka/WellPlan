@@ -31,6 +31,7 @@ const TreningDay = ({day, type, exercises}) => {
                     </thead>
                     <tbody>
                         {
+                            Array.isArray(exercises) ?
                             exercises.map((value, index) => (
                                 <tr key={index}>
                                     <td>{value[0]}</td>
@@ -38,6 +39,8 @@ const TreningDay = ({day, type, exercises}) => {
                                     <td>{value[2]}</td>
                                 </tr>
                             ))
+                            :
+                            <></>
                         }
                     </tbody>
                 </table>

@@ -11,19 +11,25 @@ const formatTimeToMinutes = (time)=>{
     return Number(time?.split(":")[0]) * 60 + Number(time?.split(":")[1]);
 }
 
+const getDateForTraining = () => {
+    return new Date().toLocaleDateString("en-US", { weekday: "long" });
+}
+
 const Home = ({user, eaten, setEaten, fetchEaten})=>{
     const [events, setEvents] = useState([]);
     const [groupEvents, setGroupEvents] = useState([]);
     const [date, setDate] = useState(new Date());
     const [calendarLog, setCalendarLog] = useState({level: "", message: ""});
+    const [trainingLog, setTrainingLog] = useState({level: "", message: ""});
+    const [todayTrening, setTodayTrening] = useState({});
 
     useEffect(()=>{
             if(user === null) return;
             (async()=>{
-                console.log("TRAINING:", await fetchTraining(user?.email));
+                setTodayTrening(await fetchTraining(user?.email));
             })();
     }, [user])
-    
+
     useEffect(() => {
         if (!events || events.length === 0){
             setGroupEvents([]);
@@ -92,11 +98,23 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                 method: "GET"
             })
 
-            if(!req.ok) return {};
+            if(!req.ok){
+                setTrainingLog({level: "error", message: "Błąd serwera"});
+                return {};
+            } 
 
+            setTrainingLog({level: "", message: ""});
             training = await req.json();
+            console.log(training);
+            for(let i in training){
+                if(i.toLocaleLowerCase() == getDateForTraining().toLocaleLowerCase()){
+                    console.log(training[i]);
+                    return training[i][0];
+                }
+            }
+            setTodayTrening({});
         } catch(e){
-            console.log('catch');
+            setTrainingLog({level: "error", message: "Błąd serwera"});
             return {};
         }
 
@@ -123,18 +141,24 @@ const Home = ({user, eaten, setEaten, fetchEaten})=>{
                     <SingleDayCalendar selectedDate={null} user={user} events={groupEvents} fetchEvents={fetchEvents} formatDateForInput={formatDateForInput} classTw="lg:w-full" classesInside="md:h-[450px]" propLog={calendarLog}/>
                 </div>
                 <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1">
-                    <TreningDay 
-                    day="Poniedziałek" 
-                    type="Push" 
-                    exercises={[
-                        ["Wyciskanie sztangi na ławce poziomej", 4, "6–8"],
-                        ["Wyciskanie hantli na skosie dodatnim", 3, "8–10"],
-                        ["Pompki na poręczach (dipy)", 3, "6–10"],
-                        ["Wyciskanie sztangi nad głowę (OHP)", 4, "5–8"],
-                        ["Unoszenie hantli bokiem", 3, "12–15"],
-                        ["Prostowanie ramion na wyciągu (triceps)", 3, "10–12"]
-                    ]}
-                    />
+                    {
+                        !todayTrening?.type ?
+                        <div className="w-90 h-180 bg-gray-800 rounded-xl flex flex-col text-[15px] border-5 flex justify-center items-center">
+                            {
+                                trainingLog.level == "error" ?
+                                <h1 className="text-4xl text-center text-red-400">{trainingLog.message}</h1>
+                                :
+                                <h1 className="text-4xl text-center text-gray-300">Brak treningu w dzisiejszym dniu</h1>
+                            }
+                        </div>
+                        :
+                        <TreningDay 
+                        day="Dzisiaj" 
+                        type={todayTrening.type} 
+                        exercises={todayTrening.plan}
+                        />
+
+                    }
                 </div>
             </div>
         </div>

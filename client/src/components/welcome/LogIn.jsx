@@ -100,7 +100,7 @@ const LogIn = ({user, setUser, setWithExpiry, navigate})=>{
             </div>
             {
                 log !== null ?
-                    <div className="bg-red-700/75 w-full sm:w-1/4 max-w-130 lg:max-w-screen rounded-lg p-3 border border-red-500 shadow-sm shadow-red-800">
+                    <div className="bg-red-400 w-full sm:w-1/4 max-w-130 lg:max-w-screen rounded-lg p-3 border border-red-500 shadow-sm shadow-red-800">
                         <h5 className="text-2xl">Błąd:</h5>
                         <p className="text-lg">{log}</p>
                     </div>
